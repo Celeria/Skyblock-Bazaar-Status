@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BannedActivity">
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="This is here to prevent stupid people from stealing my app. If you installed an experimental version of this app, uninstall and reinstall it and it'll work. If someone not called Celeria_Andranym provided this app to you, it was a shameless rip. The official version (without this limitation, and 100% free) is available at https://play.google.com/store/apps/details?id=com.andranym.SkyblockBazaarStatus \n This version only lasts for 3 days before you see this message, so if someone sold this to you as &quot;their official work&quot;, and you see this message, that person is a liar. But yeah, just reinstall the app and you'll be good. "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

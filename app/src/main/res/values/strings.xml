@@ -1,0 +1,184 @@
+<resources>
+    <string name="app_name">Skyblock Bazaar Status</string>
+    <string name="api_key">Enter your Skyblock API key here</string>
+    <string name="first_time">Hey, looks like this is your first time using this app:</string>
+    <string name="key_instructions">In order to get your Skyblock API Key, log into skyblock, and type in /api.\n
+        It will then tell you to type in \n/api new. Take that key and paste it in the box above.\n
+        I recommend saving the key somewhere on your computer as well so you don\'t need to keep making new ones.\n
+        (Though if you lose it, no worries, you should be able to just type in /api new again when you login and it\'ll make you a new one)</string>
+    <string name="dummy_instructions">press this button once you do</string>
+    <string name="preference_api_key">APIKey</string>
+    <string name="url_beginning">https://api.hypixel.net/skyblock/bazaar</string>
+    <string name="button_fail">Enter a valid key first</string>'
+    <string name="button_success">Key works! Press this button again to begin.</string>
+    <string name="loading_msg">Currently loading</string>
+    <string name="current_as_of">Prices updated on:\n</string>
+    <string name="interviewer_message">Welcome to my app!\n
+        Although this app was designed for players of a minecraft server called Hypixel Skyblock,
+        I also made it as a demonstration of my coding ability. \n
+        I learned how to do everything in this app in just one summer during the covid when I could\'nt find any other job.\n
+        This app won\'t be super pretty, but it should be quite user friendly, and hopefully bug free.\n
+        If you don\'t know what Hypixel Skyblock is, the general gist is that it\'s a game where you can collect
+        resources, and either use them for yourself or sell them to other players. Hypixel has provided an
+        API where you can access the prices of all the items in json form as long as you have your API key, and each individual
+        person can access the server up to 120 times a minute with their key (completely reasonable, prevents DDOS)\n
+        However, considering a playerbase in the hundreds of thousands, if people actually like my app, it makes sense I couldn\'t just
+        use my own key for everyone. But since this is for a demonstration, I\'m not assuming you play the game, so I have provided my key
+        for your use. Please try to avoid reloading the app more than 120 times per minute. \n
+        If you are sufficiently impressed and want to know more, let me know and I can share the well commented source code with you.\n
+        A bit more context if you don\'t actually know what\'s going on in this game:\n
+        The game has \"minions\" which produce resources even when you are offline.\n
+        They all produce resources at different rates, so this app can read the sell data and tell you which minion
+        will produce money at the fastest rate for you.\n
+        Since demand is fluid, this app can check the prices for you at the frequency you choose, and send push notifications when prices change
+        drastically. Of course, the definition of drastic is up to you, if you think 5% is enough, great, or perhaps you only care when it changes by
+        more than 50%, also up to you.
+        </string>
+    <string name="demo_button_text">I get it, now take me to the actual app</string>
+    <string name="view_prices">view current bazaar prices</string>
+    <string name="title_activity_view_prices">Bazaar Prices</string>
+    <string name="large_text">
+        "Material is the metaphor.\n\n"
+
+        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
+        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
+        "technologically advanced and open to imagination and magic.\n"
+        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
+        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
+        "flexibility of the material creates new affordances that supercede those in the physical "
+        "world, without breaking the rules of physics.\n"
+        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
+        "interact, and exist in space and in relation to each other. Realistic lighting shows "
+        "seams, divides space, and indicates moving parts.\n\n"
+
+        "Bold, graphic, intentional.\n\n"
+
+        "The foundational elements of print based design typography, grids, space, scale, color, "
+        "and use of imagery guide visual treatments. These elements do far more than please the "
+        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
+        "imagery, large scale typography, and intentional white space create a bold and graphic "
+        "interface that immerse the user in the experience.\n"
+        "An emphasis on user actions makes core functionality immediately apparent and provides "
+        "waypoints for the user.\n\n"
+
+        "Motion provides meaning.\n\n"
+
+        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
+        "inflection points that initiate motion, transforming the whole design.\n"
+        "All action takes place in a single environment. Objects are presented to the user without "
+        "breaking the continuity of experience even as they transform and reorganize.\n"
+        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
+        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
+
+        "3D world.\n\n"
+
+        "The material environment is a 3D space, which means all objects have x, y, and z "
+        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
+        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
+        "position along the z-axis and has a standard 1dp thickness.\n"
+        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
+        "emulated by manipulating the y-axis.\n\n"
+
+        "Light and shadow.\n\n"
+
+        "Within the material environment, virtual lights illuminate the scene. Key lights create "
+        "directional shadows, while ambient light creates soft shadows from all angles.\n"
+        "Shadows in the material environment are cast by these two light sources. In Android "
+        "development, shadows occur when light sources are blocked by sheets of material at "
+        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
+        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
+
+        "Resting elevation.\n\n"
+
+        "All material objects, regardless of size, have a resting elevation, or default elevation "
+        "that does not change. If an object changes elevation, it should return to its resting "
+        "elevation as soon as possible.\n\n"
+
+        "Component elevations.\n\n"
+
+        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
+        "does not vary from 6dp in one app to 16dp in another app).\n"
+        "Components may have different resting elevations across platforms, depending on the depth "
+        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
+
+        "Responsive elevation and dynamic elevation offsets.\n\n"
+
+        "Some component types have responsive elevation, meaning they change elevation in response "
+        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
+        "changes are consistently implemented using dynamic elevation offsets.\n"
+        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
+        "to the component’s resting state. They ensure that elevation changes are consistent "
+        "across actions and component types. For example, all components that lift on press have "
+        "the same elevation change relative to their resting elevation.\n"
+        "Once the input event is completed or cancelled, the component will return to its resting "
+        "elevation.\n\n"
+
+        "Avoiding elevation interference.\n\n"
+
+        "Components with responsive elevations may encounter other components as they move between "
+        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
+        "through other material, components avoid interfering with one another any number of ways, "
+        "whether on a per component basis or using the entire app layout.\n"
+        "On a component level, components can move or be removed before they cause interference. "
+        "For example, a floating action button (FAB) can disappear or move off screen before a "
+        "user picks up a card, or it can move if a snackbar appears.\n"
+        "On the layout level, design your app layout to minimize opportunities for interference. "
+        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
+        "when a user tries to pick up one of cards.\n\n"
+    </string>
+    <string name="action_settings">Settings</string>
+    <string name="view_prices_settings">Order Prices Will be Displayed</string>
+    <string name="arbitrage_settings">Arbitrage Settings</string>
+    <string name="alphabetical">Alphabetically</string>
+    <string name="by_popularity">By Popularity</string>
+    <string name="arbitrage">arbitrage</string>
+    <string name="quick_flip_header">Profits from leveraging the difference between the buy and sell price:</string>
+    <string name="quick_flip_instructions">\nBasically, if the sell and buy prices are very different, you can create a large buy order at the current price
+                and flip it once the order is fulfilled.\n
+                WARNING: Does not always work, for example, diamonds could be sell for 10 and buy for 12, and you could buy them for
+                10 coins and flip them for 12, thinking you\'ll make 2 profit per diamond, but remember there\'s always a chance that after
+                your buy order is filled, the buy price drops to 8, and now you\'ve made a loss. So proceed at your own risk.</string>
+    <string name="bazaar_flip">show me the best bazaar flips</string>
+    <string name="npc_flip">Profits from selling NPC goods on bazaar</string>
+    <string name="npc_flip_help">\nAt NPC shops, you can buy up to 640 of each item per day at a fixed price.\n
+                                If that price is lower than the current bazaar sell price, you can buy the item from the NPC and sell it immediately for guaranteed profit.</string>
+    <string name="npc_flip_button">show me today\'s profit</string>
+    <string name="question_mark">\?</string>
+    <string name="prices_last_updated">PRICES LAST UPDATED: </string>
+    <string name="bazaar_flip_amount">Maximum buy order amount:</string>
+    <string name="european_question">When the United States Supreme Court makes rulings that advance civil rights, which part of the Constitution do they normally
+    use as justification for their ruling?\nFurthermore, when the United States Congress needs to make regulations, which part of the Constitution do they use as justification?</string>
+    <string name="real_challenge">Tired of puzzle apps pretending to be difficult while in reality anyone with an IQ over room temperature can easily solve it?
+    Well here I have provided challenges, some of which do in fact require an IQ at least 2 standard deviations above the norm in order to be able to solve.
+    So you should not worry if you can\'t solve some of challenges, they were simply designed for someone far smarter than you.\n
+    The features unlocked below this point are all fairly useless, so if you absolutely can\'t figure something out, just do what
+    you normals typically do, and just give up.</string>
+    <string name="xenobiologist">You are designing a new life form, and in order to ensure your creation doesn\'t mutate out of
+    control, you made a modification to normal life as we know it. Instead of a triplet code for protein synthesis, you have adapted
+    a quadruplet code. Let me tell you, it wasn\'t easy at all to pull off, but you managed to do it. Rather than come up with your own
+    codons from scratch, you just decided to add an adenine to the end of each codon. You need to get this organism to synthesize a polypeptide that is composed
+    solely of 5 phenylalanine in a chain. What DNA sequence would have to present in this modified organism in order for this polypeptide to be made?</string>
+    <!--    MIT License-->
+
+    <!--    Copyright (c) 2020 tonkaew131-->
+
+    <!--    Permission is hereby granted, free of charge, to any person obtaining a copy-->
+    <!--    of this software and associated documentation files (the "Software"), to deal-->
+    <!--    in the Software without restriction, including without limitation the rights-->
+    <!--    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell-->
+    <!--    copies of the Software, and to permit persons to whom the Software is-->
+    <!--    furnished to do so, subject to the following conditions:-->
+
+    <!--    The above copyright notice and this permission notice shall be included in all-->
+    <!--    copies or substantial portions of the Software.-->
+
+    <!--    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR-->
+    <!--    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,-->
+    <!--    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE-->
+    <!--    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER-->
+    <!--    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,-->
+    <!--    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE-->
+    <!--    SOFTWARE.-->
+    <string name="minionJSONData">{\"minions\":[{\"name\":\"Cobblestone Minion\",\"items_per_action\":[1],\"items\":[\"COBBLESTONE\"],\"npc_val\":[1],\"tier\":{\"1\":14,\"2\":14,\"3\":12,\"4\":12,\"5\":10,\"6\":10,\"7\":9,\"8\":9,\"9\":8,\"10\":8,\"11\":7}},{\"name\":\"Obsidian Minion\",\"items_per_action\":[1],\"items\":[\"OBSIDIAN\"],\"npc_val\":[12],\"tier\":{\"1\":45,\"2\":45,\"3\":42,\"4\":42,\"5\":39,\"6\":39,\"7\":35,\"8\":35,\"9\":30,\"10\":30,\"11\":24}},{\"name\":\"Glowstone Minion\",\"items_per_action\":[3],\"items\":[\"GLOWSTONE_DUST\"],\"npc_val\":[2],\"tier\":{\"1\":25,\"2\":25,\"3\":23,\"4\":23,\"5\":21,\"6\":21,\"7\":19,\"8\":19,\"9\":16,\"10\":16,\"11\":13}},{\"name\":\"Gravel Minion\",\"items_per_action\":[1],\"items\":[\"FLINT\"],\"npc_val\":[4],\"tier\":{\"1\":26,\"2\":26,\"3\":24,\"4\":24,\"5\":22,\"6\":22,\"7\":19,\"8\":19,\"9\":16,\"10\":16,\"11\":13}},{\"name\":\"Sand Minion\",\"items_per_action\":[1],\"items\":[\"SAND\"],\"npc_val\":[2],\"tier\":{\"1\":26,\"2\":26,\"3\":24,\"4\":24,\"5\":22,\"6\":22,\"7\":19,\"8\":19,\"9\":16,\"10\":16,\"11\":13}},{\"name\":\"Clay Minion\",\"items_per_action\":[4],\"items\":[\"CLAY_BALL\"],\"npc_val\":[3],\"tier\":{\"1\":32,\"2\":32,\"3\":30,\"4\":30,\"5\":27.5,\"6\":27.5,\"7\":24,\"8\":24,\"9\":20,\"10\":20,\"11\":16}},{\"name\":\"Ice Minion\",\"items_per_action\":[1],\"items\":[\"ICE\"],\"npc_val\":[0.5],\"tier\":{\"1\":14,\"2\":14,\"3\":12,\"4\":12,\"5\":10,\"6\":10,\"7\":9,\"8\":9,\"9\":8,\"10\":8,\"11\":7}},{\"name\":\"Snow Minion\",\"items_per_action\":[4],\"items\":[\"SNOW_BALL\"],\"npc_val\":[1],\"tier\":{\"1\":13,\"2\":13,\"3\":12,\"4\":12,\"5\":11,\"6\":11,\"7\":9.5,\"8\":9.5,\"9\":8,\"10\":8,\"11\":6.5}},{\"name\":\"Coal Minion\",\"items_per_action\":[1],\"items\":[\"COAL\"],\"npc_val\":[2],\"tier\":{\"1\":15,\"2\":15,\"3\":13,\"4\":13,\"5\":12,\"6\":12,\"7\":10,\"8\":10,\"9\":9,\"10\":9,\"11\":7}},{\"name\":\"Iron Minion\",\"items_per_action\":[1],\"items\":[\"IRON_INGOT\"],\"npc_val\":[3],\"tier\":{\"1\":17,\"2\":17,\"3\":15,\"4\":15,\"5\":14,\"6\":14,\"7\":12,\"8\":12,\"9\":10,\"10\":10,\"11\":8}},{\"name\":\"Gold Minion\",\"items_per_action\":[1],\"items\":[\"GOLD_INGOT\"],\"npc_val\":[4],\"tier\":{\"1\":22,\"2\":22,\"3\":20,\"4\":20,\"5\":18,\"6\":18,\"7\":16,\"8\":16,\"9\":14,\"10\":14,\"11\":11}},{\"name\":\"Diamond Minion\",\"items_per_action\":[1],\"items\":[\"DIAMOND\"],\"npc_val\":[8],\"tier\":{\"1\":29,\"2\":29,\"3\":27,\"4\":27,\"5\":25,\"6\":25,\"7\":22,\"8\":22,\"9\":19,\"10\":19,\"11\":15}},{\"name\":\"Lapis Minion\",\"items_per_action\":[6],\"items\":[\"INK_SACK:4\"],\"npc_val\":[1],\"tier\":{\"1\":29,\"2\":29,\"3\":27,\"4\":27,\"5\":25,\"6\":25,\"7\":23,\"8\":23,\"9\":21,\"10\":21,\"11\":18}},{\"name\":\"Redstone Minion\",\"items_per_action\":[4.5],\"items\":[\"REDSTONE\"],\"npc_val\":[1],\"tier\":{\"1\":29,\"2\":29,\"3\":27,\"4\":27,\"5\":25,\"6\":25,\"7\":23,\"8\":23,\"9\":21,\"10\":21,\"11\":18}},{\"name\":\"Emerald Minion\",\"items_per_action\":[1],\"items\":[\"EMERALD\"],\"npc_val\":[6],\"tier\":{\"1\":28,\"2\":28,\"3\":26,\"4\":26,\"5\":24,\"6\":24,\"7\":21,\"8\":21,\"9\":18,\"10\":18,\"11\":14}},{\"name\":\"Quartz Minion\",\"items_per_action\":[1],\"items\":[\"QUARTZ\"],\"npc_val\":[4],\"tier\":{\"1\":22.5,\"2\":22.5,\"3\":21,\"4\":21,\"5\":19,\"6\":19,\"7\":17,\"8\":17,\"9\":14.5,\"10\":14.5,\"11\":11.5}},{\"name\":\"End Stone Minion\",\"items_per_action\":[1],\"items\":[\"ENDER_STONE\"],\"npc_val\":[2],\"tier\":{\"1\":26,\"2\":26,\"3\":24,\"4\":24,\"5\":22,\"6\":22,\"7\":19,\"8\":19,\"9\":16,\"10\":16,\"11\":13}},{\"name\":\"Wheat Minion\",\"items_per_action\":[1,1],\"items\":[\"WHEAT\",\"SEEDS\"],\"npc_val\":[1,0.5],\"tier\":{\"1\":15,\"2\":15,\"3\":13,\"4\":13,\"5\":11,\"6\":11,\"7\":10,\"8\":10,\"9\":9,\"10\":9,\"11\":8}},{\"name\":\"Melon Minion\",\"items_per_action\":[5],\"items\":[\"MELON\"],\"npc_val\":[1],\"tier\":{\"1\":24,\"2\":24,\"3\":22.5,\"4\":22.5,\"5\":21,\"6\":21,\"7\":18.5,\"8\":18.5,\"9\":16,\"10\":16,\"11\":13}},{\"name\":\"Pumpkin Minion\",\"items_per_action\":[1],\"items\":[\"PUMPKIN\"],\"npc_val\":[4],\"tier\":{\"1\":32,\"2\":32,\"3\":30,\"4\":30,\"5\":27,\"6\":27,\"7\":24,\"8\":24,\"9\":20,\"10\":20,\"11\":16}},{\"name\":\"Carrot Minion\",\"items_per_action\":[3],\"items\":[\"CARROT_ITEM\"],\"npc_val\":[1],\"tier\":{\"1\":20,\"2\":20,\"3\":18,\"4\":18,\"5\":16,\"6\":16,\"7\":14,\"8\":14,\"9\":12,\"10\":12,\"11\":10}},{\"name\":\"Potato Minion\",\"items_per_action\":[3],\"items\":[\"POTATO_ITEM\"],\"npc_val\":[1],\"tier\":{\"1\":20,\"2\":20,\"3\":18,\"4\":18,\"5\":16,\"6\":16,\"7\":14,\"8\":14,\"9\":12,\"10\":12,\"11\":10}},{\"name\":\"Mushroom Minion\",\"items_per_action\":[0.5,0.5],\"items\":[\"RED_MUSHROOM\",\"BROWN_MUSHROOM\"],\"npc_val\":[4,4],\"tier\":{\"1\":30,\"2\":30,\"3\":28,\"4\":28,\"5\":26,\"6\":26,\"7\":23,\"8\":23,\"9\":20,\"10\":20,\"11\":16}},{\"name\":\"Cactus Minion\",\"items_per_action\":[3],\"items\":[\"CACTUS\"],\"npc_val\":[1],\"tier\":{\"1\":27,\"2\":27,\"3\":25,\"4\":25,\"5\":23,\"6\":23,\"7\":21,\"8\":21,\"9\":18,\"10\":18,\"11\":15}},{\"name\":\"Cocoa Beans Minion\",\"items_per_action\":[3],\"items\":[\"INK_SACK:3\"],\"npc_val\":[3],\"tier\":{\"1\":27,\"2\":27,\"3\":25,\"4\":25,\"5\":23,\"6\":23,\"7\":21,\"8\":21,\"9\":18,\"10\":18,\"11\":15}},{\"name\":\"Sugar Cane Minion\",\"items_per_action\":[3],\"items\":[\"SUGAR_CANE\"],\"npc_val\":[2],\"tier\":{\"1\":22,\"2\":22,\"3\":20,\"4\":20,\"5\":18,\"6\":18,\"7\":16,\"8\":16,\"9\":14.5,\"10\":14.5,\"11\":12}},{\"name\":\"Nether Wart Minion\",\"items_per_action\":[3],\"items\":[\"NETHER_STALK\"],\"npc_val\":[3],\"tier\":{\"1\":50,\"2\":50,\"3\":47,\"4\":47,\"5\":44,\"6\":44,\"7\":41,\"8\":41,\"9\":38,\"10\":38,\"11\":32}},{\"name\":\"Flower Minion\",\"items_per_action\":[0.8,0.2],\"items\":[\"SMALL_FLOWER\",\"TALL_FLOWER\"],\"npc_val\":[1,2],\"tier\":{\"1\":30,\"2\":29,\"3\":28,\"4\":27,\"5\":26,\"6\":25,\"7\":24,\"8\":23,\"9\":22,\"10\":21,\"11\":20}},{\"name\":\"Fishing Minion\",\"items_per_action\":[0.5,0.25,0.12,0.04,0.03,0.03,0.03],\"items\":[\"RAW_FISH\",\"RAW_FISH:1\",\"RAW_FISH:3\",\"RAW_FISH:2\",\"PRISMARINE_CRYSTALS\",\"PRISMARINE_SHARD\",\"SPONGE\"],\"npc_val\":[6,10,15,20,5,5,50],\"tier\":{\"1\":78,\"2\":75,\"3\":72,\"4\":72,\"5\":68,\"6\":68,\"7\":62.5,\"8\":62.5,\"9\":53,\"10\":53,\"11\":35}},{\"name\":\"Zombie Minion\",\"items_per_action\":[1],\"items\":[\"ROTTEN_FLESH\"],\"npc_val\":[2],\"tier\":{\"1\":26,\"2\":26,\"3\":24,\"4\":24,\"5\":22,\"6\":22,\"7\":20,\"8\":20,\"9\":17,\"10\":17,\"11\":13}},{\"name\":\"Revenant Minion\",\"items_per_action\":[3,0.2],\"items\":[\"ROTTEN_FLESH\",\"DIAMOND\"],\"npc_val\":[2,8],\"tier\":{\"1\":29,\"2\":29,\"3\":26,\"4\":26,\"5\":23,\"6\":23,\"7\":19,\"8\":19,\"9\":14.5,\"10\":14.5,\"11\":10}},{\"name\":\"Skeleton Minion\",\"items_per_action\":[1],\"items\":[\"BONE\"],\"npc_val\":[2],\"tier\":{\"1\":25,\"2\":25,\"3\":23,\"4\":23,\"5\":21,\"6\":21,\"7\":19,\"8\":19,\"9\":16,\"10\":16,\"11\":13}},{\"name\":\"Creeper Minion\",\"items_per_action\":[1],\"items\":[\"SULPHUR\"],\"npc_val\":[4],\"tier\":{\"1\":27,\"2\":27,\"3\":25,\"4\":25,\"5\":23,\"6\":23,\"7\":21,\"8\":21,\"9\":18,\"10\":18,\"11\":14}},{\"name\":\"Spider Minion\",\"items_per_action\":[1,0.5],\"items\":[\"STRING\",\"SPIDER_EYE\"],\"npc_val\":[3,3],\"tier\":{\"1\":25,\"2\":25,\"3\":23,\"4\":23,\"5\":21,\"6\":21,\"7\":19,\"8\":19,\"9\":16,\"10\":16,\"11\":13}},{\"name\":\"Tarantula Minion\",\"items_per_action\":[3.16,1,0.2],\"items\":[\"STRING\",\"SPIDER_EYE\",\"IRON_INGOT\"],\"npc_val\":[3,3,3],\"tier\":{\"1\":25,\"2\":25,\"3\":23,\"4\":23,\"5\":21,\"6\":21,\"7\":19,\"8\":19,\"9\":16,\"10\":16,\"11\":13}},{\"name\":\"Cave Spider Minion\",\"items_per_action\":[0.5,1],\"items\":[\"STRING\",\"SPIDER_EYE\"],\"npc_val\":[3,3],\"tier\":{\"1\":25,\"2\":25,\"3\":23,\"4\":23,\"5\":21,\"6\":21,\"7\":19,\"8\":19,\"9\":16,\"10\":16,\"11\":13}},{\"name\":\"Blaze Minion\",\"items_per_action\":[1],\"items\":[\"BLAZE_ROD\"],\"npc_val\":[9],\"tier\":{\"1\":33,\"2\":33,\"3\":31,\"4\":31,\"5\":28.5,\"6\":28.5,\"7\":25,\"8\":25,\"9\":21,\"10\":21,\"11\":16.5}},{\"name\":\"Magma Cube Minion\",\"items_per_action\":[1.8],\"items\":[\"MAGMA_CREAM\"],\"npc_val\":[8],\"tier\":{\"1\":32,\"2\":32,\"3\":30,\"4\":30,\"5\":28,\"6\":28,\"7\":25,\"8\":25,\"9\":22,\"10\":22,\"11\":18}},{\"name\":\"Enderman Minion\",\"items_per_action\":[1],\"items\":[\"ENDER_PEARL\"],\"npc_val\":[10],\"tier\":{\"1\":32,\"2\":32,\"3\":30,\"4\":30,\"5\":28,\"6\":28,\"7\":25,\"8\":25,\"9\":22,\"10\":22,\"11\":18}},{\"name\":\"Ghast Minion\",\"items_per_action\":[1],\"items\":[\"GHAST_TEAR\"],\"npc_val\":[16],\"tier\":{\"1\":50,\"2\":50,\"3\":47,\"4\":47,\"5\":44,\"6\":44,\"7\":41,\"8\":41,\"9\":38,\"10\":28,\"11\":32}},{\"name\":\"Slime Minion\",\"items_per_action\":[1.8],\"items\":[\"SLIME_BALL\"],\"npc_val\":[5],\"tier\":{\"1\":26,\"2\":26,\"3\":24,\"4\":24,\"5\":22,\"6\":22,\"7\":19,\"8\":19,\"9\":16,\"10\":16,\"11\":12}},{\"name\":\"Cow Minion\",\"items_per_action\":[1,1],\"items\":[\"RAW_BEEF\",\"LEATHER\"],\"npc_val\":[4,3],\"tier\":{\"1\":26,\"2\":26,\"3\":24,\"4\":24,\"5\":22,\"6\":22,\"7\":20,\"8\":20,\"9\":17,\"10\":17,\"11\":13}},{\"name\":\"Pig Minion\",\"items_per_action\":[1],\"items\":[\"PORK\"],\"npc_val\":[5],\"tier\":{\"1\":26,\"2\":26,\"3\":24,\"4\":24,\"5\":22,\"6\":22,\"7\":20,\"8\":20,\"9\":17,\"10\":17,\"11\":13}},{\"name\":\"Chicken Minion\",\"items_per_action\":[1,1],\"items\":[\"RAW_CHICKEN\",\"FEATHER\"],\"npc_val\":[4,3],\"tier\":{\"1\":26,\"2\":26,\"3\":24,\"4\":24,\"5\":22,\"6\":22,\"7\":20,\"8\":20,\"9\":18,\"10\":18,\"11\":15}},{\"name\":\"Sheep Minion\",\"items_per_action\":[1,1],\"items\":[\"MUTTON\",\"WOOL\"],\"npc_val\":[5,2],\"tier\":{\"1\":24,\"2\":24,\"3\":22,\"4\":22,\"5\":20,\"6\":20,\"7\":18,\"8\":18,\"9\":16,\"10\":16,\"11\":12}},{\"name\":\"Rabbit Minion\",\"items_per_action\":[1,0.35,0.35],\"items\":[\"RABBIT\",\"RABBIT_FOOT\",\"RABBIT_HIDE\"],\"npc_val\":[4,5,5],\"tier\":{\"1\":26,\"2\":26,\"3\":24,\"4\":24,\"5\":22,\"6\":22,\"7\":20,\"8\":20,\"9\":17,\"10\":17,\"11\":13}},{\"name\":\"Oak Minion\",\"items_per_action\":[4],\"items\":[\"LOG\"],\"npc_val\":[2],\"tier\":{\"1\":48,\"2\":48,\"3\":45,\"4\":45,\"5\":42,\"6\":42,\"7\":38,\"8\":38,\"9\":33,\"10\":33,\"11\":27}},{\"name\":\"Spruce Minion\",\"items_per_action\":[4],\"items\":[\"LOG:1\"],\"npc_val\":[2],\"tier\":{\"1\":48,\"2\":48,\"3\":45,\"4\":45,\"5\":42,\"6\":42,\"7\":38,\"8\":38,\"9\":33,\"10\":33,\"11\":27}},{\"name\":\"Birch Minion\",\"items_per_action\":[4],\"items\":[\"LOG:2\"],\"npc_val\":[2],\"tier\":{\"1\":48,\"2\":48,\"3\":45,\"4\":45,\"5\":42,\"6\":42,\"7\":38,\"8\":38,\"9\":33,\"10\":33,\"11\":27}},{\"name\":\"Dark Oak Minion\",\"items_per_action\":[4],\"items\":[\"LOG_2:1\"],\"npc_val\":[2],\"tier\":{\"1\":48,\"2\":48,\"3\":45,\"4\":45,\"5\":42,\"6\":42,\"7\":38,\"8\":38,\"9\":33,\"10\":33,\"11\":27}},{\"name\":\"Acacia Minion\",\"items_per_action\":[4],\"items\":[\"LOG_2\"],\"npc_val\":[2],\"tier\":{\"1\":48,\"2\":48,\"3\":45,\"4\":45,\"5\":42,\"6\":42,\"7\":38,\"8\":38,\"9\":33,\"10\":33,\"11\":27}},{\"name\":\"Jungle Minion\",\"items_per_action\":[4],\"items\":[\"LOG:3\"],\"npc_val\":[2],\"tier\":{\"1\":48,\"2\":48,\"3\":45,\"4\":45,\"5\":42,\"6\":42,\"7\":38,\"8\":38,\"9\":33,\"10\":33,\"11\":27}}]}</string>
+
+</resources>
