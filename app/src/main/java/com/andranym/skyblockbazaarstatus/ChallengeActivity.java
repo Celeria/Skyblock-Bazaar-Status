@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.ArraySet;
 import android.view.View;
@@ -18,10 +19,18 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.games.AchievementsClient;
+import com.google.android.gms.games.Games;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -79,6 +88,13 @@ public class ChallengeActivity extends AppCompatActivity {
         //Make random number generator
         final Random randMaker = new Random();
 
+        //region Check for achievements
+        if (solved1) {
+            Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                    .unlock("CgkI-4n1zrYYEAIQAA");
+        }
+        //endregion
+
         //region Challenge 1
         if(!solved1) {
             txtSolved1.setVisibility(View.GONE);
@@ -87,6 +103,7 @@ public class ChallengeActivity extends AppCompatActivity {
         String question1 = "You have a hemisphere with a volume of " + hemisphereVolume[0] + ". " +
                 "What is the surface area of a sphere with the same diameter? Round your answer to the nearest thousandth.";
         txtChallenge1.setText(question1);
+
         btnSolve1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -63,7 +63,7 @@ public class InertialFrameActivity extends Activity implements SensorEventListen
                     String display = "Place your phone in an inertial frame of reference:\nCurrent acceleration experienced: " + Round4(currentMovement);
                     new update().execute(display);
 
-                    if (previousMovement[0] < 0.1 && currentMovement < 0.1) {
+                    if (previousMovement[0] < 0.2 && currentMovement < 0.2) {
                         display = "You have completed this challenge.";
                         new update().execute(display);
                         SharedPreferences.Editor editor = data.edit();
