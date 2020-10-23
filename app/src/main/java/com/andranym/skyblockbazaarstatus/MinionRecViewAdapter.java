@@ -58,6 +58,7 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
         final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         final int customBoostNormal = settings.getInt("customBoostNormal",0);
         final int customBoostFly = settings.getInt("customBoostFly",0);
+        final boolean solved4 = settings.getBoolean("solvedChallenge4",false);
 
         //region Set initial values based on saved data
         holder.txtProducts.setText(minions.get(position).getProducts());
@@ -72,6 +73,10 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
         holder.editTextNumberDecimalMiscBoost1.setText(Double.toString(minions.get(position).getMiscBoost1()*100));
         holder.editTextNumberDecimalMiscBoost2.setText(Double.toString(minions.get(position).getMiscBoost2()*100));
         holder.editTextNumberAdditionalMultiplier.setText(Double.toString(minions.get(position).getAdditionalMultiplier()));
+        if (!solved4) {
+            holder.txtRecMultplier.setVisibility(View.GONE);
+            holder.editTextNumberAdditionalMultiplier.setVisibility(View.GONE);
+        }
         ArrayList<String> upgrades = new ArrayList<>();
         upgrades.add("Compactor");
         upgrades.add("Super Compactor");
@@ -1019,6 +1024,7 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
         TextView txtTierInfo;
         TextView txtItemsPerAction;
         TextView txtRecFuelType;
+        TextView txtRecMultplier;
         HorizontalScrollView productScroll;
         EditText editTextNumberDecimalMiscBoost1;
         EditText editTextNumberDecimalMiscBoost2;
@@ -1040,6 +1046,7 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
             txtNPCPrice = itemView.findViewById(R.id.txtNPCPrice);
             txtTierInfo = itemView.findViewById(R.id.txtTierInfo);
             txtItemsPerAction = itemView.findViewById(R.id.txtItemsPerAction);
+            txtRecMultplier = itemView.findViewById(R.id.txtRecMultiplier);
             editTextNumberDecimalMiscBoost1 = itemView.findViewById(R.id.editTextNumberDecimalMiscBoost1);
             editTextNumberDecimalMiscBoost2 = itemView.findViewById(R.id.editTextNumberDecimalMiscBoost2);
             editTextNumberAdditionalMultiplier = itemView.findViewById(R.id.editTextAdditionalMultiplier);

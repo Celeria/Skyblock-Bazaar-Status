@@ -16,7 +16,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnChallenges;
     Button btnArbitrage;
     Button btnMinionOptimizer;
+    SignInButton signIn;
     public TextView txtMinutesSince;
     TextView txtWarnData;
     ProgressDialog pdStoring;
@@ -54,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         btnSettings = (Button) findViewById(R.id.btnSettings);
         btnChallenges = (Button) findViewById(R.id.btnChallenges);
         btnArbitrage = (Button) findViewById(R.id.btnArbitrage);
+        signIn = findViewById(R.id.sign_in_button);
         txtMinutesSince = (TextView) findViewById(R.id.txtMinutesSince);
         txtWarnData = (TextView) findViewById(R.id.txtWarnData);
         pdStoring = new ProgressDialog(MainActivity.this);
@@ -235,10 +246,16 @@ public class MainActivity extends AppCompatActivity {
 
         //regionCode for the Minion Optimizer button
         final Intent intentMinionOptimizer = new Intent(this,MinionOptimizerActivity.class);
+        final boolean solved1 = sharedPref.getBoolean("solvedChallenge1",false);
+        final Toast goSolve = Toast.makeText(this,"Complete the first challenge in order to access this feature.",Toast.LENGTH_LONG);
         btnMinionOptimizer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(intentMinionOptimizer);
+                if (solved1) {
+                    startActivity(intentMinionOptimizer);
+                } else {
+                    goSolve.show();
+                }
             }
         });
         //endregion
@@ -406,6 +423,45 @@ public class MainActivity extends AppCompatActivity {
         }
         //endregion
 
+    }
+
+    private void signInSilently() {
+        GoogleSignInOptions signInOptions = GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN;
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if (GoogleSignIn.hasPermissions(account, signInOptions.getScopeArray())) {
+            // Already signed in.
+            // The signed in account is stored in the 'account' variable.
+            GoogleSignInAccount signedInAccount = account;
+        } else {
+            // Haven't been signed-in before. Try the silent sign-in first.
+            GoogleSignInClient signInClient = GoogleSignIn.getClient(this, signInOptions);
+            signInClient
+                    .silentSignIn()
+                    .addOnCompleteListener(
+                            this,
+                            new OnCompleteListener<GoogleSignInAccount>() {
+                                @Override
+                                public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
+                                    if (task.isSuccessful()) {
+                                        // The signed in account is stored in the task's result.
+                                        GoogleSignInAccount signedInAccount = task.getResult();
+                                    } else {
+                                        // Player will need to sign-in explicitly using via UI.
+                                        // See [sign-in best practices](http://developers.google.com/games/services/checklist) for guidance on how and when to implement Interactive Sign-in,
+                                        // and [Performing Interactive Sign-in](http://developers.google.com/games/services/android/signin#performing_interactive_sign-in) for details on how to implement
+                                        // Interactive Sign-in.
+                                        final Toast weird = Toast.makeText(getApplicationContext(),"something strange",Toast.LENGTH_LONG);
+                                        weird.show();
+                                    }
+                                }
+                            });
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        signInSilently();
     }
 
     private class checkTimeFancy extends AsyncTask<Long,Void,Integer> {

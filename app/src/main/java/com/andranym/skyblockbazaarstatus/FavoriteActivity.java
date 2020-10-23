@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -51,6 +52,7 @@ public class FavoriteActivity extends AppCompatActivity {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final String priceDataString = settings.getString("currentData",null);
         final String favoritesString = settings.getString("favoritesList","[\"DIAMOND\",\"CATALYST\",\"STOCK_OF_STONKS\"]");
+        final boolean solved5 = settings.getBoolean("solvedChallenge5",false);
         //endregion
 
         //regionCreate UI elements
@@ -202,49 +204,54 @@ public class FavoriteActivity extends AppCompatActivity {
         final JSONObject finalProductsList = productsList;
         //Allow changes to the actual list
         final SharedPreferences.Editor editor = settings.edit();
+        final Toast fail = Toast.makeText(this,"You must complete challenge 5 to use this button.",Toast.LENGTH_LONG);
         //Add product to top
         btnAddTop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newItem = spinnerFavorites.getSelectedItem().toString();
-                String possibleCorrection = new FixBadNames().unfix(newItem);
-                String itemName = newItem;
-                if (possibleCorrection != null) {
-                    newItem = possibleCorrection;
-                }
-                //Get the current prices
-                double buyPrice = 0;
-                double sellPrice = 0;
-                try {
-                    int buyOrders = finalProductsList.getJSONObject(newItem).getJSONObject("quick_status").getInt("buyOrders");
-                    int sellOrders = finalProductsList.getJSONObject(newItem).getJSONObject("quick_status").getInt("buyOrders");
-                    if (buyOrders != 0) {
-                        buyPrice = finalProductsList.getJSONObject(newItem).getJSONArray("buy_summary").getJSONObject(0).getDouble("pricePerUnit");
-                    } else {
-                        buyPrice = 0;
+                if (solved5) {
+                    String newItem = spinnerFavorites.getSelectedItem().toString();
+                    String possibleCorrection = new FixBadNames().unfix(newItem);
+                    String itemName = newItem;
+                    if (possibleCorrection != null) {
+                        newItem = possibleCorrection;
                     }
-                    if (sellOrders != 0) {
-                        sellPrice = finalProductsList.getJSONObject(newItem).getJSONArray("sell_summary").getJSONObject(0).getDouble("pricePerUnit");
-                    } else {
-                        sellPrice = 0;
+                    //Get the current prices
+                    double buyPrice = 0;
+                    double sellPrice = 0;
+                    try {
+                        int buyOrders = finalProductsList.getJSONObject(newItem).getJSONObject("quick_status").getInt("buyOrders");
+                        int sellOrders = finalProductsList.getJSONObject(newItem).getJSONObject("quick_status").getInt("buyOrders");
+                        if (buyOrders != 0) {
+                            buyPrice = finalProductsList.getJSONObject(newItem).getJSONArray("buy_summary").getJSONObject(0).getDouble("pricePerUnit");
+                        } else {
+                            buyPrice = 0;
+                        }
+                        if (sellOrders != 0) {
+                            sellPrice = finalProductsList.getJSONObject(newItem).getJSONArray("sell_summary").getJSONObject(0).getDouble("pricePerUnit");
+                        } else {
+                            sellPrice = 0;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                String itemDesc = "Buy Price: " + addCommasAdjusted(Double.toString(Round2(buyPrice))) +
-                        "\nSell Price: " + addCommasAdjusted(Double.toString(Round2(sellPrice)));
-                Favorite currentFavorite = new Favorite(itemName,itemDesc);
+                    String itemDesc = "Buy Price: " + addCommasAdjusted(Double.toString(Round2(buyPrice))) +
+                            "\nSell Price: " + addCommasAdjusted(Double.toString(Round2(sellPrice)));
+                    Favorite currentFavorite = new Favorite(itemName, itemDesc);
 
-                favorites.add(0,currentFavorite);
-                favoriteNames.add(0,itemName);
-                RecAdapter = new FavoriteRecViewAdapter(FavoriteActivity.this);
-                recFavorites.setAdapter(RecAdapter);
-                recFavorites.setLayoutManager(new LinearLayoutManager(FavoriteActivity.this));
-                RecAdapter.setFavorites(favorites);
-                RecAdapter.setSaveData(favoriteNames);
-                String favoritesList = new Gson().toJson(favoriteNames);
-                editor.putString("favoritesList",favoritesList);
-                editor.commit();
+                    favorites.add(0, currentFavorite);
+                    favoriteNames.add(0, itemName);
+                    RecAdapter = new FavoriteRecViewAdapter(FavoriteActivity.this);
+                    recFavorites.setAdapter(RecAdapter);
+                    recFavorites.setLayoutManager(new LinearLayoutManager(FavoriteActivity.this));
+                    RecAdapter.setFavorites(favorites);
+                    RecAdapter.setSaveData(favoriteNames);
+                    String favoritesList = new Gson().toJson(favoriteNames);
+                    editor.putString("favoritesList", favoritesList);
+                    editor.commit();
+                } else {
+                    fail.show();
+                }
             }
         });
 
