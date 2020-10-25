@@ -31,6 +31,7 @@ public class FixBadNames {
         names.add(new Pair<> ("SULPHUR","GUNPOWDER"));
         names.add(new Pair<> ("NETHER_STALK","NETHER_WART"));
         names.add(new Pair<> ("ENCHANTED_NETHER_STALK","ENCHANTED_NETHER_WART"));
+        names.add(new Pair<> ("ENCHANTED_GLOWSTONE","ENCHANTED_GLOWSTONE_BLOCK"));
 
         for (int index = 0; index < names.size();++index) {
             Pair namePair = names.get(index);
@@ -72,6 +73,7 @@ public class FixBadNames {
         names.add(new Pair<> ("SULPHUR","GUNPOWDER"));
         names.add(new Pair<> ("NETHER_STALK","NETHER_WART"));
         names.add(new Pair<> ("ENCHANTED_NETHER_STALK","ENCHANTED_NETHER_WART"));
+        names.add(new Pair<> ("ENCHANTED_GLOWSTONE","ENCHANTED_GLOWSTONE_BLOCK"));
 
         for (int index = 0; index < names.size();++index) {
             Pair namePair = names.get(index);

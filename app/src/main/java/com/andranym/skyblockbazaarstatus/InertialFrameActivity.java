@@ -72,7 +72,12 @@ public class InertialFrameActivity extends Activity implements SensorEventListen
                         keepRunning = false;
                     }
                     previousMovement[0] = currentMovement;
-                    SystemClock.sleep(40); }
+                    try {
+                        Thread.sleep(40);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }.start();
 

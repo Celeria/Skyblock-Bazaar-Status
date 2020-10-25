@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     Button btnChallenges;
     Button btnArbitrage;
     Button btnMinionOptimizer;
-    SignInButton signIn;
     public TextView txtMinutesSince;
     TextView txtWarnData;
     ProgressDialog pdStoring;
@@ -64,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         btnSettings = (Button) findViewById(R.id.btnSettings);
         btnChallenges = (Button) findViewById(R.id.btnChallenges);
         btnArbitrage = (Button) findViewById(R.id.btnArbitrage);
-        signIn = findViewById(R.id.sign_in_button);
         txtMinutesSince = (TextView) findViewById(R.id.txtMinutesSince);
         txtWarnData = (TextView) findViewById(R.id.txtWarnData);
         pdStoring = new ProgressDialog(MainActivity.this);
@@ -461,7 +459,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        signInSilently();
+        //signInSilently();
     }
 
     private class checkTimeFancy extends AsyncTask<Long,Void,Integer> {
