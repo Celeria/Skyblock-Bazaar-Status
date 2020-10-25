@@ -110,7 +110,7 @@ public class ChallengeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!editNumChallenge1.getText().toString().equals("")){
-                    double answer1 = 2 * Math.PI * Math.pow((hemisphereVolume[0])/((4.0/3.0)*Math.PI),(2.0/3.0));
+                    double answer1 = 4 * Math.PI * Math.pow((hemisphereVolume[0])/((2.0/3.0)*Math.PI),(2.0/3.0));
                     double userAnswer = Double.parseDouble(editNumChallenge1.getText().toString());
                     if (Math.abs(userAnswer - answer1) < 0.01) {
                         txtSolved1.setVisibility(View.VISIBLE);
