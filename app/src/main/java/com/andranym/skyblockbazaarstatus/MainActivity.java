@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog pdStoring;
     ProgressDialog pd;
 
+    boolean agreed = false;
+    boolean solved1 = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
 
         //regionCode for the Minion Optimizer button
         final Intent intentMinionOptimizer = new Intent(this,MinionOptimizerActivity.class);
-        final boolean solved1 = sharedPref.getBoolean("solvedChallenge1",false);
+        solved1 = sharedPref.getBoolean("solvedChallenge1",false);
         final Toast goSolve = Toast.makeText(this,"Complete the first challenge in order to access this feature.",Toast.LENGTH_LONG);
         btnMinionOptimizer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -460,6 +463,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //signInSilently();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        agreed = sharedPref.getBoolean("agreedToTerms",false);
+        solved1 = sharedPref.getBoolean("solvedChallenge1",false);
     }
 
     private class checkTimeFancy extends AsyncTask<Long,Void,Integer> {

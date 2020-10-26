@@ -275,24 +275,39 @@ public class ChallengeActivity extends AppCompatActivity {
         if(!solved5){
             txtSolved5.setVisibility(View.GONE);
         }
-
+        final int[] pityCounter = {0};
         btnSolve5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String userAnswer = editTextC5.getText().toString().toUpperCase();
-                if (userAnswer.contains("TACTACCTACCTACCTACCTACCTATTT") ||
-                userAnswer.contains("TACTACCTACCTACCTACCTACCTATCT") ||
-                userAnswer.contains("TACTACCTACCTACCTACCTACCTACTT")) {
+                if (userAnswer.contains("TTTATCCATCCATCCATCCATCCATCAT") ||
+                userAnswer.contains("TCTATCCATCCATCCATCCATCCATCAT") ||
+                userAnswer.contains("TTCATCCATCCATCCATCCATCCATCAT")) {
                     SharedPreferences.Editor editor = data.edit();
                     editor.putBoolean("solvedChallenge5", true);
                     editor.commit();
                     txtSolved5.setVisibility(View.VISIBLE);
                 } else {
-                    Toast fail = Toast.makeText(getApplicationContext(),"That answer is not what I was looking for.",Toast.LENGTH_LONG);
-                    fail.show();
+                    if (pityCounter[0] < 15) {
+                        Toast fail = Toast.makeText(getApplicationContext(), "That answer is not what I was looking for.", Toast.LENGTH_LONG);
+                        fail.show();
+                        ++pityCounter[0];
+                    } else {
+                        if (userAnswer.length() < 20) {
+                            Toast semiFail = Toast.makeText(getApplicationContext(), "Did you account for the start and stop codon? This is your only hint by the way, and only because I see you've spent some time on this.", Toast.LENGTH_LONG);
+                            semiFail.show();
+                        } else {
+                            Toast fail = Toast.makeText(getApplicationContext(), "That answer is not what I was looking for.", Toast.LENGTH_LONG);
+                            fail.show();
+                        }
+                    }
                 }
             }
         });
+        //endregion
+
+        //region Challenge 6
+
         //endregion
     }
 }

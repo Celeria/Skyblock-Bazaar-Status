@@ -240,7 +240,7 @@ public class SettingsActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         if (!editDecimalBazaarTax.getText().toString().equals("")) {
                             double bazaarTaxOG = Round3(Double.parseDouble(editDecimalBazaarTax.getText().toString()));
-                            if (bazaarTaxOG > 9.999 || (abs(bazaarTaxOG)<0.001)) {
+                            if (bazaarTaxOG > 9.999 || (abs(bazaarTaxOG)<0.001) || bazaarTaxOG < -9.999) {
                                 Toast toast = Toast.makeText(getApplicationContext(),"STOP TRYING TO BREAK MY APP\nEnter a proper percentage like 1.25",Toast.LENGTH_SHORT);
                                 toast.show();
                                 editDecimalBazaarTax.setText(String.valueOf(bazaarTaxFixed));

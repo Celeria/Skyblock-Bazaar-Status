@@ -14,6 +14,18 @@
         tools:context=".SettingsActivity">
 
         <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="64dp"
+            android:text="Play Stonks Simulator"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSolve5" />
+
+        <TextView
             android:id="@+id/textView20"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -174,7 +186,7 @@
             android:id="@+id/textView37"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2000dp"
+            android:layout_marginTop="3000dp"
             android:text="TextView"
             app:layout_constraintTop_toBottomOf="@+id/textView34"
             tools:layout_editor_absoluteX="169dp" />
@@ -322,6 +334,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnSolve5"
             app:layout_constraintTop_toBottomOf="@+id/editTextC5" />
+
+        <TextView
+            android:id="@+id/textView39"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="I have created a minigame here where you can trade bazaar goods, risk free. You can instant buy as many items as you can afford, at the current lowest buy price. You can later come back and sell as many as you want at the highest sell price. You can buy any items you want, you start with 1 million coins. I haven't thought of an award to give you for this section, but make the number go high, I might think of something for you later."
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
