@@ -21,6 +21,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:text="Welcome to some puzzles I've created. \nIn order to be worthy to use 100% of the features, you don't have to pay for the app, you merely need to be smart enough. These first two puzzles unlock some pretty important features, so I've made them easy enough for basically anyone to solve."
+            android:textSize="18sp"
             android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,8 +32,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:text="Unlock Minion Optimizer:"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView20" />
@@ -44,6 +46,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:text="Challenge 1:"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
@@ -75,6 +78,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginEnd="8dp"
             android:text="Congrats you have completed this challenge and unlocked the minion optimizer."
+            android:textSize="14sp"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,8 +89,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="64dp"
             android:text="Unlock Bazaar Flipper:"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtSolved1" />
@@ -99,6 +104,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:text="@string/european_question"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView38" />
@@ -111,7 +117,7 @@
             android:layout_marginEnd="8dp"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Write your answer here"
+            android:hint="Write both answers here"
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -143,9 +149,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="64dp"
             android:layout_marginEnd="8dp"
             android:text="@string/real_challenge"
+            android:textSize="18sp"
             android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -158,6 +165,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:text="Unlock Better Timer:"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView34" />
@@ -178,6 +186,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:text="Challenge 3:"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
@@ -200,6 +209,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginEnd="8dp"
             android:text="Great job completing this challenge. You now have the option to enable a more precise timer for the main menu. Please note, the app uses the EXACT time it retrieves data from the Hypixel API, and Hypixel itself does not refresh every single second, so if it says something like, updated 20 seconds ago, you know why.\nAlso, my bad, once you turn this switch on or off, you need to restart your app in order for the changes on the main menu to take effect. I didn't feel like coming up with a better workaround since I figured very few people would actually get this far, so once again, congrats."
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editNumC3" />
@@ -228,8 +238,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="64dp"
             android:text="Unlock Multiplier Option in Minion Optimizer"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/switchFancyTimer" />
@@ -262,6 +273,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:text='Unlock "Add to Top" option in Favorites:'
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtSolved4" />
@@ -274,9 +286,42 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:text="@string/xenobiologist"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView40" />
+
+        <EditText
+            android:id="@+id/editTextC5"
+            android:layout_width="376dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:hint="Type nucletide letter sequence here"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView42" />
+
+        <Button
+            android:id="@+id/btnSolve5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Submit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextC5" />
+
+        <TextView
+            android:id="@+id/txtSolved5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:text="So you have a college understanding of biology. Good job. Your life is now just ever so slightly more convenient while using this app."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnSolve5"
+            app:layout_constraintTop_toBottomOf="@+id/editTextC5" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

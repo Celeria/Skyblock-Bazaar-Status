@@ -22,16 +22,19 @@ public class ChallengeActivity extends AppCompatActivity {
     Button btnSolve1;
     Button btnSolve2;
     Button btnSolve3;
+    Button btnSolve5;
     Button btnTryChallenge4;
     TextView txtSolved1;
     TextView txtSolved2;
     TextView txtSolved3;
     TextView txtSolved4;
+    TextView txtSolved5;
     TextView txtChallenge1;
     TextView txtChallenge3;
     EditText editNumChallenge1;
     EditText editTextC2;
     EditText editNumC3;
+    EditText editTextC5;
     Switch switchFancyTimer;
 
     @Override
@@ -45,16 +48,19 @@ public class ChallengeActivity extends AppCompatActivity {
         btnSolve1 = findViewById(R.id.btnSolve1);
         btnSolve2 = findViewById(R.id.btnSolve2);
         btnSolve3 = findViewById(R.id.btnSolve3);
+        btnSolve5 = findViewById(R.id.btnSolve5);
         btnTryChallenge4 = findViewById(R.id.btnTryChallenge4);
         txtSolved1 = findViewById(R.id.txtSolved1);
         txtSolved2 = findViewById(R.id.txtSolved2);
         txtSolved3 = findViewById(R.id.txtSolved3);
         txtSolved4 = findViewById(R.id.txtSolved4);
+        txtSolved5 = findViewById(R.id.txtSolved5);
         txtChallenge1 = findViewById(R.id.txtChallenge1);
         txtChallenge3 = findViewById(R.id.txtChallenge3);
         editNumChallenge1 = findViewById(R.id.editNumC1);
         editTextC2 = findViewById(R.id.editTextC2);
         editNumC3 = findViewById(R.id.editNumC3);
+        editTextC5 = findViewById(R.id.editTextC5);
         switchFancyTimer = findViewById(R.id.switchFancyTimer);
 
         //endregion
@@ -65,6 +71,7 @@ public class ChallengeActivity extends AppCompatActivity {
         final boolean solved2 = data.getBoolean("solvedChallenge2",false);
         final boolean solved3 = data.getBoolean("solvedChallenge3",false);
         final boolean solved4 = data.getBoolean("solvedChallenge4",false);
+        final boolean solved5 = data.getBoolean("solvedChallenge5",false);
         //endregion
 
         //Make random number generator
@@ -260,6 +267,30 @@ public class ChallengeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(goAccel);
+            }
+        });
+        //endregion
+
+        //regionChallenge 5
+        if(!solved5){
+            txtSolved5.setVisibility(View.GONE);
+        }
+
+        btnSolve5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userAnswer = editTextC5.getText().toString().toUpperCase();
+                if (userAnswer.contains("TACTACCTACCTACCTACCTACCTATTT") ||
+                userAnswer.contains("TACTACCTACCTACCTACCTACCTATCT") ||
+                userAnswer.contains("TACTACCTACCTACCTACCTACCTACTT")) {
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putBoolean("solvedChallenge5", true);
+                    editor.commit();
+                    txtSolved5.setVisibility(View.VISIBLE);
+                } else {
+                    Toast fail = Toast.makeText(getApplicationContext(),"That answer is not what I was looking for.",Toast.LENGTH_LONG);
+                    fail.show();
+                }
             }
         });
         //endregion

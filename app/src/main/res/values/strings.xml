@@ -155,9 +155,11 @@
     you normals typically do, and just give up.</string>
     <string name="xenobiologist">You are designing a new life form, and in order to ensure your creation doesn\'t mutate out of
     control, you made a modification to normal life as we know it. Instead of a triplet code for protein synthesis, you have adapted
-    a quadruplet code. Let me tell you, it wasn\'t easy at all to pull off, but you managed to do it. Rather than come up with your own
-    codons from scratch, you just decided to add an adenine to the end of each codon. You need to get this organism to synthesize a polypeptide that is composed
-    solely of 5 phenylalanine in a chain. What DNA sequence would have to present in this modified organism in order for this polypeptide to be made?</string>
+    a quadruplet code. It was quite exhausting to do, so you just let your intern come up with the codons.
+    Your intern decided to just go with adding an extra adenine to the end of each of the normal protein codons.
+    Too tired to argue, you decided to just go with it. You need to get this organism to synthesize a polypeptide
+    that is composed solely of 5 tryptophan in a chain.\n
+    From 3\' to 5\', what DNA template strand must exist in this organism in order for the above chain to be synthesized? </string>
     <!--    MIT License-->
 
     <!--    Copyright (c) 2020 tonkaew131-->

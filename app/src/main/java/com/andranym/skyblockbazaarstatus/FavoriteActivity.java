@@ -205,7 +205,7 @@ public class FavoriteActivity extends AppCompatActivity {
         //Allow changes to the actual list
         final SharedPreferences.Editor editor = settings.edit();
         final Toast fail = Toast.makeText(this,"You must complete challenge 5 to use this button.",Toast.LENGTH_LONG);
-        final Toast added = Toast.makeText(this,"Item added to favorites",Toast.LENGTH_LONG);
+        final Toast added = Toast.makeText(this,"Item added to favorites",Toast.LENGTH_SHORT);
         //Add product to top
         btnAddTop.setOnClickListener(new View.OnClickListener() {
             @Override
