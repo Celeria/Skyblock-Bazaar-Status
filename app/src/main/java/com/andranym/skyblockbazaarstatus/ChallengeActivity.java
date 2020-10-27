@@ -23,6 +23,7 @@ public class ChallengeActivity extends AppCompatActivity {
     Button btnSolve2;
     Button btnSolve3;
     Button btnSolve5;
+    Button btnStartStonks;
     Button btnTryChallenge4;
     TextView txtSolved1;
     TextView txtSolved2;
@@ -50,6 +51,7 @@ public class ChallengeActivity extends AppCompatActivity {
         btnSolve3 = findViewById(R.id.btnSolve3);
         btnSolve5 = findViewById(R.id.btnSolve5);
         btnTryChallenge4 = findViewById(R.id.btnTryChallenge4);
+        btnStartStonks = findViewById(R.id.btnStartStonks);
         txtSolved1 = findViewById(R.id.txtSolved1);
         txtSolved2 = findViewById(R.id.txtSolved2);
         txtSolved3 = findViewById(R.id.txtSolved3);
@@ -307,7 +309,13 @@ public class ChallengeActivity extends AppCompatActivity {
         //endregion
 
         //region Challenge 6
-
+        final Intent startStonk = new Intent(this,StonkActivity.class);
+        btnStartStonks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(startStonk);
+            }
+        });
         //endregion
     }
 }

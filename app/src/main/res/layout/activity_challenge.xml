@@ -341,11 +341,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text="I have created a minigame here where you can trade bazaar goods, risk free. You can instant buy as many items as you can afford, at the current lowest buy price. You can later come back and sell as many as you want at the highest sell price. You can buy any items you want, you start with 1 million coins. I haven't thought of an award to give you for this section, but make the number go high, I might think of something for you later."
+            android:text="I have created a minigame here where you can trade bazaar goods, risk free. You can instant buy as many items as you can afford, at the current lowest buy price. You can later come back and sell as many as you want at the highest sell price. You can buy any items you want, you start with 1 million coins.\nBecome a billionaire and you can unlock a welcome message on the main menu."
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+        <Button
+            android:id="@+id/btnStartStonks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Start Stonks Simulator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

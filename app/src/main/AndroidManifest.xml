@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight">
-        <activity android:name=".InertialFrameActivity"></activity>
+        <activity android:name=".StonkActivity"></activity>
+        <activity android:name=".InertialFrameActivity" />
         <activity android:name=".ChallengeActivity" />
         <activity android:name=".BannedActivity" />
         <activity android:name=".MinionOptimizerActivity">

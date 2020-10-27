@@ -45,7 +45,7 @@ public class FavoriteRecViewAdapter extends RecyclerView.Adapter<FavoriteRecView
         final SharedPreferences.Editor editor = settings.edit();
         holder.txtItemName.setText(favorites.get(position).getItemTitle());
         holder.txtItemInfo.setText(favorites.get(position).getItemDesc());
-        //Remove the ability to delete the final element/
+        //Remove the ability to delete the final element
         if (favorites.size() == 1) {
             holder.btnDeleteItem.setVisibility(View.GONE);
         }
