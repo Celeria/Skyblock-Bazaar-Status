@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -131,6 +132,7 @@ public class StonkActivity extends AppCompatActivity {
                 //Display all products the user had previously ordered, does so by checking how many owned.
                 int currentlyOwned = settings.getInt("stonksOwned" + actualName,0);
                 if (currentlyOwned != 0) {
+                    //uses the "original name" provided by the API, this ensures it
                     String orderHistory = "Order History:\n" + settings.getString("orderHistory" + actualName,"");
                     Stonk currentStonk = new Stonk(product,currentlyOwned,orderHistory);
                     displayedStonks.add(currentStonk);
@@ -186,5 +188,68 @@ public class StonkActivity extends AppCompatActivity {
             }
         });
         //endregion
+
+        //region Update amount of money
+        new Thread() {
+            @Override
+            public void run() {
+                boolean keepRunning = true;
+                while (keepRunning) {
+                    String money = settings.getString("stonkBalance","1000000");
+                    String display = "Current Balance: " + addCommasAdjusted(money);
+                    new update().execute(display);
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
+        //endregion
+    }
+
+    class update extends AsyncTask<String,Void,String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            return strings[0];
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            txtStonkBalance.setText(s);
+        }
+    }
+
+    //Add commas method, adjusted to work with decimal places at the end
+    public String addCommasAdjusted(String digits) {
+        //Store the part with the decimal
+        String[] digitsSplit = digits.split("\\.");
+        String beforeDecimal = digitsSplit[0];
+        String afterDecimal;
+        try {
+            afterDecimal = digitsSplit[1];
+        } catch (Exception e){
+            afterDecimal = "0";
+        }
+
+        String result = "";
+        for (int i=1; i <= beforeDecimal.length(); ++i) {
+            char ch = beforeDecimal.charAt(beforeDecimal.length() - i);
+            if (i % 3 == 1 && i > 1) {
+                result = "," + result;
+            }
+            result = ch + result;
+        }
+
+        //Put the decimals back on before returning
+        if (afterDecimal.length() < 2) {
+            result = result + "." + afterDecimal;
+        } else {
+            result = result + "." + afterDecimal.substring(0,1);
+        }
+        return result;
     }
 }

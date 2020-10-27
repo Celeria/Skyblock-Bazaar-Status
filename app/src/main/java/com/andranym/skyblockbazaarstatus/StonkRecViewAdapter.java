@@ -2,6 +2,7 @@ package com.andranym.skyblockbazaarstatus;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,9 +48,9 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        double bazaarTax = 1-((double)(settings.getInt("personalBazaarTaxAmount",1250))/1000/100);
+        final double bazaarTax = 1-((double)(settings.getInt("personalBazaarTaxAmount",1250))/1000/100);
 
-        //region Get product information
+        //region Get product information and set the initial values
         String possibleCorrection = new FixBadNames().unfix(data.get(position).getProductName());
         final String currentProduct;
         if (possibleCorrection != null) {
@@ -86,6 +87,57 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
 
         String itemDesc = data.get(position).getProductName() + "\nYou own: " + addCommas(Integer.toString(data.get(position).getItemsOwned()));
         holder.txtItemNameStonk.setText(itemDesc);
+
+        String orderHistory = data.get(position).getOrderHistory();
+        holder.orderHistory.setText(orderHistory);
+        //endregion
+
+        //region Add explanation of how much it'll cost when you type a number
+        final double finalBuyPrice1 = buyPrice;
+        final double finalSellPrice = sellPrice;
+        new Thread(){
+            @Override
+            public void run() {
+                boolean keepRunning = true;
+                while (keepRunning) {
+                    String itemsDesiredString = holder.editAmount.getText().toString();
+                    if (!itemsDesiredString.equals("") && itemsDesiredString.length() < 9){
+                        int numberWanted = Integer.parseInt(itemsDesiredString);
+                        double cost = Round2(numberWanted * finalBuyPrice1);
+                        double profit = Round2(numberWanted * finalSellPrice * bazaarTax);
+                        String updatedPriceInfo = "Buy Price: " + addCommasAdjusted(Double.toString(Round2(finalBuyPrice1))) +
+                                "\n  Cost to buy " + numberWanted + ":\n  " + addCommasAdjusted(new BigDecimal(cost).toPlainString()) +
+                                "\nSell Price: " + addCommasAdjusted(Double.toString(Round2(finalSellPrice *bazaarTax))) +
+                                "\n  Earned by selling " + numberWanted + ":\n  " + addCommasAdjusted(new BigDecimal(profit).toPlainString());
+                        new update().execute(updatedPriceInfo);
+                    } else {
+                        String priceInfo = "Buy Price: " + addCommasAdjusted(Double.toString(Round2(finalBuyPrice1))) +
+                                "\nSell Price: " + addCommasAdjusted(Double.toString(Round2(finalSellPrice*bazaarTax)));
+                        new update().execute(priceInfo);
+                    }
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            class update extends AsyncTask<String,Void,String> {
+
+                @Override
+                protected String doInBackground(String... strings) {
+                    return strings[0];
+                }
+
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    holder.txtStonkPriceInfo.setText(s);
+                }
+            }
+        }.start();
+
         //endregion
 
         //region Code for buy button
@@ -95,10 +147,13 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
             public void onClick(View v) {
                 String amountWanted = holder.editAmount.getText().toString();
                 int numberWanted = 0;
-                if (!amountWanted.equals("")){
-                    numberWanted = Integer.parseInt(amountWanted);
-                }
                 boolean possible = true;
+                //Ensure the string isn't empty, or too large to parse an int
+                if (!amountWanted.equals("") && amountWanted.length() < 9){
+                    numberWanted = Integer.parseInt(amountWanted);
+                } else {
+                    possible = false;
+                }
                 if (StonkActivity.stonkBalance < (Round2(finalBuyPrice) * (double)numberWanted)) {
                     possible = false;
                 }
@@ -106,19 +161,68 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
                     StonkActivity.stonkBalance -= (Round2(finalBuyPrice) * (double)numberWanted);
                     String money = Double.toString(StonkActivity.stonkBalance);
                     int currentlyOwned = settings.getInt("stonksOwned" + currentProduct,0);
+                    String previousHistory = settings.getString("orderHistory" + currentProduct,"");
                     int nowOwned = currentlyOwned + numberWanted;
+                    String updateHistory = "Bought " + numberWanted + " " + data.get(position).getProductName() + " for " + finalBuyPrice + " each.\n";
                     final SharedPreferences.Editor editor = settings.edit();
-                    editor.putString("stonkBalance",money);
+                    editor.putString("stonkBalance",(new BigDecimal(money).toPlainString()));
                     editor.putInt("stonksOwned" + currentProduct,nowOwned);
+                    editor.putString("orderHistory" + currentProduct,updateHistory + previousHistory);
                     editor.apply();
                     String itemDesc = data.get(position).getProductName() + "\nYou own: " + addCommas(Integer.toString(nowOwned));
                     holder.txtItemNameStonk.setText(itemDesc);
+                    holder.orderHistory.setText("Order History:\n" + updateHistory + previousHistory);
                 }
             }
         });
         //endregion
 
         //region Code for sell button
+        holder.sell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String amountWanted = holder.editAmount.getText().toString();
+                int numberWanted = 0;
+                boolean possible = true;
+                //Ensure the string isn't empty, or too large to parse an int
+                if (!amountWanted.equals("") && amountWanted.length() < 9){
+                    numberWanted = Integer.parseInt(amountWanted);
+                } else {
+                    possible = false;
+                }
+                int currentlyOwned = settings.getInt("stonksOwned" + currentProduct,0);
+                if (currentlyOwned < numberWanted) {
+                    possible = false;
+                }
+                if (possible) {
+                    StonkActivity.stonkBalance += (Round2(finalSellPrice * (double)numberWanted * bazaarTax));
+                    String money = Double.toString(StonkActivity.stonkBalance);
+                    String previousHistory = settings.getString("orderHistory" + currentProduct,"");
+                    int nowOwned = currentlyOwned - numberWanted;
+                    String updateHistory = "Sold " + numberWanted + " " + data.get(position).getProductName() + " for " + Round2(finalSellPrice * bazaarTax) + " each.\n";
+                    final SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("stonkBalance",(new BigDecimal(money).toPlainString()));
+                    editor.putInt("stonksOwned" + currentProduct,nowOwned);
+                    editor.putString("orderHistory" + currentProduct,updateHistory + previousHistory);
+                    editor.apply();
+                    String itemDesc = data.get(position).getProductName() + "\nYou own: " + addCommas(Integer.toString(nowOwned));
+                    holder.txtItemNameStonk.setText(itemDesc);
+                    holder.orderHistory.setText("Order History:\n" + updateHistory + previousHistory);
+                }
+            }
+        });
+        //endregion
+
+        //region Clear history button
+        holder.clearHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final SharedPreferences.Editor editor = settings.edit();
+                editor.remove("orderHistory" + currentProduct);
+                editor.apply();
+                holder.orderHistory.setText("Order History:");
+            }
+        });
 
         //endregion
     }
@@ -135,6 +239,7 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
         EditText editAmount;
         Button buy;
         Button sell;
+        Button clearHistory;
         TextView orderHistory;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -144,6 +249,7 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
             editAmount = itemView.findViewById(R.id.editAmount);
             buy = itemView.findViewById(R.id.btnBuyStonk);
             sell = itemView.findViewById(R.id.btnSellStonk);
+            clearHistory = itemView.findViewById(R.id.btnClearHistory);
             orderHistory = itemView.findViewById(R.id.txtOrderHistory);
         }
     }
@@ -151,9 +257,14 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
     //Add commas method, adjusted to work with decimal places at the end
     public String addCommasAdjusted(String digits) {
         //Store the part with the decimal
-        String afterDecimal = digits.substring(digits.length()-2);
-        //Run original code on the raw string with the decimal part cut off
-        String beforeDecimal = digits.substring(0,digits.length()-2);
+        String[] digitsSplit = digits.split("\\.");
+        String beforeDecimal = digitsSplit[0];
+        String afterDecimal;
+        try {
+            afterDecimal = digitsSplit[1];
+        } catch (Exception e){
+            afterDecimal = "0";
+        }
 
         String result = "";
         for (int i=1; i <= beforeDecimal.length(); ++i) {
@@ -165,7 +276,11 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
         }
 
         //Put the decimals back on before returning
-        result = result + afterDecimal;
+        if (afterDecimal.length() < 2) {
+            result = result + "." + afterDecimal;
+        } else {
+            result = result + "." + afterDecimal.substring(0,1);
+        }
         return result;
     }
 
