@@ -167,6 +167,7 @@ public class StonkActivity extends AppCompatActivity {
                 for(Stonk stonk:displayedStonks) {
                     if (stonk.getProductName().equals(newProduct)) {
                         repeat = true;
+                        break;
                     }
                 }
                 if (!repeat) {
