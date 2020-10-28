@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -140,6 +141,32 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
 
         //endregion
 
+        //regionCode to pin
+        final boolean[] isPinned = {settings.getBoolean("isPinned" + currentProduct, false)};
+        if (isPinned[0]) {
+            holder.pin.setText("UNPIN");
+        }
+        holder.pin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final SharedPreferences.Editor editor = settings.edit();
+                if (isPinned[0]) {
+                    editor.putBoolean("isPinned" + currentProduct,false);
+                    editor.commit();
+                    holder.pin.setText("PIN");
+                    isPinned[0] = false;
+                } else {
+                    editor.putBoolean("isPinned" + currentProduct,true);
+                    editor.commit();
+                    holder.pin.setText("UNPIN");
+                    isPinned[0] = true;
+                    Toast pinned = Toast.makeText(context.getApplicationContext(),"You will see this item even if you own none.",Toast.LENGTH_SHORT);
+                    pinned.show();
+                }
+            }
+        });
+        //endregion
+
         //region Code for buy button
         final double finalBuyPrice = buyPrice;
         holder.buy.setOnClickListener(new View.OnClickListener() {
@@ -239,6 +266,7 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
         EditText editAmount;
         Button buy;
         Button sell;
+        Button pin;
         Button clearHistory;
         TextView orderHistory;
         public ViewHolder(@NonNull View itemView) {
@@ -251,6 +279,7 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
             sell = itemView.findViewById(R.id.btnSellStonk);
             clearHistory = itemView.findViewById(R.id.btnClearHistory);
             orderHistory = itemView.findViewById(R.id.txtOrderHistory);
+            pin = itemView.findViewById(R.id.btnStonkPin);
         }
     }
 

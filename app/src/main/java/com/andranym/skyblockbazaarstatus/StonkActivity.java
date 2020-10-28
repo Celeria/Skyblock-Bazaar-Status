@@ -131,7 +131,8 @@ public class StonkActivity extends AppCompatActivity {
                 }
                 //Display all products the user had previously ordered, does so by checking how many owned.
                 int currentlyOwned = settings.getInt("stonksOwned" + actualName,0);
-                if (currentlyOwned != 0) {
+                boolean isPinned = settings.getBoolean("isPinned" + actualName,false);
+                if (currentlyOwned != 0 || isPinned) {
                     //uses the "original name" provided by the API, this ensures it
                     String orderHistory = "Order History:\n" + settings.getString("orderHistory" + actualName,"");
                     Stonk currentStonk = new Stonk(product,currentlyOwned,orderHistory);
