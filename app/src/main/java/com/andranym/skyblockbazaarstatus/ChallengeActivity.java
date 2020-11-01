@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.ArraySet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ public class ChallengeActivity extends AppCompatActivity {
     Button btnSolve2;
     Button btnSolve3;
     Button btnSolve5;
+    Button btnSolve7;
     Button btnStartStonks;
     Button btnTryChallenge4;
     TextView txtSolved1;
@@ -32,10 +34,12 @@ public class ChallengeActivity extends AppCompatActivity {
     TextView txtSolved5;
     TextView txtChallenge1;
     TextView txtChallenge3;
+    TextView txtChallenge7;
     EditText editNumChallenge1;
     EditText editTextC2;
     EditText editNumC3;
     EditText editTextC5;
+    EditText editNumC7;
     Switch switchFancyTimer;
 
     @Override
@@ -50,6 +54,7 @@ public class ChallengeActivity extends AppCompatActivity {
         btnSolve2 = findViewById(R.id.btnSolve2);
         btnSolve3 = findViewById(R.id.btnSolve3);
         btnSolve5 = findViewById(R.id.btnSolve5);
+        btnSolve7 = findViewById(R.id.btnSolve7);
         btnTryChallenge4 = findViewById(R.id.btnTryChallenge4);
         btnStartStonks = findViewById(R.id.btnStartStonks);
         txtSolved1 = findViewById(R.id.txtSolved1);
@@ -59,10 +64,13 @@ public class ChallengeActivity extends AppCompatActivity {
         txtSolved5 = findViewById(R.id.txtSolved5);
         txtChallenge1 = findViewById(R.id.txtChallenge1);
         txtChallenge3 = findViewById(R.id.txtChallenge3);
+        txtChallenge7 = findViewById(R.id.txtChallenge7);
         editNumChallenge1 = findViewById(R.id.editNumC1);
         editTextC2 = findViewById(R.id.editTextC2);
         editNumC3 = findViewById(R.id.editNumC3);
+        editNumC7 = findViewById(R.id.editNumC7);
         editTextC5 = findViewById(R.id.editTextC5);
+        editNumC7 = findViewById(R.id.editNumC7);
         switchFancyTimer = findViewById(R.id.switchFancyTimer);
 
         //endregion
@@ -317,5 +325,57 @@ public class ChallengeActivity extends AppCompatActivity {
             }
         });
         //endregion
+
+        //regionChallenge 7
+        final int[] guess = {1 + randMaker.nextInt(1000000)};
+        //So the user can find it
+        Log.e("NUMBER_THINKING_OF",Integer.toString(guess[0]));
+        final String display = "Your phone has come up with a number from 1 to 1,000,000." +
+                "\nRead its mind and enter it below. You could also be stupid about it and guess," +
+                "but I have limited you to 1,000 guesses, use them wisely.";
+        txtChallenge7.setText(display);
+        btnSolve7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int guessesRemaining = data.getInt("guessesRemaining",1000);
+                if (guessesRemaining > 1 && !editNumC7.getText().toString().equals("")) {
+                    if(guess[0] == Integer.parseInt(editNumC7.getText().toString())) {
+                        //If the guess is equal to the guess the user entered
+                        SharedPreferences.Editor editor = data.edit();
+                        editor.putBoolean("solvedChallenge7", true);
+                        editor.commit();
+                        Toast success = Toast.makeText(getApplicationContext(),"Congrats, you got it. Hopefully by reading log data, and not from dumb luck.",Toast.LENGTH_LONG);
+                        success.show();
+                    } else {
+                        //come up with a new guess and decrement amount remaining
+                        Toast fail = Toast.makeText(getApplicationContext(),"The answer was " + guess[0] + " try again.",Toast.LENGTH_SHORT);
+                        fail.show();
+                        guess[0] = randMaker.nextInt(1000000);
+                        Log.e("NUMBER_THINKING_OF",Integer.toString(guess[0]));
+                        guessesRemaining -= 1;
+                        SharedPreferences.Editor editor = data.edit();
+                        editor.putInt("guessesRemaining", guessesRemaining);
+                        editor.commit();
+                        String display = "Your phone has come up with a number from 1 to 1,000,000." +
+                                "\nRead its mind and enter it below. You could also be stupid about it and guess, " +
+                                "but I have limited you to 1,000 guesses, use them wisely.";
+                        display = display + "\nYou now have " + guessesRemaining + " guesses left.";
+                        txtChallenge7.setText(display);
+                    }
+                } else {
+                    if (guessesRemaining < 1) {
+                        String display = "Your phone has come up with a number from 1 to 1,000,000." +
+                                "\nRead its mind and enter it below. You could also be stupid about it and guess," +
+                                "but I have limited you to 1,000 guesses, use them wisely.";
+                        display = display + "\nYou have been banned from trying this challenge, clearly you don't get it after trying it 1000 times." +
+                                "\n Waste your life elsewhere.";
+                        txtChallenge7.setText(display);
+                    }
+                }
+            }
+        });
+        //endregion
+
+
     }
 }

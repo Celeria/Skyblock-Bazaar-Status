@@ -23,7 +23,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         //region Declare all UI elements
         btnViewPrices = (Button) findViewById(R.id.btnViewPrices);
-        btnTestJson = (Button) findViewById(R.id.btnTestJson);
+        btnTestJson = (Button) findViewById(R.id.btnUpdateJson);
         btnViewFavorites = (Button)findViewById(R.id.btnViewFavorites);
         btnMinionOptimizer = (Button)findViewById(R.id.btnMinionOptimizer);
         btnSettings = (Button) findViewById(R.id.btnSettings);

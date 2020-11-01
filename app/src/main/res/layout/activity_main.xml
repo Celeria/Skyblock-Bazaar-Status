@@ -15,138 +15,189 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/btnChallenges"
-                android:layout_width="280dp"
+                android:id="@+id/btnViewPrices"
+                android:layout_width="374dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
                 android:layout_marginTop="16dp"
-                android:text="challenges"
+                android:text="View\nBazaar\nPrices"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnSettings" />
+                app:layout_constraintTop_toBottomOf="@+id/btnUpdateJson" />
 
             <Button
                 android:id="@+id/btnViewFavorites"
-                android:layout_width="280dp"
+                android:layout_width="185dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
                 android:layout_marginTop="16dp"
-                android:text="VIEW FAVORITES"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnViewPrices" />
-
-            <Button
-                android:id="@+id/btnViewPrices"
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/view_prices"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btnCredits"
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="16dp"
-                android:text="Credits"
+                android:text="FAVORITES"
+                app:layout_constraintEnd_toStartOf="@+id/btnSettings"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnChallenges" />
 
             <Button
-                android:id="@+id/btnPriceHistory"
-                android:layout_width="280dp"
+                android:id="@+id/btnArbitrage"
+                android:layout_width="374dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="20dp"
-                android:text="Price History"
+                android:layout_marginTop="16dp"
+                android:text="@string/arbitrage"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnMinionOptimizer" />
+                app:layout_constraintTop_toBottomOf="@+id/btnViewPrices" />
 
             <Button
-                android:id="@+id/btnSettings"
-                android:layout_width="280dp"
+                android:id="@+id/btnMinionOptimizer"
+                android:layout_width="374dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_settings"
+                android:text="Minion\nOptimizer"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnPriceHistory" />
 
             <Button
-                android:id="@+id/btnMinionOptimizer"
-                android:layout_width="280dp"
+                android:id="@+id/btnPriceHistory"
+                android:layout_width="185dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
                 android:layout_marginTop="16dp"
-                android:text="Minion Optimizer"
+                android:text="Price\nHistory"
+                app:layout_constraintEnd_toStartOf="@+id/button3"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnArbitrage" />
+                app:layout_constraintTop_toBottomOf="@+id/btnViewFavorites" />
 
-            <TextView
-                android:id="@+id/txtMinutesSince"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btnSettings"
+                android:layout_width="185dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="24dp"
-                android:text="Now"
-                android:textColor="#4CAF50"
-                android:textStyle="bold"
-                android:visibility="visible"
-                app:layout_constraintStart_toEndOf="@+id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/btnCredits" />
+                android:layout_marginTop="16dp"
+                android:text="@string/action_settings"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnViewFavorites"
+                app:layout_constraintTop_toBottomOf="@+id/btnChallenges" />
 
-            <TextView
-                android:id="@+id/txtWarnData"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btnChallenges"
+                android:layout_width="374dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="1dp"
-                android:text="WARNING: Using mobile data. \nPressing update uses around\nhalf a megabyte."
+                android:layout_marginTop="16dp"
+                android:text="challenges"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnNPCFLIP" />
+
+            <Button
+                android:id="@+id/btnCredits"
+                android:layout_width="374dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Credits"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnMinionOptimizer" />
+
+            <Button
+                android:id="@+id/btnUpdateJson"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="200dp"
+                android:text="Update Data"
                 android:visibility="gone"
-                app:layout_constraintStart_toEndOf="@+id/btnTestJson"
-                app:layout_constraintTop_toBottomOf="@+id/txtMinutesSince" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="200dp"
                 android:text="@string/prices_last_updated"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnCredits" />
+                app:layout_constraintTop_toBottomOf="@+id/txtWelcomeMessage" />
 
-            <Button
-                android:id="@+id/btnTestJson"
-                android:layout_width="120dp"
+            <TextView
+                android:id="@+id/txtWarnData"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="1dp"
-                android:text="Update Data"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-            <Button
-                android:id="@+id/btnArbitrage"
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/arbitrage"
+                android:text="WARNING: Using mobile data. \nPressing update uses around\nhalf a megabyte."
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnUpdateJson"
+                app:layout_constraintTop_toBottomOf="@+id/txtMinutesSince" />
+
+            <TextView
+                android:id="@+id/txtMinutesSince"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Now"
+                android:textColor="#4CAF50"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintStart_toEndOf="@+id/textView4"
+                app:layout_constraintTop_toBottomOf="@+id/txtWelcomeMessage" />
+
+            <TextView
+                android:id="@+id/txtWelcomeMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Welcome!"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnViewFavorites" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btnBAZAARFLIP"
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Bazaar Flip"
+                app:layout_constraintEnd_toStartOf="@+id/btnNPCFLIP"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnArbitrage" />
+
+            <Button
+                android:id="@+id/btnNPCFLIP"
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="NPC Flip"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnBAZAARFLIP"
+                app:layout_constraintTop_toBottomOf="@+id/btnArbitrage" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Google Play Games Sign in"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnPriceHistory"
+                app:layout_constraintTop_toBottomOf="@+id/btnSettings" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
