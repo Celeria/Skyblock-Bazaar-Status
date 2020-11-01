@@ -328,11 +328,18 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
 
                         petBoost = petBoost / 100;
 
-                        double boost = 0;
-                        if (thisUpgrade1.equals("Minion Expander 5%") || thisUpgrade2.equals("Minion Expander 5%")) {
-                            boost = 0.05;
-                        } else if (thisUpgrade1.equals("Custom Speed Boost " + customBoostNormal +"%") || thisUpgrade2.equals("Custom Speed Boost " + customBoostNormal +"%")) {
-                            boost = (double)customBoostNormal / 100;
+                        double boost1 = 0;
+                        if (thisUpgrade1.equals("Minion Expander 5%")) {
+                            boost1 = 0.05;
+                        } else if (thisUpgrade1.equals("Custom Speed Boost " + customBoostNormal +"%")) {
+                            boost1 = (double)customBoostNormal / 100;
+                        }
+
+                        double boost2 = 0;
+                        if (thisUpgrade2.equals("Minion Expander 5%")) {
+                            boost2 = 0.05;
+                        } else if (thisUpgrade2.equals("Custom Speed Boost " + customBoostNormal +"%")) {
+                            boost2 = (double)customBoostNormal / 100;
                         }
 
                         double fuelNumberForCalculations = fuelNumber;
@@ -388,7 +395,8 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
                             initialTime = RoundDownTwentieth(initialTime/ (1 + woodBoost));
                             initialTime = RoundDownTwentieth(initialTime/ (1 + farmBoost));
                             //Account for Upgrades
-                            initialTime = RoundDownTwentieth(initialTime / (1 + boost));
+                            initialTime = RoundDownTwentieth(initialTime / (1 + boost1));
+                            initialTime = RoundDownTwentieth(initialTime / (1 + boost2));
                             //Account for Pets
                             initialTime = RoundDownTwentieth(initialTime / (1 + petBoost));
                             //Account for misc boosts
@@ -473,12 +481,19 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
                                 itemsPerAction.add(minionItemsPerAction.get(i)[j]);
                             }
                         }
+
+                        //Fishing minions have a different multiplier than everything else
+                        int timeMultiplier = 2;
+                        if (name.equals("Fishing Minion")) {
+                            timeMultiplier = 1;
+                        }
+
                         //Add additional items because of diamond spreading or enchanted egg
                         if (thisUpgrade1.equals("Diamond Spreading") || thisUpgrade2.equals("Diamond Spreading")) {
                             products.add("DIAMOND");
                             npcPrices.add(8.0);
                             //Diamond spreading produces 1 extra diamond for every 10 items produced by the minion
-                            itemsPerAction.add(0.1*ArraySum(minionItemsPerAction.get(i)));
+                            itemsPerAction.add(0.1*ArraySum(minionItemsPerAction.get(i))/timeMultiplier);
                             if (thisUpgrade1.equals("Diamond Spreading") && thisUpgrade2.equals("Diamond Spreading")) {
                                 warnings = warnings + "WARNING: YOU CAN'T ACTUALLY USE 2 DIAMOND SPREADINGS (the code runs assuming you picked just one, please select another upgrade)";
                             }
@@ -787,11 +802,6 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
                         String itemsPerActionString = "Items Produced per Action";
                         double ranking = 0;
 
-                        //Fishing minions have a different multiplier than everything else
-                        int timeMultiplier = 2;
-                        if (name.equals("Fishing Minion")) {
-                            timeMultiplier = 1;
-                        }
                         int current_tier = 1;
 
                         //Warn if no compactors of any kind found
@@ -963,7 +973,7 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
                             fuelNumber = fuelNumber * 100;
                         } else {
                             typeOfFuel = false;
-                            fuelNumber = multiplierNumber;
+                            fuelNumber = multiplierNumberInt;
                         }
                         //endregion
 

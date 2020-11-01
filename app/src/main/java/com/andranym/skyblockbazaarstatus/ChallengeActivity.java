@@ -88,6 +88,8 @@ public class ChallengeActivity extends AppCompatActivity {
         final boolean solved3 = data.getBoolean("solvedChallenge3",false);
         final boolean solved4 = data.getBoolean("solvedChallenge4",false);
         final boolean solved5 = data.getBoolean("solvedChallenge5",false);
+        final boolean solved6 = data.getBoolean("solvedChallenge6",false);
+        final boolean solved7 = data.getBoolean("solvedChallenge7",false);
         //endregion
 
         //Make random number generator

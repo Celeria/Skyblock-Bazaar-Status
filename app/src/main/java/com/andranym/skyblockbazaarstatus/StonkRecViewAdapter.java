@@ -49,7 +49,16 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        final double bazaarTax = 1-((double)(settings.getInt("personalBazaarTaxAmount",1250))/1000/100);
+        double bazaarTax1 = 1-((double)(settings.getInt("personalBazaarTaxAmount",1250))/1000/100);
+        final double bazaarTax;
+        if (bazaarTax1 < 0) {
+            bazaarTax = 0;
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("solvedChallenge6", true);
+            editor.commit();
+        } else {
+            bazaarTax = bazaarTax1;
+        }
 
         //region Get product information and set the initial values
         String possibleCorrection = new FixBadNames().unfix(data.get(position).getProductName());
