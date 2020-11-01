@@ -1,1 +1,9 @@
-Test to see if this is visible.
+If you complete an achievement, that information is sent out so that you can get the achievement for 
+Google Play Games. 
+If I add a leaderboard for the stonk simulator game your score will also be collected if you chose
+to sign into Google Play. 
+This app will access your phone's accelerometer, but won't store that information.
+All settings information for this app is stored locally. If you delete the app, the information is gone.
+There is a nigh impossible challenge that once completed, tells you you can enter your
+name. You can enter whatever you want, and this information is not sent anywhere, it is stored locally, and
+will disappear when your delete the app.
