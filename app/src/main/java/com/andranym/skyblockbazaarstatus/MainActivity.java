@@ -1,5 +1,6 @@
 package com.andranym.skyblockbazaarstatus;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,10 +20,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -35,6 +38,7 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int RC_SIGN_IN = 45782;
     Button btnViewPrices;
     Button btnViewFavorites;
     Button btnTestJson;
@@ -42,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnChallenges;
     Button btnArbitrage;
     Button btnMinionOptimizer;
-    public TextView txtMinutesSince;
+    Button btnGoogleSignIn;
+    TextView txtMinutesSince;
     TextView txtWarnData;
     ProgressDialog pdStoring;
     ProgressDialog pd;
@@ -68,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         txtMinutesSince = (TextView) findViewById(R.id.txtMinutesSince);
         txtWarnData = (TextView) findViewById(R.id.txtWarnData);
         pdStoring = new ProgressDialog(MainActivity.this);
+        btnGoogleSignIn = (Button)findViewById(R.id.btnGoogleSignIn);
         pdStoring.setMessage("Your phone is processing the data... If you see this your device is so, so slow.");
         pdStoring.setCancelable(false);
         //endregion
@@ -423,6 +429,15 @@ public class MainActivity extends AppCompatActivity {
         }
         //endregion
 
+        //regionCode to sign in to Google
+        signInSilently();
+        btnGoogleSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startSignInIntent();
+            }
+        });
+        //endregion
     }
 
     private void signInSilently() {
@@ -445,12 +460,13 @@ public class MainActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         // The signed in account is stored in the task's result.
                                         GoogleSignInAccount signedInAccount = task.getResult();
+                                        int e = 0;
                                     } else {
                                         // Player will need to sign-in explicitly using via UI.
                                         // See [sign-in best practices](http://developers.google.com/games/services/checklist) for guidance on how and when to implement Interactive Sign-in,
                                         // and [Performing Interactive Sign-in](http://developers.google.com/games/services/android/signin#performing_interactive_sign-in) for details on how to implement
                                         // Interactive Sign-in.
-                                        final Toast weird = Toast.makeText(getApplicationContext(),"something strange",Toast.LENGTH_LONG);
+                                        final Toast weird = Toast.makeText(getApplicationContext(),"something strange",Toast.LENGTH_SHORT);
                                         weird.show();
                                     }
                                 }
@@ -573,4 +589,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void startSignInIntent() {
+        GoogleSignInClient signInClient = GoogleSignIn.getClient(this,
+                GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN);
+        Intent intent = signInClient.getSignInIntent();
+        startActivityForResult(intent, RC_SIGN_IN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if (result.isSuccess()) {
+                // The signed in account is stored in the result.
+                GoogleSignInAccount signedInAccount = result.getSignInAccount();
+            } else {
+                String message = result.getStatus().getStatusMessage();
+                if (message == null || message.isEmpty()) {
+                    message = "You did not sign in.";
+                }
+                new AlertDialog.Builder(this).setMessage(message)
+                        .setNeutralButton(android.R.string.ok, null).show();
+            }
+        }
+    }
 }

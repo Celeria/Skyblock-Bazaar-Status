@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Price\nHistory"
-                app:layout_constraintEnd_toStartOf="@+id/button3"
+                app:layout_constraintEnd_toStartOf="@+id/btnGoogleSignIn"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnViewFavorites" />
@@ -188,7 +188,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/btnArbitrage" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnGoogleSignIn"
                 android:layout_width="185dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

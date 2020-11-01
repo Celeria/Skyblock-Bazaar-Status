@@ -16,6 +16,12 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.games.Games;
+
+import java.util.Objects;
 import java.util.Random;
 
 public class ChallengeActivity extends AppCompatActivity {
@@ -88,10 +94,15 @@ public class ChallengeActivity extends AppCompatActivity {
         final Random randMaker = new Random();
 
         //region Check for achievements
-//        if (solved1) {
-//            Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-//                    .unlock("CgkI-4n1zrYYEAIQAA");
-//        }
+        if (solved1) {
+            try {
+                GoogleSignInOptions signInOptions = GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN;
+                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                        .unlock("CgkI-4n1zrYYEAIQAA");
+            } catch(Exception e) {
+                Toast.makeText(getApplicationContext(),"Achievements did not work",Toast.LENGTH_SHORT).show();
+            }
+        }
         //endregion
 
         //region Challenge 1
