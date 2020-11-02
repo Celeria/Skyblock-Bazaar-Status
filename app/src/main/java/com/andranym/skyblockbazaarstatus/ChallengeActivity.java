@@ -38,6 +38,7 @@ public class ChallengeActivity extends AppCompatActivity {
     TextView txtSolved3;
     TextView txtSolved4;
     TextView txtSolved5;
+    TextView txtSolved7;
     TextView txtChallenge1;
     TextView txtChallenge3;
     TextView txtChallenge7;
@@ -47,6 +48,7 @@ public class ChallengeActivity extends AppCompatActivity {
     EditText editTextC5;
     EditText editNumC7;
     Switch switchFancyTimer;
+    Switch switchArbitrageShortcut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class ChallengeActivity extends AppCompatActivity {
         txtSolved3 = findViewById(R.id.txtSolved3);
         txtSolved4 = findViewById(R.id.txtSolved4);
         txtSolved5 = findViewById(R.id.txtSolved5);
+        txtSolved7 = findViewById(R.id.txtSolved7);
         txtChallenge1 = findViewById(R.id.txtChallenge1);
         txtChallenge3 = findViewById(R.id.txtChallenge3);
         txtChallenge7 = findViewById(R.id.txtChallenge7);
@@ -78,6 +81,7 @@ public class ChallengeActivity extends AppCompatActivity {
         editTextC5 = findViewById(R.id.editTextC5);
         editNumC7 = findViewById(R.id.editNumC7);
         switchFancyTimer = findViewById(R.id.switchFancyTimer);
+        switchArbitrageShortcut = findViewById(R.id.switchArbitrageShortcut);
 
         //endregion
 
@@ -340,6 +344,29 @@ public class ChallengeActivity extends AppCompatActivity {
         //endregion
 
         //regionChallenge 7
+        if (!solved7) {
+            txtSolved7.setVisibility(View.GONE);
+            switchArbitrageShortcut.setVisibility(View.GONE);
+        }
+
+        boolean useOptimizedArbitrage = data.getBoolean("useOptimizedArbitrage",false);
+        if (useOptimizedArbitrage) {
+            switchFancyTimer.setChecked(true);
+        }
+
+        switchArbitrageShortcut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = data.edit();
+                if (switchArbitrageShortcut.isChecked()) {
+                    editor.putBoolean("useOptimizedArbitrage", true);
+                } else {
+                    editor.putBoolean("useOptimizedArbitrage", false);
+                }
+                editor.commit();
+            }
+        });
+
         final int[] guess = {1 + randMaker.nextInt(1000000)};
         //So the user can find it
         Log.e("NUMBER_THINKING_OF",Integer.toString(guess[0]));

@@ -399,6 +399,28 @@
             app:layout_constraintStart_toEndOf="@+id/editNumC7"
             app:layout_constraintTop_toBottomOf="@+id/txtChallenge7" />
 
+        <TextView
+            android:id="@+id/txtSolved7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:text="Great job, from one android developer to another. Want a shortcut to the flipper menus? Enable it below:"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editNumC7" />
+
+        <Switch
+            android:id="@+id/switchArbitrageShortcut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Enable Arbitrage Shortcut"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtSolved7" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

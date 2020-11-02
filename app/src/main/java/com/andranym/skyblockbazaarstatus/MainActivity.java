@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnSettings;
     Button btnChallenges;
     Button btnArbitrage;
+    Button btnBAZAARFLIP;
+    Button btnNPCFLIP;
     Button btnMinionOptimizer;
     Button btnGoogleSignIn;
     TextView txtMinutesSince;
@@ -70,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         btnSettings = (Button) findViewById(R.id.btnSettings);
         btnChallenges = (Button) findViewById(R.id.btnChallenges);
         btnArbitrage = (Button) findViewById(R.id.btnArbitrage);
+        btnNPCFLIP = (Button) findViewById(R.id.btnNPCFLIP);
+        btnBAZAARFLIP = (Button) findViewById(R.id.btnBAZAARFLIP);
         txtMinutesSince = (TextView) findViewById(R.id.txtMinutesSince);
         txtWarnData = (TextView) findViewById(R.id.txtWarnData);
         pdStoring = new ProgressDialog(MainActivity.this);
@@ -186,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
 
         //region Code for what happens when you press the VIEW CURRENT BAZAAR PRICES button
         final Intent intentViewPrices = new Intent(this, ViewPricesNoScrollActivity.class);
-        //intentViewPrices.putExtra("priceData",txtJson.getText().toString());
         btnViewPrices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,12 +213,35 @@ public class MainActivity extends AppCompatActivity {
         //endregion
 
         //regionCode for the ARBITRAGE button
+        //see which one to display
+        boolean useOptimizedArbitrage = sharedPref.getBoolean("useOptimizedArbitrage",false);
+        if(useOptimizedArbitrage) {
+            btnArbitrage.setVisibility(View.GONE);
+        } else {
+            btnBAZAARFLIP.setVisibility(View.GONE);
+            btnNPCFLIP.setVisibility(View.GONE);
+        }
         final Intent intentArbitrage = new Intent(this, ArbitrageMenu.class);
-        //intentArbitrage.putExtra("priceData", priceData[0]);
         btnArbitrage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(intentArbitrage);
+            }
+        });
+
+        final Intent intentNPC = new Intent(this,NPCFlipActivity.class);
+        btnNPCFLIP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intentNPC);
+            }
+        });
+
+        final Intent intentBazaar = new Intent(this,BazaarFlipActivity.class);
+        btnBAZAARFLIP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intentBazaar);
             }
         });
         //endregion
