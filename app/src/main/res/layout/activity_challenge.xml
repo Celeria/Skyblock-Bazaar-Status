@@ -38,6 +38,18 @@
             app:layout_constraintTop_toBottomOf="@+id/btnStartStonks" />
 
         <TextView
+            android:id="@+id/textView45"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="64dp"
+            android:text="Unlock Welcome Message:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switchArbitrageShortcut" />
+
+        <TextView
             android:id="@+id/textView20"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -193,15 +205,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView34" />
-
-        <TextView
-            android:id="@+id/textView37"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3000dp"
-            android:text="TextView"
-            app:layout_constraintTop_toBottomOf="@+id/textView34"
-            tools:layout_editor_absoluteX="169dp" />
 
         <TextView
             android:id="@+id/txtChallenge3"
@@ -420,6 +423,28 @@
             android:text="Enable Arbitrage Shortcut"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtSolved7" />
+
+        <TextView
+            android:id="@+id/txtChallenge8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Challenge 8:"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView45" />
+
+        <TextView
+            android:id="@+id/textView37"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5000dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView45" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

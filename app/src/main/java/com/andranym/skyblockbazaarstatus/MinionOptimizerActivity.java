@@ -331,7 +331,7 @@ public class MinionOptimizerActivity extends AppCompatActivity {
                     products.add("DIAMOND");
                     npcPrices.add(8.0);
                     //Diamond spreading produces 1 extra diamond for every 10 items produced by the minion
-                    itemsPerAction.add(0.1*ArraySum(minionItemsPerAction.get(i))/timeMultiplier);
+                    itemsPerAction.add(0.1*ArraySum(minionItemsPerAction.get(i)));
                     if (thisUpgrade1.equals("Diamond Spreading") && thisUpgrade2.equals("Diamond Spreading")) {
                         warnings = warnings + "WARNING: YOU CAN'T ACTUALLY USE 2 DIAMOND SPREADINGS (the code runs assuming you picked just one, please select another upgrade)";
                     }

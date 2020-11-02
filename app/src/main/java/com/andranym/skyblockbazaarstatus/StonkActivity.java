@@ -64,7 +64,7 @@ public class StonkActivity extends AppCompatActivity {
         //endregion
 
         //regionaward achievement if you found the secret trick
-        if (bazaarTax1 < 0) {
+        if (bazaarTax1 > 1) {
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean("solvedChallenge6", true);
             editor.putBoolean("solvedChallenge6display",true);
@@ -80,7 +80,7 @@ public class StonkActivity extends AppCompatActivity {
         //region Leader board for max coins
         try {
             Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
-                    .submitScore(getString(R.string.leaderboard_most_coins_earned), (long) stonkBalance);
+                    .submitScore(getString(R.string.leaderboard_most_coins_earned), (long) (stonkBalance/1000000));
         } catch(Exception e){
             //do nothing
         }

@@ -22,6 +22,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
@@ -43,6 +45,7 @@ public class ChallengeActivity extends AppCompatActivity {
     TextView txtChallenge1;
     TextView txtChallenge3;
     TextView txtChallenge7;
+    TextView txtChallenge8;
     EditText editNumChallenge1;
     EditText editTextC2;
     EditText editNumC3;
@@ -77,6 +80,7 @@ public class ChallengeActivity extends AppCompatActivity {
         txtChallenge1 = findViewById(R.id.txtChallenge1);
         txtChallenge3 = findViewById(R.id.txtChallenge3);
         txtChallenge7 = findViewById(R.id.txtChallenge7);
+        txtChallenge8 = findViewById(R.id.txtChallenge8);
         editNumChallenge1 = findViewById(R.id.editNumC1);
         editTextC2 = findViewById(R.id.editTextC2);
         editNumC3 = findViewById(R.id.editNumC3);
@@ -540,7 +544,34 @@ public class ChallengeActivity extends AppCompatActivity {
         });
         //endregion
 
-
+        //region Challenge 8
+        boolean acceptableValue = false;
+        int seedValue = 10;
+        while (!acceptableValue) {
+            seedValue = 10 + randMaker.nextInt(90);
+            if(seedValue % 10 != 0) {
+                acceptableValue = true;
+            }
+        }
+        ArrayList<String> patternValues = new ArrayList<>();
+        BigDecimal previousValue = BigDecimal.valueOf(seedValue);
+        for (int i = 0; i < 8; ++i) {
+            String prevPattern = previousValue.toPlainString();
+            StringBuilder prevPattern1 = new StringBuilder();
+            prevPattern1.append(prevPattern);
+            prevPattern1 = prevPattern1.reverse();
+            String newNumber = prevPattern1.toString();
+            BigDecimal value = new BigDecimal(newNumber);
+            BigDecimal newValue = value.multiply(value);
+            patternValues.add(newValue.toPlainString());
+            previousValue = newValue;
+        }
+        StringBuilder display8 = new StringBuilder("Find the next number.");
+        for (int i = patternValues.size()-1; i > -1; --i) {
+            display8.append("\n\n").append(patternValues.get(i));
+        }
+        txtChallenge8.setText(display8.toString());
+        //endregion
     }
 
     private void showAchievements(){
