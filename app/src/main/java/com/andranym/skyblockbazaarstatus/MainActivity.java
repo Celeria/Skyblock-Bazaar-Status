@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -39,6 +41,7 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 45782;
+    GoogleSignInClient mGoogleSignInClient;
     Button btnViewPrices;
     Button btnViewFavorites;
     Button btnTestJson;
@@ -456,11 +459,18 @@ public class MainActivity extends AppCompatActivity {
         //endregion
 
         //regionCode to sign in to Google
-        signInSilently();
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        //signInSilently();
         btnGoogleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startSignInIntent();
+                signIn();
             }
         });
         //endregion
@@ -505,8 +515,62 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         //signInSilently();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        //Reset the ability to use minion optimizer/terms agreed
         agreed = sharedPref.getBoolean("agreedToTerms",false);
         solved1 = sharedPref.getBoolean("solvedChallenge1",false);
+        //Reset the arbitrage settings
+        boolean useOptimizedArbitrage = sharedPref.getBoolean("useOptimizedArbitrage",false);
+        if(useOptimizedArbitrage) {
+            btnArbitrage.setVisibility(View.GONE);
+            btnBAZAARFLIP.setVisibility(View.VISIBLE);
+            btnNPCFLIP.setVisibility(View.VISIBLE);
+        } else {
+            btnBAZAARFLIP.setVisibility(View.GONE);
+            btnNPCFLIP.setVisibility(View.GONE);
+            btnArbitrage.setVisibility(View.VISIBLE);
+        }
+    }
+
+//    @Override
+//    protected void onStart() {
+//        // Check for existing Google Sign In account, if the user is already signed in
+//        // the GoogleSignInAccount will be non-null.
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+//        if(account == null) {
+//            startActivity(new Intent(MainActivity.this, GoogleSignInActivity.class));
+//        }
+//        super.onStart();
+//    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            // Signed in successfully, show authenticated UI.
+            startActivity(new Intent(MainActivity.this, GoogleSignInActivity.class));
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w("Google Sign In Error", "signInResult:failed code=" + e.getStatusCode());
+            Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_LONG).show();
+        }
     }
 
     private class checkTimeFancy extends AsyncTask<Long,Void,Integer> {
@@ -611,32 +675,6 @@ public class MainActivity extends AppCompatActivity {
                 txtWarnData.setVisibility(View.GONE);
             } else{
                 txtWarnData.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
-    private void startSignInIntent() {
-        GoogleSignInClient signInClient = GoogleSignIn.getClient(this,
-                GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN);
-        Intent intent = signInClient.getSignInIntent();
-        startActivityForResult(intent, RC_SIGN_IN);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-                // The signed in account is stored in the result.
-                GoogleSignInAccount signedInAccount = result.getSignInAccount();
-            } else {
-                String message = result.getStatus().getStatusMessage();
-                if (message == null || message.isEmpty()) {
-                    message = "You did not sign in.";
-                }
-                new AlertDialog.Builder(this).setMessage(message)
-                        .setNeutralButton(android.R.string.ok, null).show();
             }
         }
     }

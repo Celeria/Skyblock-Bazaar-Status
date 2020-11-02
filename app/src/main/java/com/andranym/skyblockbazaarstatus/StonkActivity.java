@@ -14,6 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.games.Games;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,8 +58,32 @@ public class StonkActivity extends AppCompatActivity {
         //region Import Settings
         final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final String priceDataString = settings.getString("currentData",null);
+        double bazaarTax1 = 1-((double)(settings.getInt("personalBazaarTaxAmount",1250))/1000/100);
         stonkBalance = Double.parseDouble(settings.getString("stonkBalance","1000000"));
         stonkBalanceCheat = Double.parseDouble(settings.getString("stonkBalanceCheat","1000000"));
+        //endregion
+
+        //regionaward achievement if you found the secret trick
+        if (bazaarTax1 < 0) {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("solvedChallenge6", true);
+            editor.putBoolean("solvedChallenge6display",true);
+            Toast.makeText(getApplicationContext(),"I see you found the secret workaround. I'm not going to force you to actually" +
+                    " get 1 billion coins, you already got the achievement. But I won't let you actually cheat so the leaderboard remains steady.",Toast.LENGTH_LONG).show();
+            editor.commit();
+        } else if (stonkBalance >= 1000000000) {
+            //seriously
+            Toast.makeText(getApplicationContext(),"Oh wow, you actually did it, you became a billionaire, you absolute madlad.",Toast.LENGTH_LONG).show();
+        }
+        //endregion
+
+        //region Leader board for max coins
+        try {
+            Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
+                    .submitScore(getString(R.string.leaderboard_most_coins_earned), (long) stonkBalance);
+        } catch(Exception e){
+            //do nothing
+        }
         //endregion
 
         //regionHelp button that goes to bazaar flip

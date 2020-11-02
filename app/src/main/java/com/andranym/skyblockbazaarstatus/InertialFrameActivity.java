@@ -64,10 +64,11 @@ public class InertialFrameActivity extends Activity implements SensorEventListen
                     new update().execute(display);
 
                     if (previousMovement[0] < 0.2 && currentMovement < 0.2) {
-                        display = "You have completed this challenge.";
+                        display = "You have completed this challenge.\nPress back button to exit.";
                         new update().execute(display);
                         SharedPreferences.Editor editor = data.edit();
                         editor.putBoolean("solvedChallenge4", true);
+                        editor.putBoolean("solvedChallenge4display",true);
                         editor.commit();
                         keepRunning = false;
                     }

@@ -53,9 +53,6 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
         final double bazaarTax;
         if (bazaarTax1 < 0) {
             bazaarTax = 0;
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean("solvedChallenge6", true);
-            editor.commit();
         } else {
             bazaarTax = bazaarTax1;
         }

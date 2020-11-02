@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.Objects;
 import java.util.Random;
@@ -49,6 +50,8 @@ public class ChallengeActivity extends AppCompatActivity {
     EditText editNumC7;
     Switch switchFancyTimer;
     Switch switchArbitrageShortcut;
+
+    final int RC_ACHIEVEMENT_UI = 9003;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +97,18 @@ public class ChallengeActivity extends AppCompatActivity {
         final boolean solved5 = data.getBoolean("solvedChallenge5",false);
         final boolean solved6 = data.getBoolean("solvedChallenge6",false);
         final boolean solved7 = data.getBoolean("solvedChallenge7",false);
+        final boolean solved8 = data.getBoolean("solvedChallenge8",false);
+        final boolean solved9 = data.getBoolean("solvedChallenge9",false);
+
+        final boolean solved1display = data.getBoolean("solvedChallenge1display",false);
+        final boolean solved2display = data.getBoolean("solvedChallenge2display",false);
+        final boolean solved3display = data.getBoolean("solvedChallenge3display",false);
+        final boolean solved4display = data.getBoolean("solvedChallenge4display",false);
+        final boolean solved5display = data.getBoolean("solvedChallenge5display",false);
+        final boolean solved6display = data.getBoolean("solvedChallenge6display",false);
+        final boolean solved7display = data.getBoolean("solvedChallenge7display",false);
+        final boolean solved8display = data.getBoolean("solvedChallenge8display",false);
+        final boolean solved9display = data.getBoolean("solvedChallenge8display",false);
         //endregion
 
         //Make random number generator
@@ -102,11 +117,113 @@ public class ChallengeActivity extends AppCompatActivity {
         //region Check for achievements
         if (solved1) {
             try {
-                GoogleSignInOptions signInOptions = GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN;
                 Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                        .unlock("CgkI-4n1zrYYEAIQAA");
+                        .unlock(getString(R.string.achievement_simple_geometry));
+                if (solved1display) {
+                    //For the first time unlocking, show the achievements
+                    showAchievements();
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putBoolean("solvedChallenge1display",false);
+                    editor.commit();
+                }
             } catch(Exception e) {
-                Toast.makeText(getApplicationContext(),"Achievements did not work",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Achievements did not work, perhaps not signed in?",Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (solved2) {
+            try {
+                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                        .unlock(getString(R.string.achievement_civics_101));
+                if (solved2display) {
+                    //For the first time unlocking, show the achievements
+                    showAchievements();
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putBoolean("solvedChallenge2display",false);
+                    editor.commit();
+                }
+            } catch(Exception e) {
+                Toast.makeText(getApplicationContext(),"Achievements did not work, perhaps not signed in?",Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (solved3) {
+            try {
+                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                        .unlock(getString(R.string.achievement_birthday_paradox));
+                if (solved3display) {
+                    //For the first time unlocking, show the achievements
+                    showAchievements();
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putBoolean("solvedChallenge3display",false);
+                    editor.commit();
+                }
+            } catch(Exception e) {
+                Toast.makeText(getApplicationContext(),"Achievements did not work, perhaps not signed in?",Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (solved4) {
+            try {
+                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                        .unlock(getString(R.string.achievement_everything_else_is_accelerating_up));
+                if (solved4display) {
+                    //For the first time unlocking, show the achievements
+                    showAchievements();
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putBoolean("solvedChallenge4display",false);
+                    editor.commit();
+                }
+            } catch(Exception e) {
+                Toast.makeText(getApplicationContext(),"Achievements did not work, perhaps not signed in?",Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (solved5) {
+            try {
+                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                        .unlock(getString(R.string.achievement_life_not_as_we_know_it));
+                if (solved5display) {
+                    //For the first time unlocking, show the achievements
+                    showAchievements();
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putBoolean("solvedChallenge5display",false);
+                    editor.commit();
+                }
+            } catch(Exception e) {
+                Toast.makeText(getApplicationContext(),"Achievements did not work, perhaps not signed in?",Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (solved6) {
+            try {
+                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                        .unlock(getString(R.string.achievement_market_manipulation));
+                if (solved6display) {
+                    //For the first time unlocking, show the achievements
+                    showAchievements();
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putBoolean("solvedChallenge6display",false);
+                    editor.commit();
+                }
+            } catch(Exception e) {
+                Toast.makeText(getApplicationContext(),"Achievements did not work, perhaps not signed in?",Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (solved7) {
+            try {
+                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                        .unlock(getString(R.string.achievement_no_luck_required));
+                if (solved7display) {
+                    //For the first time unlocking, show the achievements
+                    showAchievements();
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putBoolean("solvedChallenge7display",false);
+                    editor.commit();
+                }
+            } catch(Exception e) {
+                Toast.makeText(getApplicationContext(),"Achievements did not work, perhaps not signed in?",Toast.LENGTH_SHORT).show();
             }
         }
         //endregion
@@ -130,6 +247,7 @@ public class ChallengeActivity extends AppCompatActivity {
                         txtSolved1.setVisibility(View.VISIBLE);
                         SharedPreferences.Editor editor = data.edit();
                         editor.putBoolean("solvedChallenge1", true);
+                        editor.putBoolean("solvedChallenge1display",true);
                         editor.commit();
                     } else {
                         Toast fail = Toast.makeText(getApplicationContext(),"No, the correct answer was " + answer1,Toast.LENGTH_LONG);
@@ -157,6 +275,7 @@ public class ChallengeActivity extends AppCompatActivity {
                         (userAnswer.contains("commerce"))) {
                     SharedPreferences.Editor editor = data.edit();
                     editor.putBoolean("solvedChallenge2", true);
+                    editor.putBoolean("solvedChallenge2display",true);
                     editor.commit();
                     txtSolved2.setVisibility(View.VISIBLE);
                 } else {
@@ -236,6 +355,7 @@ public class ChallengeActivity extends AppCompatActivity {
                             if (Math.abs(answer - realAnswer) <= 0.01) {
                                 SharedPreferences.Editor editor = data.edit();
                                 editor.putBoolean("solvedChallenge3", true);
+                                editor.putBoolean("solvedChallenge3display",true);
                                 editor.commit();
                                 txtSolved3.setVisibility(View.VISIBLE);
                                 switchFancyTimer.setVisibility(View.VISIBLE);
@@ -312,6 +432,7 @@ public class ChallengeActivity extends AppCompatActivity {
                 userAnswer.contains("TTCATCCATCCATCCATCCATCCATCAT")) {
                     SharedPreferences.Editor editor = data.edit();
                     editor.putBoolean("solvedChallenge5", true);
+                    editor.putBoolean("solvedChallenge5display",true);
                     editor.commit();
                     txtSolved5.setVisibility(View.VISIBLE);
                 } else {
@@ -351,7 +472,7 @@ public class ChallengeActivity extends AppCompatActivity {
 
         boolean useOptimizedArbitrage = data.getBoolean("useOptimizedArbitrage",false);
         if (useOptimizedArbitrage) {
-            switchFancyTimer.setChecked(true);
+            switchArbitrageShortcut.setChecked(true);
         }
 
         switchArbitrageShortcut.setOnClickListener(new View.OnClickListener() {
@@ -383,9 +504,12 @@ public class ChallengeActivity extends AppCompatActivity {
                         //If the guess is equal to the guess the user entered
                         SharedPreferences.Editor editor = data.edit();
                         editor.putBoolean("solvedChallenge7", true);
+                        editor.putBoolean("solvedChallenge7display",true);
                         editor.commit();
                         Toast success = Toast.makeText(getApplicationContext(),"Congrats, you got it. Hopefully by reading log data, and not from dumb luck.",Toast.LENGTH_LONG);
                         success.show();
+                        txtSolved7.setVisibility(View.GONE);
+                        switchArbitrageShortcut.setVisibility(View.GONE);
                     } else {
                         //come up with a new guess and decrement amount remaining
                         Toast fail = Toast.makeText(getApplicationContext(),"The answer was " + guess[0] + " try again.",Toast.LENGTH_SHORT);
@@ -417,5 +541,16 @@ public class ChallengeActivity extends AppCompatActivity {
         //endregion
 
 
+    }
+
+    private void showAchievements(){
+        Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this))
+                .getAchievementsIntent()
+                .addOnSuccessListener(new OnSuccessListener<Intent>() {
+                    @Override
+                    public void onSuccess(Intent intent) {
+                        startActivityForResult(intent, RC_ACHIEVEMENT_UI);
+                    }
+                });
     }
 }
