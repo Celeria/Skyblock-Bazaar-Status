@@ -20,7 +20,6 @@ public class BannedActivity extends AppCompatActivity {
         if(keyCode== KeyEvent.KEYCODE_BACK)
         {
             //Removes ability for you to just press the back button to get to main page.
-            int e = 6;
         }
         return true;
     }

@@ -51,8 +51,8 @@ public class StonkRecViewAdapter extends RecyclerView.Adapter<StonkRecViewAdapte
         final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         double bazaarTax1 = 1-((double)(settings.getInt("personalBazaarTaxAmount",1250))/1000/100);
         final double bazaarTax;
-        if (bazaarTax1 < 0) {
-            bazaarTax = 0;
+        if (bazaarTax1 > 1) {
+            bazaarTax = 1;
         } else {
             bazaarTax = bazaarTax1;
         }

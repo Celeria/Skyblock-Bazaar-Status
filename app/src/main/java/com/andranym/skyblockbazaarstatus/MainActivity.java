@@ -136,8 +136,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean agreed = sharedPref.getBoolean("agreedToTerms",false);
         //if the user hasn't agreed in the past, make them agree
-        if(!agreed){
 
+        if(!agreed){
+            Intent goAgree = new Intent(this,AgreementActivity.class);
+            startActivity(goAgree);
         }
         //endregion
 
