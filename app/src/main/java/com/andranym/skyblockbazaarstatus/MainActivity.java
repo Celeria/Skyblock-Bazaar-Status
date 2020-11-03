@@ -1,6 +1,5 @@
 package com.andranym.skyblockbazaarstatus;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,12 +20,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -52,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnNPCFLIP;
     Button btnMinionOptimizer;
     Button btnGoogleSignIn;
+    Button btnCredits;
     TextView txtMinutesSince;
     TextView txtWarnData;
     ProgressDialog pdStoring;
@@ -81,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         txtWarnData = (TextView) findViewById(R.id.txtWarnData);
         pdStoring = new ProgressDialog(MainActivity.this);
         btnGoogleSignIn = (Button)findViewById(R.id.btnGoogleSignIn);
+        btnCredits = (Button)findViewById(R.id.btnCredits);
         pdStoring.setMessage("Your phone is processing the data... If you see this your device is so, so slow.");
         pdStoring.setCancelable(false);
         //endregion
@@ -473,6 +472,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 signIn();
+            }
+        });
+        //endregion
+
+        //regionCode for credits
+        final Intent goCredits = new Intent(this,CreditsActivity.class);
+        btnCredits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(goCredits);
             }
         });
         //endregion
