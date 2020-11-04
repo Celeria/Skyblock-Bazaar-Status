@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     Button comingSoon;
     TextView txtMinutesSince;
     TextView txtWarnData;
+    TextView txtWelcome;
     ProgressDialog pdStoring;
     ProgressDialog pd;
 
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         comingSoon = (Button)findViewById(R.id.btnPriceHistory);
         txtMinutesSince = (TextView) findViewById(R.id.txtMinutesSince);
         txtWarnData = (TextView) findViewById(R.id.txtWarnData);
+        txtWelcome = (TextView)findViewById(R.id.txtWelcomeMessage);
         pdStoring = new ProgressDialog(MainActivity.this);
         btnGoogleSignIn = (Button)findViewById(R.id.btnGoogleSignIn);
         btnCredits = (Button)findViewById(R.id.btnCredits);
@@ -191,6 +193,24 @@ public class MainActivity extends AppCompatActivity {
         } else{
             //If no connection, fetch the data from before
             priceData[0] = sharedPref.getString("currentData",null);
+        }
+        //endregion
+
+        //regionDisplay welcome message and color if needed
+        boolean displayWelcome = sharedPref.getBoolean("displayWelcome",false);
+        if(displayWelcome){
+            txtWelcome.setText("Welcome, and congrats on challenge completion!");
+            txtWelcome.setVisibility(View.VISIBLE);
+        }
+        boolean useDifferentColor = sharedPref.getBoolean("useDifferentColor",false);
+        if (useDifferentColor) {
+            try {
+                String colorString = sharedPref.getString("welcomeColor", "#8a000000");
+                int color = Color.parseColor(colorString);
+                txtWelcome.setTextColor(color);
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "That is an invalid color", Toast.LENGTH_SHORT).show();
+            }
         }
         //endregion
 
@@ -555,6 +575,23 @@ public class MainActivity extends AppCompatActivity {
             btnBAZAARFLIP.setVisibility(View.GONE);
             btnNPCFLIP.setVisibility(View.GONE);
             btnArbitrage.setVisibility(View.VISIBLE);
+        }
+        //Display welcome if desired
+        boolean displayWelcome = sharedPref.getBoolean("displayWelcome",false);
+        if(displayWelcome){
+            txtWelcome.setText("Welcome, and congrats on challenge completion!");
+            txtWelcome.setVisibility(View.VISIBLE);
+        }
+        //change color if desired
+        boolean useDifferentColor = sharedPref.getBoolean("useDifferentColor",false);
+        if (useDifferentColor) {
+            try {
+                String colorString = sharedPref.getString("welcomeColor", "#8a000000");
+                int color = Color.parseColor(colorString);
+                txtWelcome.setTextColor(color);
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "That is an invalid color", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

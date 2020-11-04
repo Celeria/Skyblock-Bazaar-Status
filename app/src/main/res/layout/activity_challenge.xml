@@ -50,6 +50,18 @@
             app:layout_constraintTop_toBottomOf="@+id/switchArbitrageShortcut" />
 
         <TextView
+            android:id="@+id/textView55"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="64dp"
+            android:text="Unlock Colored Welcome Message:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switchShowWelcome" />
+
+        <TextView
             android:id="@+id/textView20"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -411,6 +423,14 @@
             app:layout_constraintStart_toEndOf="@+id/editNumC8"
             app:layout_constraintTop_toBottomOf="@+id/txtChallenge8" />
 
+        <Button
+            android:id="@+id/btnSolve9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="submit"
+            app:layout_constraintStart_toEndOf="@+id/editNumC9"
+            app:layout_constraintTop_toBottomOf="@+id/txtChallenge9" />
+
         <TextView
             android:id="@+id/txtSolved7"
             android:layout_width="0dp"
@@ -446,14 +466,16 @@
             app:layout_constraintTop_toBottomOf="@+id/textView45" />
 
         <TextView
-            android:id="@+id/textView37"
-            android:layout_width="wrap_content"
+            android:id="@+id/txtChallenge9"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5000dp"
-            android:text="TextView"
+            android:layout_marginStart="8dp"
+            android:text="Challenge 9:"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView45" />
+            app:layout_constraintTop_toBottomOf="@+id/textView55" />
 
         <EditText
             android:id="@+id/editNumC8"
@@ -466,6 +488,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtChallenge8" />
 
+        <EditText
+            android:id="@+id/editNumC9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:hint="Enter Numbers Here:"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtChallenge9" />
+
         <TextView
             android:id="@+id/txtSolved8"
             android:layout_width="0dp"
@@ -477,6 +510,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editNumC8" />
+
+        <TextView
+            android:id="@+id/txtSolved9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Wow. Seriously, that is impressive, even I didn't know how to do this one. Send me an email, I'll include your name in the app since you are the first one to solve this, if you choose. Send me a screenshot of the achievement, and how you did it."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editNumC9" />
 
         <Switch
             android:id="@+id/switchShowWelcome"
@@ -496,6 +541,35 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView34" />
+
+        <EditText
+            android:id="@+id/editColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Enter New Color Code:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtSolved9" />
+
+        <Button
+            android:id="@+id/btnChangeColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Save new color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editColor" />
+
+        <TextView
+            android:id="@+id/textView37"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Invisible padding"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnChangeColor" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

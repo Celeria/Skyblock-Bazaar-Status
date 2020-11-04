@@ -35,8 +35,10 @@ public class ChallengeActivity extends AppCompatActivity {
     Button btnSolve5;
     Button btnSolve7;
     Button btnSolve8;
+    Button btnSolve9;
     Button btnStartStonks;
     Button btnTryChallenge4;
+    Button btnChangeColor;
     TextView txtSolved1;
     TextView txtSolved2;
     TextView txtSolved3;
@@ -49,6 +51,7 @@ public class ChallengeActivity extends AppCompatActivity {
     TextView txtChallenge3;
     TextView txtChallenge7;
     TextView txtChallenge8;
+    TextView txtChallenge9;
     EditText editNumChallenge1;
     EditText editTextC2;
     EditText editNumC3;
@@ -56,6 +59,7 @@ public class ChallengeActivity extends AppCompatActivity {
     EditText editNumC7;
     EditText editNumC8;
     EditText editNumC9;
+    EditText editColor;
     Switch switchFancyTimer;
     Switch switchArbitrageShortcut;
     Switch switchShowWelcome;
@@ -77,8 +81,10 @@ public class ChallengeActivity extends AppCompatActivity {
         btnSolve5 = findViewById(R.id.btnSolve5);
         btnSolve7 = findViewById(R.id.btnSolve7);
         btnSolve8 = findViewById(R.id.btnSolve8);
+        btnSolve9 = findViewById(R.id.btnSolve9);
         btnTryChallenge4 = findViewById(R.id.btnTryChallenge4);
         btnStartStonks = findViewById(R.id.btnStartStonks);
+        btnChangeColor = findViewById(R.id.btnChangeColor);
         txtSolved1 = findViewById(R.id.txtSolved1);
         txtSolved2 = findViewById(R.id.txtSolved2);
         txtSolved3 = findViewById(R.id.txtSolved3);
@@ -86,10 +92,12 @@ public class ChallengeActivity extends AppCompatActivity {
         txtSolved5 = findViewById(R.id.txtSolved5);
         txtSolved7 = findViewById(R.id.txtSolved7);
         txtSolved8 = findViewById(R.id.txtSolved8);
+        txtSolved9 = findViewById(R.id.txtSolved9);
         txtChallenge1 = findViewById(R.id.txtChallenge1);
         txtChallenge3 = findViewById(R.id.txtChallenge3);
         txtChallenge7 = findViewById(R.id.txtChallenge7);
         txtChallenge8 = findViewById(R.id.txtChallenge8);
+        txtChallenge9 = findViewById(R.id.txtChallenge9);
         editNumChallenge1 = findViewById(R.id.editNumC1);
         editTextC2 = findViewById(R.id.editTextC2);
         editNumC3 = findViewById(R.id.editNumC3);
@@ -97,7 +105,8 @@ public class ChallengeActivity extends AppCompatActivity {
         editTextC5 = findViewById(R.id.editTextC5);
         editNumC7 = findViewById(R.id.editNumC7);
         editNumC8 = findViewById(R.id.editNumC8);
-        //editNumC9 = findViewById(R.id.editNumC9);
+        editNumC9 = findViewById(R.id.editNumC9);
+        editColor = findViewById(R.id.editColor);
         switchFancyTimer = findViewById(R.id.switchFancyTimer);
         switchArbitrageShortcut = findViewById(R.id.switchArbitrageShortcut);
         switchShowWelcome = findViewById(R.id.switchShowWelcome);
@@ -258,6 +267,22 @@ public class ChallengeActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Achievements did not work, perhaps not signed in?",Toast.LENGTH_SHORT).show();
             }
         }
+
+        if (solved9) {
+            try {
+                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                        .unlock(getString(R.string.achievement_order_in_chaos));
+                if (solved9display) {
+                    //For the first time unlocking, show the achievements
+                    showAchievements();
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putBoolean("solvedChallenge9display",false);
+                    editor.commit();
+                }
+            } catch(Exception e) {
+                Toast.makeText(getApplicationContext(),"Achievements did not work, perhaps not signed in?",Toast.LENGTH_SHORT).show();
+            }
+        }
         //endregion
 
         //regionButton to show achievements if the user wants
@@ -272,6 +297,9 @@ public class ChallengeActivity extends AppCompatActivity {
             }
         });
         //endregion
+
+        //OH HELLO IF YOU ARE LOOKING AT THIS FOR THE RIGHT ANSWERS. GOOD JOB, THIS IS AN INTENDED FEATURE,
+        //I WANT TO GIVE AN ADVANTAGE TO FELLOW CODERS
 
         //region Challenge 1
         if(!solved1) {
@@ -343,11 +371,11 @@ public class ChallengeActivity extends AppCompatActivity {
                 "that we all know about. It has a solid brick-like texture, and the only intelligent species of life on this planet, the Tolgonians, " +
                 "often use the plant to fortify their subterranean homes. Just like our Earth, this planet's species have a concept of the birthday. " +
                 "However, for their planet, the year has 10,000 days in it, which are split into 10 1000 day \"months\". Tologonian birthdays are " +
-                "often celebrated using a cake made from a special" +
-                "kind of mycelium that links the majority of the roots of the planet's other plant life. The fungus that creates the mycelium web actually" +
-                "uses a novel form of sulfur metabolism that is energized by the sunlight through a unique series of chemical reactions that do not occur" +
+                "often celebrated using a cake made from a special " +
+                "kind of mycelium that links the majority of the roots of the planet's other plant life. The fungus that creates the mycelium web actually " +
+                "uses a novel form of sulfur metabolism that is energized by the sunlight through a unique series of chemical reactions that do not occur " +
                 "naturally here on earth. " + alienPopulation[0] + " Tologonians have gathered in a room together. Birthdays on this planet are uniformly " +
-                "distributed. What is the probability that at least two Tologonians in this room share the same birthday? An exact answer is not required," +
+                "distributed. What is the probability that at least two Tologonians in this room share the same birthday? An exact answer is not required, " +
                 "as long as you are within 0.01 of the correct answer, your phone will accept it.\n" +
                 "Also, be patient, this question is hard, your phone might take a couple seconds to calculate the right answer.";
 
@@ -415,10 +443,10 @@ public class ChallengeActivity extends AppCompatActivity {
                                         "often use the plant to fortify their subterranean homes. Just like our Earth, this planet's species have a concept of the birthday. " +
                                         "However, for their planet, the year has 10,000 days in it, which are split into 10 1000 day \"months\". Tologonian birthdays are " +
                                         "often celebrated using a cake made from a special" +
-                                        "kind of mycelium that links the majority of the roots of the planet's other plant life. The fungus that creates the mycelium web actually" +
-                                        "uses a novel form of sulfur metabolism that is energized by the sunlight through a unique series of chemical reactions that do not occur" +
+                                        "kind of mycelium that links the majority of the roots of the planet's other plant life. The fungus that creates the mycelium web actually " +
+                                        "uses a novel form of sulfur metabolism that is energized by the sunlight through a unique series of chemical reactions that do not occur " +
                                         "naturally here on earth. " + alienPopulation[0] + " Tologonians have gathered in a room together. Birthdays on this planet are uniformly " +
-                                        "distributed. What is the probability that at least two Tologonians in this room share the same birthday? An exact answer is not required," +
+                                        "distributed. What is the probability that at least two Tologonians in this room share the same birthday? An exact answer is not required, " +
                                         "as long as you are within 0.01 of the correct answer, your phone will accept it.\n" +
                                         "Also, be patient, this question is hard, your phone might take a couple seconds to calculate the right answer.";
 
@@ -591,6 +619,24 @@ public class ChallengeActivity extends AppCompatActivity {
             switchShowWelcome.setVisibility(View.INVISIBLE);
         }
 
+        //switch code
+        boolean checkWelcome = data.getBoolean("displayWelcome",false);
+        if (checkWelcome) {
+            switchShowWelcome.setChecked(true);
+        }
+        switchShowWelcome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = data.edit();
+                if (switchShowWelcome.isChecked()) {
+                    editor.putBoolean("displayWelcome", true);
+                } else {
+                    editor.putBoolean("displayWelcome", false);
+                }
+                editor.commit();
+            }
+        });
+
         boolean acceptableValue = false;
         int seedValue = 10;
         while (!acceptableValue) {
@@ -630,6 +676,7 @@ public class ChallengeActivity extends AppCompatActivity {
                         editor.putBoolean("solvedChallenge8display",true);
                         editor.commit();
                         txtSolved8.setVisibility(View.VISIBLE);
+                        switchShowWelcome.setVisibility(View.VISIBLE);
                     } else {
                         //Generate new puzzle
                         boolean acceptableValue = false;
@@ -664,6 +711,60 @@ public class ChallengeActivity extends AppCompatActivity {
                 } catch(Exception e) {
                     //Probably because the thing was blank, do nothing
                 }
+            }
+        });
+
+        //endregion
+
+        //regionChallenge 9
+        if(!solved9){
+            txtSolved9.setVisibility(View.GONE);
+            editColor.setVisibility(View.GONE);
+            btnChangeColor.setVisibility(View.GONE);
+        }
+
+        String beginning = "Welcome to the final boss of questions.\nEven I, the creator of this app, don't know how to solve this one.\nI mean " +
+                "I have some idea, but I'm not APT level good.\nBe the first to solve this one, and I'll literally include your name here in this message.\n" +
+                "Anyway, as for the actual question, there is a sequence of numbers below.\nFind the next 20 numbers:\n";
+        StringBuilder sequence = new StringBuilder();
+        for(int i = 0;i<400;++i) {
+            if(i%20==0){
+                sequence.append("\n");
+            }
+            sequence.append(randMaker.nextInt(10));
+        }
+        final StringBuilder answer = new StringBuilder();
+        for(int i = 0;i<20;++i){
+            answer.append(randMaker.nextInt());
+        }
+        String display9 = beginning + sequence.toString();
+        txtChallenge9.setText(display9);
+        btnSolve9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userAnswer = editNumC9.getText().toString();
+                if(userAnswer.equals(answer.toString())){
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putBoolean("solvedChallenge9", true);
+                    editor.putBoolean("solvedChallenge9display",true);
+                    editor.commit();
+                    txtSolved9.setVisibility(View.VISIBLE);
+                    btnChangeColor.setVisibility(View.VISIBLE);
+                    editColor.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(getApplicationContext(),"That is incorrect",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnChangeColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String color = editColor.getText().toString();
+                SharedPreferences.Editor editor = data.edit();
+                editor.putString("welcomeColor",color);
+                editor.putBoolean("useDifferentColor",true);
+                editor.commit();
             }
         });
 
