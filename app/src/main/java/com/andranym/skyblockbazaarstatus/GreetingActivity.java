@@ -18,6 +18,8 @@ public class GreetingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_greeting);
 
+        setTitle("Welcome");
+
         startAlready = findViewById(R.id.btnStartAlready);
         moreInformation = findViewById(R.id.btnNoClue);
 

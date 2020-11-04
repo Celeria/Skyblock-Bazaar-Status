@@ -8,8 +8,10 @@
 
     <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -55,7 +57,7 @@
                 android:id="@+id/textView50"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Finally, thanks me, Celeria_Andranym for making this app. If you are curious how I went about doing it, check out the source code below:"
+                android:text="Additional thanks to all the people whose code I used snippets of in order to make some part of the 10,000+ lines of code for this app work. If you wish to view the source code, and an explanation for how all of this works, check out the github repository I made:"
                 android:textSize="16sp" />
 
             <EditText
@@ -65,6 +67,20 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="https://github.com/Celeria/Skyblock-Bazaar-Status" />
+
+            <TextView
+                android:id="@+id/textView52"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Finally thanks to me (Minecraft IGN: Celeria_Andranym) for spending the time to learn how to do this, as well as pay for it all. It didn't cost me that much actual money to make, but as you've seen, I haven't put any ads in this app, or made you pay for it. If you appreciate me doing so, and are burdened by excess money, click the button to give me some of it so I can afford skyblock gems."
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnDonate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="donate" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

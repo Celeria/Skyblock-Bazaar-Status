@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ComingSoonActivity">
+
+    <TextView
+        android:id="@+id/textView53"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="This isn't ready yet because I'm busy in real life.\nWhen it gets here, you can expect a graph of prices, and the ability to choose how often your phone pings the server in the background so you can build a graph.\n(Once an hour, day, every 5 minutes? It'll be up to you)\nFurthermore, you should be able to receive notifications if a product you chose has changed in price, or if a certain product has changed a certain amount, all set by you. There will also be an option to turn off notifications entirely. But in order to do that, I need time, so just use all the other cool stuff here in the meantime.\n(I'm not saying if you donate me money I'll make this faster, but I'm also not saying that wouldn't be incentive for me)"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

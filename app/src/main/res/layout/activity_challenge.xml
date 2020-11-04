@@ -204,7 +204,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView34" />
+            app:layout_constraintTop_toBottomOf="@+id/btnShowAchievements" />
 
         <TextView
             android:id="@+id/txtChallenge3"
@@ -390,6 +390,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:ems="10"
+            android:hint="Enter Number Here"
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtChallenge7" />
@@ -401,6 +402,14 @@
             android:text="submit"
             app:layout_constraintStart_toEndOf="@+id/editNumC7"
             app:layout_constraintTop_toBottomOf="@+id/txtChallenge7" />
+
+        <Button
+            android:id="@+id/btnSolve8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="submit"
+            app:layout_constraintStart_toEndOf="@+id/editNumC8"
+            app:layout_constraintTop_toBottomOf="@+id/txtChallenge8" />
 
         <TextView
             android:id="@+id/txtSolved7"
@@ -445,6 +454,48 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView45" />
+
+        <EditText
+            android:id="@+id/editNumC8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:hint="Enter Number Here"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtChallenge8" />
+
+        <TextView
+            android:id="@+id/txtSolved8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:text="Congrats on finding the pattern. If you would like to see a welcome message in the main menu, turn the option on below."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editNumC8" />
+
+        <Switch
+            android:id="@+id/switchShowWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Show Welcome"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtSolved8" />
+
+        <Button
+            android:id="@+id/btnShowAchievements"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Google Play Games Achievements"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView34" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

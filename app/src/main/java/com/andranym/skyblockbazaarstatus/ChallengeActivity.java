@@ -18,7 +18,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -29,11 +28,13 @@ import java.util.Random;
 
 public class ChallengeActivity extends AppCompatActivity {
 
+    Button btnShowAchievements;
     Button btnSolve1;
     Button btnSolve2;
     Button btnSolve3;
     Button btnSolve5;
     Button btnSolve7;
+    Button btnSolve8;
     Button btnStartStonks;
     Button btnTryChallenge4;
     TextView txtSolved1;
@@ -42,6 +43,8 @@ public class ChallengeActivity extends AppCompatActivity {
     TextView txtSolved4;
     TextView txtSolved5;
     TextView txtSolved7;
+    TextView txtSolved8;
+    TextView txtSolved9;
     TextView txtChallenge1;
     TextView txtChallenge3;
     TextView txtChallenge7;
@@ -51,8 +54,11 @@ public class ChallengeActivity extends AppCompatActivity {
     EditText editNumC3;
     EditText editTextC5;
     EditText editNumC7;
+    EditText editNumC8;
+    EditText editNumC9;
     Switch switchFancyTimer;
     Switch switchArbitrageShortcut;
+    Switch switchShowWelcome;
 
     final int RC_ACHIEVEMENT_UI = 9003;
 
@@ -64,11 +70,13 @@ public class ChallengeActivity extends AppCompatActivity {
         setTitle("Challenges");
 
         //regionDeclare UI elements
+        btnShowAchievements = findViewById(R.id.btnShowAchievements);
         btnSolve1 = findViewById(R.id.btnSolve1);
         btnSolve2 = findViewById(R.id.btnSolve2);
         btnSolve3 = findViewById(R.id.btnSolve3);
         btnSolve5 = findViewById(R.id.btnSolve5);
         btnSolve7 = findViewById(R.id.btnSolve7);
+        btnSolve8 = findViewById(R.id.btnSolve8);
         btnTryChallenge4 = findViewById(R.id.btnTryChallenge4);
         btnStartStonks = findViewById(R.id.btnStartStonks);
         txtSolved1 = findViewById(R.id.txtSolved1);
@@ -77,6 +85,7 @@ public class ChallengeActivity extends AppCompatActivity {
         txtSolved4 = findViewById(R.id.txtSolved4);
         txtSolved5 = findViewById(R.id.txtSolved5);
         txtSolved7 = findViewById(R.id.txtSolved7);
+        txtSolved8 = findViewById(R.id.txtSolved8);
         txtChallenge1 = findViewById(R.id.txtChallenge1);
         txtChallenge3 = findViewById(R.id.txtChallenge3);
         txtChallenge7 = findViewById(R.id.txtChallenge7);
@@ -87,8 +96,11 @@ public class ChallengeActivity extends AppCompatActivity {
         editNumC7 = findViewById(R.id.editNumC7);
         editTextC5 = findViewById(R.id.editTextC5);
         editNumC7 = findViewById(R.id.editNumC7);
+        editNumC8 = findViewById(R.id.editNumC8);
+        //editNumC9 = findViewById(R.id.editNumC9);
         switchFancyTimer = findViewById(R.id.switchFancyTimer);
         switchArbitrageShortcut = findViewById(R.id.switchArbitrageShortcut);
+        switchShowWelcome = findViewById(R.id.switchShowWelcome);
 
         //endregion
 
@@ -131,7 +143,7 @@ public class ChallengeActivity extends AppCompatActivity {
                     editor.commit();
                 }
             } catch(Exception e) {
-                Toast.makeText(getApplicationContext(),"Achievements did not work, perhaps not signed in?",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Not signed in to Google Play Games. \nDo so on the main menu if you want the achievement.",Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -230,6 +242,35 @@ public class ChallengeActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Achievements did not work, perhaps not signed in?",Toast.LENGTH_SHORT).show();
             }
         }
+
+        if (solved8) {
+            try {
+                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                        .unlock(getString(R.string.achievement_pattern_recognizer));
+                if (solved8display) {
+                    //For the first time unlocking, show the achievements
+                    showAchievements();
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putBoolean("solvedChallenge8display",false);
+                    editor.commit();
+                }
+            } catch(Exception e) {
+                Toast.makeText(getApplicationContext(),"Achievements did not work, perhaps not signed in?",Toast.LENGTH_SHORT).show();
+            }
+        }
+        //endregion
+
+        //regionButton to show achievements if the user wants
+        btnShowAchievements.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    showAchievements();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(),"Not signed in.",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         //endregion
 
         //region Challenge 1
@@ -545,6 +586,11 @@ public class ChallengeActivity extends AppCompatActivity {
         //endregion
 
         //region Challenge 8
+        if (!solved8) {
+            txtSolved8.setVisibility(View.INVISIBLE);
+            switchShowWelcome.setVisibility(View.INVISIBLE);
+        }
+
         boolean acceptableValue = false;
         int seedValue = 10;
         while (!acceptableValue) {
@@ -571,6 +617,56 @@ public class ChallengeActivity extends AppCompatActivity {
             display8.append("\n\n").append(patternValues.get(i));
         }
         txtChallenge8.setText(display8.toString());
+        final int[] finalSeedValue = {seedValue};
+        btnSolve8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    String userAnswer = editNumC8.getText().toString();
+                    int answer = Integer.parseInt(userAnswer);
+                    if (answer == finalSeedValue[0]) {
+                        SharedPreferences.Editor editor = data.edit();
+                        editor.putBoolean("solvedChallenge8", true);
+                        editor.putBoolean("solvedChallenge8display",true);
+                        editor.commit();
+                        txtSolved8.setVisibility(View.VISIBLE);
+                    } else {
+                        //Generate new puzzle
+                        boolean acceptableValue = false;
+                        int seedValue = 10;
+                        while (!acceptableValue) {
+                            seedValue = 10 + randMaker.nextInt(90);
+                            if(seedValue % 10 != 0) {
+                                acceptableValue = true;
+                            }
+                        }
+                        ArrayList<String> patternValues = new ArrayList<>();
+                        BigDecimal previousValue = BigDecimal.valueOf(seedValue);
+                        for (int i = 0; i < 8; ++i) {
+                            String prevPattern = previousValue.toPlainString();
+                            StringBuilder prevPattern1 = new StringBuilder();
+                            prevPattern1.append(prevPattern);
+                            prevPattern1 = prevPattern1.reverse();
+                            String newNumber = prevPattern1.toString();
+                            BigDecimal value = new BigDecimal(newNumber);
+                            BigDecimal newValue = value.multiply(value);
+                            patternValues.add(newValue.toPlainString());
+                            previousValue = newValue;
+                        }
+                        StringBuilder display8 = new StringBuilder("Find the next number.");
+                        for (int i = patternValues.size()-1; i > -1; --i) {
+                            display8.append("\n\n").append(patternValues.get(i));
+                        }
+                        txtChallenge8.setText(display8.toString());
+                        finalSeedValue[0] = seedValue;
+                        Toast.makeText(getApplicationContext(),"Nope, try again. No hints for this.",Toast.LENGTH_SHORT).show();
+                    }
+                } catch(Exception e) {
+                    //Probably because the thing was blank, do nothing
+                }
+            }
+        });
+
         //endregion
     }
 

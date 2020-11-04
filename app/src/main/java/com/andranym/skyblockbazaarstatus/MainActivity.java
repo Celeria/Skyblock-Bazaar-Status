@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnMinionOptimizer;
     Button btnGoogleSignIn;
     Button btnCredits;
+    Button comingSoon;
     TextView txtMinutesSince;
     TextView txtWarnData;
     ProgressDialog pdStoring;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         btnArbitrage = (Button) findViewById(R.id.btnArbitrage);
         btnNPCFLIP = (Button) findViewById(R.id.btnNPCFLIP);
         btnBAZAARFLIP = (Button) findViewById(R.id.btnBAZAARFLIP);
+        comingSoon = (Button)findViewById(R.id.btnPriceHistory);
         txtMinutesSince = (TextView) findViewById(R.id.txtMinutesSince);
         txtWarnData = (TextView) findViewById(R.id.txtWarnData);
         pdStoring = new ProgressDialog(MainActivity.this);
@@ -467,7 +469,10 @@ public class MainActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        //signInSilently();
+        // Didn't get this to work, not deleting in case I need it later
+        // signInSilently();
+
+        //Part where I actually sign in.
         btnGoogleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -482,6 +487,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(goCredits);
+            }
+        });
+        //endregion
+
+        //regionCode for price history
+        //sike, its actually coming soon
+        final Intent goComingSoon = new Intent(this,ComingSoonActivity.class);
+        comingSoon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(goComingSoon);
             }
         });
         //endregion
@@ -580,7 +596,7 @@ public class MainActivity extends AppCompatActivity {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("Google Sign In Error", "signInResult:failed code=" + e.getStatusCode());
-            Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Could not sign in.\nMake sure you have the Google Play Games app, and that you are signed in on there.", Toast.LENGTH_LONG).show();
         }
     }
 

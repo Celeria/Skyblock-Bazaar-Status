@@ -18,6 +18,9 @@ public class AgreementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement);
+
+        setTitle("Agree to Terms");
+
         agree = findViewById(R.id.btnAgreeToTerms);
 
         final Intent goGreet = new Intent(this,GreetingActivity.class);

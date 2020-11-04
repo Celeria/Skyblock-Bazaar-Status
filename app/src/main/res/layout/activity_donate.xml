@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DonateActivity">
+
+    <Button
+        android:id="@+id/btnDonate099"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Give me 99 cents.\n(Google doesn't allow 1 dollar purchases)"
+        app:layout_constraintBottom_toTopOf="@+id/btnDonate299"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView51" />
+
+    <Button
+        android:id="@+id/btnDonate299"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Give me 3 dollars\n(Receive 3x the nothing extra)"
+        app:layout_constraintBottom_toTopOf="@+id/btnDonate549"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDonate099" />
+
+    <Button
+        android:id="@+id/btnDonate549"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Give me slightly more than 5 dollars\n(Perhaps you didn't want to waste a special promotion that saves you money if you spend over 5 dollars)"
+        app:layout_constraintBottom_toTopOf="@+id/btnDonate999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDonate299" />
+
+    <Button
+        android:id="@+id/btnDonate999"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Give me 10 dollars\n(You still get nothing besides knowing that I am in fact thankful for your support if you buy this)"
+        app:layout_constraintBottom_toTopOf="@+id/btnDonateTooMuch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDonate549" />
+
+    <Button
+        android:id="@+id/btnDonateTooMuch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Obligatory 99.99 purchase\n(worst value)"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDonate999" />
+
+    <TextView
+        android:id="@+id/textView51"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:text="Click any of the buttons below if you want to give me money. Remember, by giving me money, you don't get anything extra in return. If that's cool with you, great, I appreciate your support."
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
