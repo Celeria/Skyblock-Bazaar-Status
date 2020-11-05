@@ -138,9 +138,36 @@ public class MainActivity extends AppCompatActivity {
         //regionAgree to conditions
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean agreed = sharedPref.getBoolean("agreedToTerms",false);
-        //if the user hasn't agreed in the past, make them agree
-
+        //this part used to be further down, but we need to put it here for a quick fix
+        final String[] priceData = {null};
         if(!agreed){
+            //regionThe first ever time the app starts, it will crash if there's no data, this fixes it
+            try {
+                priceData[0] = new RetrieveData().execute(getString(R.string.url_beginning)).get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //Store it in sharedPreferences for use by other activities
+            Thread t = new Thread() {
+                @Override
+                public void run() {
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("currentData", priceData[0]);
+                    editor.commit();
+                }
+            };
+            t.start();
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //endregion
+
+            //if the user hasn't agreed in the past, make them agree
             Intent goAgree = new Intent(this,AgreementActivity.class);
             startActivity(goAgree);
         }
@@ -153,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
 
         //regionFetch data as soon as the app is opened
         //Only do so if a connection is found, and you are not on mobile data
-        final String[] priceData = {null};
         if (isConnected[0] && !isMetered) {
             pd = new ProgressDialog(MainActivity.this);
             pd.setMessage("Retrieving data from Hypixel.\n" +

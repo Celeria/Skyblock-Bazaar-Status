@@ -322,6 +322,7 @@ public class ChallengeActivity extends AppCompatActivity {
                         editor.putBoolean("solvedChallenge1", true);
                         editor.putBoolean("solvedChallenge1display",true);
                         editor.commit();
+                        Toast.makeText(getApplicationContext(),"Correct.",Toast.LENGTH_SHORT).show();
                     } else {
                         Toast fail = Toast.makeText(getApplicationContext(),"No, the correct answer was " + answer1,Toast.LENGTH_LONG);
                         fail.show();
@@ -351,6 +352,7 @@ public class ChallengeActivity extends AppCompatActivity {
                     editor.putBoolean("solvedChallenge2display",true);
                     editor.commit();
                     txtSolved2.setVisibility(View.VISIBLE);
+                    Toast.makeText(getApplicationContext(),"Correct.",Toast.LENGTH_SHORT).show();
                 } else {
                     Toast fail = Toast.makeText(getApplicationContext(),"That answer is not what I was looking for.",Toast.LENGTH_LONG);
                     fail.show();

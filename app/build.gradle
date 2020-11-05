@@ -8,8 +8,8 @@ android {
         applicationId "com.andranym.skyblockbazaarstatus"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 12
-        versionName "ALPHA-1.12"
+        versionCode 13
+        versionName "PUBLIC-1.00"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
