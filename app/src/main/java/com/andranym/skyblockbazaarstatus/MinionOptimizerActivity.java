@@ -811,7 +811,7 @@ public class MinionOptimizerActivity extends AppCompatActivity {
                     fuelNumber = fuelNumber * 100;
                 } else {
                     typeOfFuel = false;
-                    fuelNumber = multiplierNumber;
+                    fuelNumber = multiplierNumberInt;
                 }
                 //endregion
 

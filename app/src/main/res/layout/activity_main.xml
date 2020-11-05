@@ -123,24 +123,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="200dp"
                 android:text="@string/prices_last_updated"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtWelcomeMessage" />
+                app:layout_constraintTop_toBottomOf="@+id/txtWarnData" />
 
             <TextView
                 android:id="@+id/txtWarnData"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="16dp"
-                android:text="WARNING: Using mobile data. \nPressing update uses around\nhalf a megabyte."
-                android:visibility="invisible"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="WARNING: Using mobile data. Pressing update uses around half a megabyte of data."
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btnUpdateJson"
-                app:layout_constraintTop_toBottomOf="@+id/txtMinutesSince" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txtMinutesSince"
@@ -153,7 +152,7 @@
                 android:textStyle="bold"
                 android:visibility="visible"
                 app:layout_constraintStart_toEndOf="@+id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/txtWelcomeMessage" />
+                app:layout_constraintTop_toBottomOf="@+id/txtWarnData" />
 
             <TextView
                 android:id="@+id/txtWelcomeMessage"
