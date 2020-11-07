@@ -80,7 +80,7 @@ public class StonkActivity extends AppCompatActivity {
         //region Leader board for max coins
         try {
             Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
-                    .submitScore(getString(R.string.leaderboard_most_coins_earned), (long) (stonkBalance/1000000));
+                    .submitScore(getString(R.string.leaderboard_most_coins_earned), (long) (stonkBalance/100000));
         } catch(Exception e){
             //do nothing
         }

@@ -8,10 +8,12 @@
 
     <TextView
         android:id="@+id/textView23"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Modify individual minions, then click save to update rankings."
+        android:layout_marginEnd="8dp"
+        android:text="Tap a minion to expand/collapse. Change minion upgrades to see how they compare with each other. Remember to press update in order to refresh rankings."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

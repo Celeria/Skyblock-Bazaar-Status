@@ -42,6 +42,27 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
 
     Context context;
 
+    //Store whether or not a minion is collapsed, make first one expanded, rest collapsed
+    //Forgot how many minions there were, no more than this many, that's for sure
+    final boolean[] collapsed = {false,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+            true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true};
+    //This is definitely my favorite bodge of the whole app so far.
+
+
     public MinionRecViewAdapter(Context context) {
         this.context = context;
     }
@@ -73,10 +94,94 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
         holder.editTextNumberDecimalMiscBoost1.setText(Double.toString(minions.get(position).getMiscBoost1()*100));
         holder.editTextNumberDecimalMiscBoost2.setText(Double.toString(minions.get(position).getMiscBoost2()*100));
         holder.editTextNumberAdditionalMultiplier.setText(Double.toString(minions.get(position).getAdditionalMultiplier()));
-        if (!solved4) {
-            holder.txtRecMultplier.setVisibility(View.GONE);
+
+        //regionCollapse most to make it look better
+        if (collapsed[position]) {
+            holder.txtTierInfo.setVisibility(View.GONE);
+            holder.productScroll.setVisibility(View.GONE);
+            holder.txtMinionWarnings.setVisibility(View.GONE);
+            holder.txtFuelRecLabel.setVisibility(View.GONE);
+            holder.radioGroup.setVisibility(View.GONE);
+            holder.txtRecFuelType.setVisibility(View.GONE);
+            holder.spinnerRecUpgrade1.setVisibility(View.GONE);
+            holder.spinnerRecUpgrade2.setVisibility(View.GONE);
+            holder.txtUpgrade1.setVisibility(View.GONE);
+            holder.txtUpgrade2.setVisibility(View.GONE);
+            holder.txtPetBoostLabel.setVisibility(View.GONE);
+            holder.txtExtraBoost1.setVisibility(View.GONE);
+            holder.txtExtraBoost2.setVisibility(View.GONE);
+            holder.editTextNumberDecimalMiscBoost1.setVisibility(View.GONE);
+            holder.editTextNumberDecimalMiscBoost2.setVisibility(View.GONE);
+            holder.editTextNumberRecFuel.setVisibility(View.GONE);
+            holder.editTextNumberDecimalPetBoost.setVisibility(View.GONE);
+            holder.btnMinionUpdate.setVisibility(View.GONE);
+            holder.txtRecMultiplier.setVisibility(View.GONE);
             holder.editTextNumberAdditionalMultiplier.setVisibility(View.GONE);
         }
+        if (!solved4) {
+            holder.txtRecMultiplier.setVisibility(View.GONE);
+            holder.editTextNumberAdditionalMultiplier.setVisibility(View.GONE);
+        }
+        //endregion
+
+        //regionExpand when it is clicked
+        holder.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(collapsed[position]) {
+                    collapsed[position] = false;
+                    holder.txtTierInfo.setVisibility(View.VISIBLE);
+                    holder.productScroll.setVisibility(View.VISIBLE);
+                    holder.txtMinionWarnings.setVisibility(View.VISIBLE);
+                    holder.txtFuelRecLabel.setVisibility(View.VISIBLE);
+                    holder.radioGroup.setVisibility(View.VISIBLE);
+                    holder.txtRecFuelType.setVisibility(View.VISIBLE);
+                    holder.spinnerRecUpgrade1.setVisibility(View.VISIBLE);
+                    holder.spinnerRecUpgrade2.setVisibility(View.VISIBLE);
+                    holder.txtUpgrade1.setVisibility(View.VISIBLE);
+                    holder.txtUpgrade2.setVisibility(View.VISIBLE);
+                    holder.txtPetBoostLabel.setVisibility(View.VISIBLE);
+                    holder.txtExtraBoost1.setVisibility(View.VISIBLE);
+                    holder.txtExtraBoost2.setVisibility(View.VISIBLE);
+                    holder.editTextNumberDecimalMiscBoost1.setVisibility(View.VISIBLE);
+                    holder.editTextNumberDecimalMiscBoost2.setVisibility(View.VISIBLE);
+                    holder.editTextNumberRecFuel.setVisibility(View.VISIBLE);
+                    holder.editTextNumberDecimalPetBoost.setVisibility(View.VISIBLE);
+                    holder.btnMinionUpdate.setVisibility(View.VISIBLE);
+                    holder.txtRecMultiplier.setVisibility(View.VISIBLE);
+                    holder.editTextNumberAdditionalMultiplier.setVisibility(View.VISIBLE);
+                    if (!solved4) {
+                        holder.txtRecMultiplier.setVisibility(View.GONE);
+                        holder.editTextNumberAdditionalMultiplier.setVisibility(View.GONE);
+                    }
+                } else {
+                    collapsed[position] = true;
+                    holder.txtTierInfo.setVisibility(View.GONE);
+                    holder.productScroll.setVisibility(View.GONE);
+                    holder.txtMinionWarnings.setVisibility(View.GONE);
+                    holder.txtFuelRecLabel.setVisibility(View.GONE);
+                    holder.radioGroup.setVisibility(View.GONE);
+                    holder.txtRecFuelType.setVisibility(View.GONE);
+                    holder.spinnerRecUpgrade1.setVisibility(View.GONE);
+                    holder.spinnerRecUpgrade2.setVisibility(View.GONE);
+                    holder.txtUpgrade1.setVisibility(View.GONE);
+                    holder.txtUpgrade2.setVisibility(View.GONE);
+                    holder.txtPetBoostLabel.setVisibility(View.GONE);
+                    holder.txtExtraBoost1.setVisibility(View.GONE);
+                    holder.txtExtraBoost2.setVisibility(View.GONE);
+                    holder.editTextNumberDecimalMiscBoost1.setVisibility(View.GONE);
+                    holder.editTextNumberDecimalMiscBoost2.setVisibility(View.GONE);
+                    holder.editTextNumberRecFuel.setVisibility(View.GONE);
+                    holder.editTextNumberDecimalPetBoost.setVisibility(View.GONE);
+                    holder.btnMinionUpdate.setVisibility(View.GONE);
+                    holder.txtRecMultiplier.setVisibility(View.GONE);
+                    holder.editTextNumberAdditionalMultiplier.setVisibility(View.GONE);
+                }
+                notifyDataSetChanged();
+            }
+        });
+        //endregion
+
         ArrayList<String> upgrades = new ArrayList<>();
         upgrades.add("Compactor");
         upgrades.add("Super Compactor");
@@ -1034,7 +1139,13 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
         TextView txtTierInfo;
         TextView txtItemsPerAction;
         TextView txtRecFuelType;
-        TextView txtRecMultplier;
+        TextView txtRecMultiplier;
+        TextView txtFuelRecLabel;
+        TextView txtPetBoostLabel;
+        TextView txtExtraBoost1;
+        TextView txtExtraBoost2;
+        TextView txtUpgrade1;
+        TextView txtUpgrade2;
         HorizontalScrollView productScroll;
         EditText editTextNumberDecimalMiscBoost1;
         EditText editTextNumberDecimalMiscBoost2;
@@ -1056,7 +1167,13 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
             txtNPCPrice = itemView.findViewById(R.id.txtNPCPrice);
             txtTierInfo = itemView.findViewById(R.id.txtTierInfo);
             txtItemsPerAction = itemView.findViewById(R.id.txtItemsPerAction);
-            txtRecMultplier = itemView.findViewById(R.id.txtRecMultiplier);
+            txtRecMultiplier = itemView.findViewById(R.id.txtRecMultiplier);
+            txtFuelRecLabel = itemView.findViewById(R.id.txtFuelRecLabel);
+            txtPetBoostLabel = itemView.findViewById(R.id.txtPetBoostLabel);
+            txtExtraBoost1 = itemView.findViewById(R.id.txtExtraBoost1);
+            txtExtraBoost2 = itemView.findViewById(R.id.txtExtraBoost2);
+            txtUpgrade1 = itemView.findViewById(R.id.txtUpgrade1);
+            txtUpgrade2 = itemView.findViewById(R.id.txtUpgrade2);
             editTextNumberDecimalMiscBoost1 = itemView.findViewById(R.id.editTextNumberDecimalMiscBoost1);
             editTextNumberDecimalMiscBoost2 = itemView.findViewById(R.id.editTextNumberDecimalMiscBoost2);
             editTextNumberAdditionalMultiplier = itemView.findViewById(R.id.editTextAdditionalMultiplier);
