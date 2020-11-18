@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
         //region Check for internet connection
         ConnectivityManager cm = (ConnectivityManager) MainActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
-
         final NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         final boolean[] isConnected = {activeNetwork != null && activeNetwork.isConnectedOrConnecting()};
         final boolean isMetered = cm.isActiveNetworkMetered();
@@ -222,10 +221,10 @@ public class MainActivity extends AppCompatActivity {
         }
         //endregion
 
-        //regionDisplay welcome message and color if needed
+        //regionDisplay visit counter and color if needed
+        int visitCount = sharedPref.getInt("visitCounter",1);
         boolean displayWelcome = sharedPref.getBoolean("displayWelcome",false);
         if(displayWelcome){
-            txtWelcome.setText("Welcome, and congrats on challenge completion!");
             txtWelcome.setVisibility(View.VISIBLE);
         }
         boolean useDifferentColor = sharedPref.getBoolean("useDifferentColor",false);
@@ -238,6 +237,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "That is an invalid color", Toast.LENGTH_SHORT).show();
             }
         }
+        String visitMessage = "Welcome back! Number of times opened: " + visitCount;
+        txtWelcome.setText(visitMessage);
+        ++visitCount;
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("visitCounter",visitCount);
+        editor.apply();
+
         //endregion
 
         //region Code for what happens when you press the VIEW CURRENT BAZAAR PRICES button
@@ -422,7 +428,6 @@ public class MainActivity extends AppCompatActivity {
         //region Block people from stealing this app
         boolean usedBefore = sharedPref.getBoolean("copyWriteDetection",false);
         if (!usedBefore) {
-            SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean("copyWriteDetection",true);
             editor.putLong("timeAccessed",System.currentTimeMillis());
             editor.commit();
@@ -605,7 +610,6 @@ public class MainActivity extends AppCompatActivity {
         //Display welcome if desired
         boolean displayWelcome = sharedPref.getBoolean("displayWelcome",false);
         if(displayWelcome){
-            txtWelcome.setText("Welcome, and congrats on challenge completion!");
             txtWelcome.setVisibility(View.VISIBLE);
         }
         //change color if desired

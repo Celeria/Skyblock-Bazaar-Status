@@ -133,7 +133,7 @@ public class ChallengeActivity extends AppCompatActivity {
         final boolean solved6display = data.getBoolean("solvedChallenge6display",false);
         final boolean solved7display = data.getBoolean("solvedChallenge7display",false);
         final boolean solved8display = data.getBoolean("solvedChallenge8display",false);
-        final boolean solved9display = data.getBoolean("solvedChallenge8display",false);
+        final boolean solved9display = data.getBoolean("solvedChallenge9display",false);
         //endregion
 
         //Make random number generator
@@ -401,7 +401,7 @@ public class ChallengeActivity extends AppCompatActivity {
                             int successes = 0;
 
                             //Instead, simulate this situation 100,000 times to get the approx answer
-                            for (int i = 0; i < 100000; ++i) {
+                            for (int i = 0; i < 10000; ++i) {
 
                                 //Fill array with possible birthdays
                                 int[] currentTest = new int[alienPopulation[0]];
@@ -425,12 +425,13 @@ public class ChallengeActivity extends AppCompatActivity {
                                 }
                             }
 
-                            double realAnswer = (double)successes / 100000;
+                            double realAnswer = (double)successes / 10000;
 
                             if (Math.abs(answer - realAnswer) <= 0.01) {
                                 SharedPreferences.Editor editor = data.edit();
                                 editor.putBoolean("solvedChallenge3", true);
                                 editor.putBoolean("solvedChallenge3display",true);
+                                Toast.makeText(getApplicationContext(),"Correct.",Toast.LENGTH_SHORT).show();
                                 editor.commit();
                                 txtSolved3.setVisibility(View.VISIBLE);
                                 switchFancyTimer.setVisibility(View.VISIBLE);
@@ -524,6 +525,14 @@ public class ChallengeActivity extends AppCompatActivity {
                             fail.show();
                         }
                     }
+                }
+                if (solved5 && userAnswer.contains("I can't do the the multiplier one because my accelerometer is garbage, let me " +
+                        "use this easter egg to unlock it.")) {
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putBoolean("solvedChallenge4", true);
+                    editor.putBoolean("solvedChallenge4display",true);
+                    editor.commit();
+                    Toast.makeText(getApplicationContext(),"Read the source code, didn't you? Sneaky sneaky.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
