@@ -65,11 +65,20 @@ public class ArbitrageMenu extends AppCompatActivity {
         final Intent goToBazaar = new Intent(this,BazaarFlipActivity.class);
         final SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final boolean solved2 = data.getBoolean("solvedChallenge2",false);
+        final int flipTrials = data.getInt("flipTrials",5);
         final Toast fail = Toast.makeText(this,"You need to complete challenge 2 in order to use this feature.",Toast.LENGTH_LONG);
         btnBazaarFlip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (solved2) {
+                if (solved2 || flipTrials > 0) {
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    if (!solved2) {
+                        int tempTrials = flipTrials - 1;
+                        editor.putInt("minionFreeTrials", tempTrials);
+                        editor.commit();
+                        Toast.makeText(getApplicationContext(),"You have can use this feature " + tempTrials + " more times.\nThen you must complete Challenge 1 to continue to use this feature",Toast.LENGTH_LONG).show();
+                    }
                     startActivity(goToBazaar);
                 } else {
                     fail.show();

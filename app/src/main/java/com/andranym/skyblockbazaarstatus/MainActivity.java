@@ -25,6 +25,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.games.Games;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -246,6 +247,20 @@ public class MainActivity extends AppCompatActivity {
 
         //endregion
 
+        //regionUpload usage count if signed in
+        if (isConnected[0] && !showMobileWarning[0]) {
+            //Honestly I added this because google tells me how many times people ping for sign in, and I'm somewhat
+            //curious how much people use my app, this way I get a ping each time someone opens the app, I'll remove it if it gets excessive, or limit it heavily
+            try {
+                Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
+                        .submitScore(getString(R.string.leaderboard_most_active_users),visitCount);
+            } catch(Exception e){
+                //do nothing
+            }
+        }
+
+        //endregion
+
         //region Code for what happens when you press the VIEW CURRENT BAZAAR PRICES button
         final Intent intentViewPrices = new Intent(this, ViewPricesNoScrollActivity.class);
         btnViewPrices.setOnClickListener(new View.OnClickListener() {
@@ -337,11 +352,20 @@ public class MainActivity extends AppCompatActivity {
         //regionCode for the Minion Optimizer button
         final Intent intentMinionOptimizer = new Intent(this,MinionOptimizerActivity.class);
         solved1 = sharedPref.getBoolean("solvedChallenge1",false);
+        final int minionTrials = sharedPref.getInt("minionFreeTrials",5);
         final Toast goSolve = Toast.makeText(this,"Complete the first challenge in order to access this feature.",Toast.LENGTH_LONG);
         btnMinionOptimizer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (solved1) {
+                if (solved1 || minionTrials > 0) {
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    if (!solved1) {
+                        int tempTrials = minionTrials - 1;
+                        editor.putInt("minionFreeTrials", tempTrials);
+                        editor.commit();
+                        Toast.makeText(getApplicationContext(),"You have can use this feature " + tempTrials + " more times.\nThen you must complete Challenge 1 to continue to use this feature",Toast.LENGTH_LONG).show();
+                    }
                     startActivity(intentMinionOptimizer);
                 } else {
                     goSolve.show();

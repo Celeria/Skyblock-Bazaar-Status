@@ -76,8 +76,8 @@ public class SettingsActivity extends AppCompatActivity {
         final int catalystFuelNumber = settingsData.getInt("catalystFuelNumber",3);
         final int customBoostNormal = settingsData.getInt("customBoostNormal",0);
         final int customBoostFly = settingsData.getInt("customBoostFly",0);
-        final String defaultUpgrade1 = settingsData.getString("defaultUpgrade1","Compactor");
-        final String defaultUpgrade2 = settingsData.getString("defaultUpgrade2","Auto Smelter");
+        final String defaultUpgrade1 = settingsData.getString("defaultUpgrade1","Super Compactor");
+        final String defaultUpgrade2 = settingsData.getString("defaultUpgrade2","Diamond Spreading");
         final int woodChecked = settingsData.getInt("woodChecked",0);
         final int farmChecked = settingsData.getInt("farmChecked",0);
         //endregion
