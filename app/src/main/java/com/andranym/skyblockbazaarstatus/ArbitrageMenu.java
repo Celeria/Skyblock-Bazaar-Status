@@ -77,7 +77,7 @@ public class ArbitrageMenu extends AppCompatActivity {
                         int tempTrials = flipTrials - 1;
                         editor.putInt("minionFreeTrials", tempTrials);
                         editor.commit();
-                        Toast.makeText(getApplicationContext(),"You have can use this feature " + tempTrials + " more times.\nThen you must complete Challenge 1 to continue to use this feature",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"You have can use this feature " + tempTrials + " more times.\nThen you must complete Challenge 2 to continue to use this feature",Toast.LENGTH_LONG).show();
                     }
                     startActivity(goToBazaar);
                 } else {

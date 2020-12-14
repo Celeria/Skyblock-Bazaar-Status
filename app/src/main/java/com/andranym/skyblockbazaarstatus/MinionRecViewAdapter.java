@@ -740,7 +740,6 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
                                     productType = 2;
                                     break;
                                 case "Glowstone Minion":
-                                case "Snow Minion":
                                 case "Quartz Minion":
                                     warnings = warnings + "\nNote: Using compactor, the blocks produced by this minion can only be crafted into enchanted items.";
                                     for (int j = 0; j < enchantedNames.size();++j) {
@@ -763,6 +762,20 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
                                     }
                                     productType = 1;
                                     break;
+                                case "Snow Minion":
+                                    warnings = warnings + "\nNote: Using compactor, the blocks produced by this minion can only be crafted into enchanted items.";
+                                    for (int j = 0; j < enchantedNames.size();++j) {
+                                        products.set(j,enchantedNames.get(j));
+                                        bazaarPricesString.add(addCommasAdjusted(Double.toString(bazaarEnchantedPrices.get(j))));
+                                        //Deal with snow being off
+                                        if (j == 0) {
+                                            npcPricesString.add("600.0");
+                                        } else {
+                                            npcPricesString.add(addCommasAdjusted(Double.toString(npcPrices.get(j)*enchantedDivider[j])));
+                                        }
+                                    }
+                                    productType = 1;
+                                    break;
                             }
                         }
 
@@ -770,7 +783,12 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
                             for (int j = 0; j < enchantedNames.size();++j) {
                                 products.set(j,enchantedNames.get(j));
                                 bazaarPricesString.add(addCommasAdjusted(Double.toString(bazaarEnchantedPrices.get(j))));
-                                npcPricesString.add(addCommasAdjusted(Double.toString(npcPrices.get(j)*enchantedDivider[j])));
+                                //Deal with enchanted snow prices being off
+                                if(name.equals("Snow Minion") && j == 0) {
+                                    npcPricesString.add("600.0");
+                                } else {
+                                    npcPricesString.add(addCommasAdjusted(Double.toString(npcPrices.get(j) * enchantedDivider[j])));
+                                }
                                 useNormalWarning = false;
                             }
                             productType = 1;
@@ -942,8 +960,15 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
                             } else if (productType == 1) {
                                 //For enchanted
                                 for (int eachProduct = 0; eachProduct < npcPrices.size(); ++eachProduct) {
-                                    double currentNPCProfit = 86400 /  (timeBetweenActions[j] * enchantedDivider[eachProduct] *
-                                            timeMultiplier) * npcPrices.get(eachProduct) * enchantedDivider[eachProduct] * itemsPerAction.get(eachProduct) * multiplierNumber;
+                                    //Deal with snow minions being broken
+                                    double currentNPCProfit;
+                                    if(name.equals("Snow Minion") && eachProduct == 0) {
+                                        currentNPCProfit = 86400 /  (timeBetweenActions[j] * enchantedDivider[eachProduct] *
+                                                timeMultiplier) * 600 * itemsPerAction.get(eachProduct) * multiplierNumber;
+                                    } else {
+                                        currentNPCProfit = 86400 /  (timeBetweenActions[j] * enchantedDivider[eachProduct] *
+                                                timeMultiplier) * npcPrices.get(eachProduct) * enchantedDivider[eachProduct] * itemsPerAction.get(eachProduct) * multiplierNumber;
+                                    }
                                     double currentBazaarProfit = 86400 / (timeBetweenActions[j] * enchantedDivider[eachProduct] * timeMultiplier)
                                             * bazaarEnchantedPrices.get(eachProduct) * itemsPerAction.get(eachProduct) * multiplierNumber;
                                     if (currentBazaarProfit < currentNPCProfit) {
@@ -967,8 +992,15 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
 
                                 //For enchanted
                                 for (int eachProduct = 0; eachProduct < npcPrices.size(); ++eachProduct) {
-                                    double currentNPCProfit = 86400 /  (timeBetweenActions[j] * enchantedDivider[eachProduct] *
-                                            timeMultiplier) * npcPrices.get(eachProduct) * enchantedDivider[eachProduct] * itemsPerAction.get(eachProduct) * multiplierNumber;
+                                    //Deal with snow minions being broken
+                                    double currentNPCProfit;
+                                    if(name.equals("Snow Minion") && eachProduct == 0) {
+                                        currentNPCProfit = 86400 /  (timeBetweenActions[j] * enchantedDivider[eachProduct] *
+                                                timeMultiplier) * 600 * itemsPerAction.get(eachProduct) * multiplierNumber;
+                                    } else {
+                                        currentNPCProfit = 86400 /  (timeBetweenActions[j] * enchantedDivider[eachProduct] *
+                                                timeMultiplier) * npcPrices.get(eachProduct) * enchantedDivider[eachProduct] * itemsPerAction.get(eachProduct) * multiplierNumber;
+                                    }
                                     double currentBazaarProfit = 86400 / (timeBetweenActions[j] * enchantedDivider[eachProduct] * timeMultiplier)
                                             * bazaarEnchantedPrices.get(eachProduct) * itemsPerAction.get(eachProduct) * multiplierNumber;
                                     if (currentBazaarProfit < currentNPCProfit) {
