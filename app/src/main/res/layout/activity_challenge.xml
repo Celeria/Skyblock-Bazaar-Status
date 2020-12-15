@@ -368,7 +368,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text="I have created a minigame here where you can trade bazaar goods, risk free. You can instant buy as many items as you can afford, at the current lowest buy price. You can later come back and sell as many as you want at the highest sell price. You can buy any items you want, you start with 1 million coins.\nBecome a billionaire and you can unlock a welcome message on the main menu."
+            android:text="I have created a minigame here where you can trade bazaar goods, risk free. You can instant buy as many items as you can afford, at the current lowest buy price. You can later come back and sell as many as you want at the highest sell price. You can buy any items you want, you start with 100 million coins.\nBecome a billionaire to get an achievement. There is also a leaderboard for this if you were curious how you stack up against other users."
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

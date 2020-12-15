@@ -25,8 +25,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.games.AnnotatedData;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.LeaderboardsClient;
+import com.google.android.gms.games.leaderboard.LeaderboardScore;
+import com.google.android.gms.games.leaderboard.LeaderboardVariant;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import org.json.JSONException;
@@ -223,7 +228,35 @@ public class MainActivity extends AppCompatActivity {
         //endregion
 
         //regionDisplay visit counter and color if needed
-        int visitCount = sharedPref.getInt("visitCounter",1);
+        final int[] visitCount = {sharedPref.getInt("visitCounter", 1)};
+
+        if(isConnected[0] && !showMobileWarning[0]) {
+            try {
+                //Retrieve the previous score, and if its higher, replace the current score
+                LeaderboardsClient mLeaderboardsClient = Games.getLeaderboardsClient(MainActivity.this, GoogleSignIn.getLastSignedInAccount(this));
+                mLeaderboardsClient.loadCurrentPlayerLeaderboardScore(getString(R.string.leaderboard_most_active_users), LeaderboardVariant.TIME_SPAN_ALL_TIME, LeaderboardVariant.COLLECTION_PUBLIC)
+                        .addOnSuccessListener(this, new OnSuccessListener<AnnotatedData<LeaderboardScore>>() {
+                            @Override
+                            public void onSuccess(AnnotatedData<LeaderboardScore> leaderboardScoreAnnotatedData) {
+                                long score = 0;
+                                if (leaderboardScoreAnnotatedData != null) {
+                                    if (leaderboardScoreAnnotatedData.get() != null) {
+                                        score = leaderboardScoreAnnotatedData.get().getRawScore();
+                                        if (score > visitCount[0]) {
+                                            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                            SharedPreferences.Editor editor = sharedPref.edit();
+                                            editor.putInt("visitCounter", (int) score + 1);
+                                            editor.apply();
+                                        }
+                                    }
+                                }
+                            }
+                        });
+            } catch (Exception e) {
+                //do nothing
+            }
+        }
+
         boolean displayWelcome = sharedPref.getBoolean("displayWelcome",false);
         if(displayWelcome){
             txtWelcome.setVisibility(View.VISIBLE);
@@ -238,11 +271,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "That is an invalid color", Toast.LENGTH_SHORT).show();
             }
         }
-        String visitMessage = "Welcome back! Number of times opened: " + visitCount;
+        String visitMessage = "Welcome back! Number of times opened: " + visitCount[0];
         txtWelcome.setText(visitMessage);
-        ++visitCount;
+        ++visitCount[0];
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("visitCounter",visitCount);
+        editor.putInt("visitCounter", visitCount[0]);
         editor.apply();
 
         //endregion
@@ -253,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
             //curious how much people use my app, this way I get a ping each time someone opens the app, I'll remove it if it gets excessive, or limit it heavily
             try {
                 Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
-                        .submitScore(getString(R.string.leaderboard_most_active_users),visitCount);
+                        .submitScore(getString(R.string.leaderboard_most_active_users), visitCount[0]);
             } catch(Exception e){
                 //do nothing
             }
@@ -545,7 +578,7 @@ public class MainActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // Didn't get this to work, not deleting in case I need it later
-        // signInSilently();
+        signInSilently();
 
         //Part where I actually sign in.
         btnGoogleSignIn.setOnClickListener(new View.OnClickListener() {
@@ -604,8 +637,6 @@ public class MainActivity extends AppCompatActivity {
                                         // See [sign-in best practices](http://developers.google.com/games/services/checklist) for guidance on how and when to implement Interactive Sign-in,
                                         // and [Performing Interactive Sign-in](http://developers.google.com/games/services/android/signin#performing_interactive_sign-in) for details on how to implement
                                         // Interactive Sign-in.
-                                        final Toast weird = Toast.makeText(getApplicationContext(),"something strange",Toast.LENGTH_SHORT);
-                                        weird.show();
                                     }
                                 }
                             });

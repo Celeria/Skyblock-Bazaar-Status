@@ -61,9 +61,17 @@ public class StonkActivity extends AppCompatActivity {
         double bazaarTax1 = 1-((double)(settings.getInt("personalBazaarTaxAmount",1250))/1000/100);
         stonkBalance = Double.parseDouble(settings.getString("stonkBalance","1000000"));
         stonkBalanceCheat = Double.parseDouble(settings.getString("stonkBalanceCheat","1000000"));
+        //Add a few more coins because I think 1 million isn't a lot.
+        if(settings.getBoolean("notGivenBoostOfCoins",true)){
+            stonkBalance += 99000000;
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("notGivenBoostOfCoins",false);
+            editor.putString("stonkBalance",Double.toString(stonkBalance));
+            editor.commit();
+        }
         //endregion
 
-        //regionaward achievement if you found the secret trick
+        //regionAward achievement if you found the secret trick
         if (bazaarTax1 > 1) {
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean("solvedChallenge6", true);
