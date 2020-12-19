@@ -8,8 +8,8 @@ android {
         applicationId "com.andranym.skyblockbazaarstatus"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 19
-        versionName "AH#0000ff"
+        versionCode 20
+        versionName "Market Destroying Update"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

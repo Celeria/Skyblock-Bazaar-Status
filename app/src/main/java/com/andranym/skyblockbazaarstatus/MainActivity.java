@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnMinionOptimizer;
     Button btnGoogleSignIn;
     Button btnCredits;
-    Button comingSoon;
+    Button btnPriceHistory;
     TextView txtMinutesSince;
     TextView txtWarnData;
     TextView txtWelcome;
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         btnArbitrage = (Button) findViewById(R.id.btnArbitrage);
         btnNPCFLIP = (Button) findViewById(R.id.btnNPCFLIP);
         btnBAZAARFLIP = (Button) findViewById(R.id.btnBAZAARFLIP);
-        comingSoon = (Button)findViewById(R.id.btnPriceHistory);
+        btnPriceHistory = (Button)findViewById(R.id.btnPriceHistory);
         txtMinutesSince = (TextView) findViewById(R.id.txtMinutesSince);
         txtWarnData = (TextView) findViewById(R.id.txtWarnData);
         txtWelcome = (TextView)findViewById(R.id.txtWelcomeMessage);
@@ -175,6 +175,15 @@ public class MainActivity extends AppCompatActivity {
             //if the user hasn't agreed in the past, make them agree
             Intent goAgree = new Intent(this,AgreementActivity.class);
             startActivity(goAgree);
+        }
+        //endregion
+
+        //regionCheck for update
+        if(sharedPref.getBoolean("needToShowUpdateScreen",true)){
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("needToShowUpdateScreen",false);
+            editor.commit();
+            startActivity(new Intent(this,UpdateActivity.class));
         }
         //endregion
 
@@ -600,12 +609,11 @@ public class MainActivity extends AppCompatActivity {
         //endregion
 
         //regionCode for price history
-        //sike, its actually coming soon
-        final Intent goComingSoon = new Intent(this,ComingSoonActivity.class);
-        comingSoon.setOnClickListener(new View.OnClickListener() {
+        btnPriceHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(goComingSoon);
+                //startActivity(new Intent(getApplicationContext(),PriceHistoryMenuActivity.class));
+                startActivity(new Intent(getApplicationContext(),ComingSoonActivity.class));
             }
         });
         //endregion

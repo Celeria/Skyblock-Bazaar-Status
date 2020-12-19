@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ import java.util.TreeMap;
 public class ViewPricesNoScrollActivity extends AppCompatActivity {
 
     TextView txtTime;
+    EditText search;
     ListView productsListView;
 
     @Override
@@ -40,6 +42,7 @@ public class ViewPricesNoScrollActivity extends AppCompatActivity {
         //region Declare UI elements
         txtTime = (TextView)findViewById(R.id.txtTime);
         productsListView = findViewById(R.id.productsList);
+        search = findViewById(R.id.editTxtSearchPrices);
         //endregion
 
         //regionGet the data we need for this activity
@@ -324,6 +327,162 @@ public class ViewPricesNoScrollActivity extends AppCompatActivity {
                 //endregion
             //endregion
 
+        //endregion
+
+        //region Search for an item
+        final JSONObject finalPriceData = priceData;
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                String previousSearch = search.getText().toString();
+                while(true){
+                    String currentSearch = search.getText().toString();
+                    //Only perform work when the user has entered new text
+                    if (currentSearch.equals(previousSearch)){
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        previousSearch = currentSearch;
+                        //So there is consistency
+                        currentSearch = currentSearch.toLowerCase();
+                        //Store all of the things to search for
+                        ArrayList<String> searchTerms = new ArrayList<>();
+                        String currentSearchTerm = "";
+                        //It makes sense that users will put spaces in between new terms, and the
+                        //actual data does not use spaces, so I'll just run .contains on each term, separated
+                        //by spaces
+                        for (int i = 0; i < currentSearch.length(); ++i){
+                            if (currentSearch.substring(i,i+1).equals(" ")){
+                                searchTerms.add(currentSearchTerm);
+                                currentSearchTerm = "";
+                            } else {
+                                currentSearchTerm += (currentSearch.charAt(i));
+                            }
+                        }
+                        searchTerms.add(currentSearchTerm);
+
+                        //Get list of all possible items
+                        final ArrayList<String> products = new ArrayList<>();
+                        JSONObject productsList = null;
+                        try {
+                            assert finalPriceData != null;
+                            productsList = finalPriceData.getJSONObject("products");
+                            Iterator<String> productIterator = productsList.keys();
+                            while (productIterator.hasNext()){
+                                String current_product = productIterator.next();
+                                String possible_correction = new FixBadNames().fix(current_product);
+                                if (possible_correction != null) {
+                                    current_product = possible_correction;
+                                }
+                                products.add(current_product);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //Get only the list of items the user wants
+                        final ArrayList<String> productsWanted = new ArrayList<>();
+                        for(String possibleProduct:products){
+                            //Check all the search terms, if a product contains the term, add it to the list
+                            for(String term : searchTerms) {
+                                if(possibleProduct.toLowerCase().contains(term)){
+                                    String possibleCorrection = new FixBadNames().unfix(possibleProduct);
+                                    if(possibleCorrection != null) {
+                                        possibleProduct = possibleCorrection;
+                                    }
+                                    productsWanted.add(possibleProduct);
+                                    break;
+                                }
+                            }
+                        }
+                        //Use the same stupid method from earlier to actually display the products
+                        final ArrayList<String> productsWantedInformation = new ArrayList<>();
+                        //Acquire the number of buy and sell orders
+                        for (String product : productsWanted) {
+                            try {
+                                int buyOrders = productsList.getJSONObject(product).getJSONObject("quick_status").getInt("buyOrders");
+                                int sellOrders = productsList.getJSONObject(product).getJSONObject("quick_status").getInt("sellOrders");
+
+                                double buyPrice;
+                                if (buyOrders != 0) {
+                                    buyPrice = productsList.getJSONObject(product).getJSONArray("buy_summary").getJSONObject(0).getDouble("pricePerUnit");
+                                } else {
+                                    buyPrice = 0;
+                                }
+
+                                double sellPrice;
+                                if (buyOrders != 0) {
+                                    sellPrice = productsList.getJSONObject(product).getJSONArray("sell_summary").getJSONObject(0).getDouble("pricePerUnit");
+                                } else {
+                                    sellPrice = 0;
+                                }
+
+                                buyPrice = Round2(buyPrice);
+                                sellPrice = Round2(sellPrice);
+                                String buyMessage = Double.toString(buyPrice);
+                                String sellMessage = Double.toString(sellPrice);
+
+                                //Add commas to numbers for maximum readability
+                                buyMessage = addCommasAdjusted(buyMessage);
+                                sellMessage = addCommasAdjusted(sellMessage);
+                                String buyOrdersCommas = addCommas(Integer.toString(buyOrders));
+                                String sellOrdersCommas = addCommas(Integer.toString(sellOrders));
+
+                                //Sad message for very unpopular items
+                                if (buyPrice == 0.0) {
+                                    buyMessage = "Nobody is selling this item ¯\\_(ツ)_/¯";
+                                }
+                                if (sellPrice == 0.0) {
+                                    sellMessage = "Nobody is buying this item ¯\\_(ツ)_/¯";
+                                }
+
+                                String possible_correction = new FixBadNames().fix(product);
+                                if (possible_correction != null) {
+                                    product = possible_correction;
+                                }
+
+                                String listEntry = product + "\n    Buy for: " + buyMessage + "\n    Sell for: " + sellMessage +
+                                        "\n    Buy Orders: " + buyOrdersCommas + "\n    Sell Orders: " + sellOrdersCommas;
+                                productsWantedInformation.add(listEntry);
+                            } catch (Exception e){
+                                //Nothing to do here
+                            }
+                        }
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Put it all in the listview
+                                ArrayAdapter<String> productAdapter = new ArrayAdapter<>(
+                                        ViewPricesNoScrollActivity.this,
+                                        android.R.layout.simple_list_item_1,
+                                        productsWantedInformation
+                                );
+
+                                productsListView.setAdapter(productAdapter);
+                                //View details of each item if desired
+                                productsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        final Intent viewDetails = new Intent(getApplicationContext(), ExtraDetailViewPricesActivity.class);
+                                        String itemName = productsWanted.get(position);
+                                        String possibleCorrection = new FixBadNames().fix(itemName);
+                                        if (possibleCorrection != null) {
+                                            itemName = possibleCorrection;
+                                        }
+                                        viewDetails.putExtra("itemToExpand",itemName);
+                                        startActivity(viewDetails);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+            }
+        }.start();
         //endregion
 
         //region Displays how long its been since the data was last updated
