@@ -1,7 +1,12 @@
 package com.andranym.skyblockbazaarstatus;
 
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.audiofx.BassBoost;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,15 +23,35 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.Operation;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkContinuation;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+import androidx.work.WorkQuery;
+import androidx.work.WorkRequest;
+
+import com.google.common.util.concurrent.ListenableFuture;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.min;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -56,6 +81,15 @@ public class SettingsActivity extends AppCompatActivity {
     CheckBox checkBoxFarmCrystal;
     CheckBox checkBoxWoodCrystal;
     Button btnSaveMinionSettings;
+    EditText editNumMinutesBetweeenUpdate;
+    CheckBox checkMobileData;
+    Switch switchGiveNotifications;
+    EditText editNumPercentThreshold;
+    EditText editNumCoinThreshold;
+    Button btnScheduleData;
+    TextView txtRetrievalSettings;
+    TextView txtMinimumCoin;
+    TextView txtNotificationThreshold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +143,15 @@ public class SettingsActivity extends AppCompatActivity {
         checkBoxWoodCrystal = findViewById(R.id.checkBoxWoodCrystal);
         btnSaveMinionSettings = findViewById(R.id.btnSaveMinionSettings);
         editTextFuel = findViewById(R.id.editTextFuel);
+        editNumMinutesBetweeenUpdate = findViewById(R.id.editNumMinutesBetweenUpdate);
+        checkMobileData = findViewById(R.id.checkMobileUpdate);
+        switchGiveNotifications = findViewById(R.id.switchGiveNotifications);
+        editNumPercentThreshold = findViewById(R.id.editNumPercentThreshold);
+        editNumCoinThreshold = findViewById(R.id.editNumCoinThreshold);
+        btnScheduleData = findViewById(R.id.btnScheduleData);
+        txtRetrievalSettings = findViewById(R.id.txtRetrievalSettings);
+        txtMinimumCoin = findViewById(R.id.txtMinimumCoin);
+        txtNotificationThreshold = findViewById(R.id.txtNotificationThreshold);
         //endregion
 
         //region Check the radio buttons according to saved user preferences
@@ -315,7 +358,7 @@ public class SettingsActivity extends AppCompatActivity {
                 upgrades.add("Custom Speed Boost " + customBoostNormal + "%");
                 upgrades.add("Custom Fuel Boost " + customBoostFly + "%");
                 upgrades.add("Flint Shovel");
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, upgrades);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item, upgrades);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerUpgrade1.setAdapter(adapter);
                 spinnerUpgrade2.setAdapter(adapter);
@@ -426,6 +469,197 @@ public class SettingsActivity extends AppCompatActivity {
             //endregion
 
         //endregion
+
+        //regionPrice history settings
+
+        //regionGet settings data from the user, and update the text to show them
+        new Thread(){
+            @Override
+            public void run() {
+                Looper.prepare();
+                super.run();
+                while(true) {
+                    //Find out how many minutes the user wants in between retrievals
+                    if(!editNumMinutesBetweeenUpdate.getText().toString().equals("")){
+                        int minutesDesired = Integer.parseInt(editNumMinutesBetweeenUpdate.getText().toString());
+                        if (minutesDesired >+ 15) {
+                            SharedPreferences.Editor editor = settingsData.edit();
+                            editor.putInt("retrievalGapMinutes",minutesDesired);
+                            editor.commit();
+                        } else {
+                            //Set a minimum of 15 minutes so the server doesn't overwhelm
+                            Toast.makeText(getApplicationContext(),"No.",Toast.LENGTH_SHORT).show();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    txtRetrievalSettings.setText("15");
+                                }
+                            });
+                        }
+                    }
+
+                    //Update the textviews regarding how often the data gets retrieved
+                    boolean hasScheduled = settingsData.getBoolean("scheduledDataRetrievalBefore", false);
+                    int retrievalInterval = settingsData.getInt("retrievalGapMinutes",15);
+                    if (hasScheduled){
+                        final String display = "Getting prices every " + retrievalInterval + " minutes.";
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                txtRetrievalSettings.setText(display);
+                            }
+                        });
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                txtRetrievalSettings.setText("You have not scheduled data retrieval.\nPress SCHEDULE DATA RETRIEVAL to do so.");
+                            }
+                        });
+                    }
+
+                    //Update the textviews regarding the threshold for notification
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            float coinThreshold = settingsData.getFloat("notificationThresholdCoins",0);
+                            txtMinimumCoin.setText("Don't want to notified when seeds changes by +100% from 0.1 to 0.2 coins?" +
+                                    "\nSet minimum below:\nYour current threshold: " + coinThreshold);
+                        }
+                    });
+
+                    if(!editNumCoinThreshold.getText().toString().equals("")){
+                        float coinThreshold = Float.parseFloat(editNumCoinThreshold.getText().toString());
+                        SharedPreferences.Editor editor = settingsData.edit();
+                        editor.putFloat("notificationThresholdCoins",coinThreshold);
+                        editor.commit();
+                    }
+
+                    //Update the textviews regarding the threshold for notification
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            float threshold = settingsData.getFloat("notificationThreshold",0);
+                            txtNotificationThreshold.setText("Set threshold for sending a notification:\nCurrent threshold: "
+                                    + Round(threshold,0) + "%");
+                        }
+                    });
+
+                    if(!editNumPercentThreshold.getText().toString().equals("")){
+                        float threshold = Float.parseFloat(editNumPercentThreshold.getText().toString());
+                        SharedPreferences.Editor editor = settingsData.edit();
+                        editor.putFloat("notificationThreshold",threshold);
+                        editor.commit();
+                    }
+
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
+        //endregion
+
+        //regionNotification options
+        switchGiveNotifications.setChecked(settingsData.getBoolean("showNotifications",true));
+        switchGiveNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                SharedPreferences.Editor editor = settingsData.edit();
+                editor.putBoolean("showNotifications", b);
+                editor.commit();
+                if (!b) {
+                    txtMinimumCoin.setVisibility(View.GONE);
+                    txtNotificationThreshold.setVisibility(View.GONE);
+                    editNumCoinThreshold.setVisibility(View.GONE);
+                    editNumPercentThreshold.setVisibility(View.GONE);
+                } else {
+                    txtMinimumCoin.setVisibility(View.VISIBLE);
+                    txtNotificationThreshold.setVisibility(View.VISIBLE);
+                    editNumCoinThreshold.setVisibility(View.VISIBLE);
+                    editNumPercentThreshold.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        //endregion
+
+        //regionUse mobile data option
+        checkMobileData.setChecked(settingsData.getBoolean("useMobileDataForRetrieval",false));
+        checkMobileData.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                SharedPreferences.Editor editor = settingsData.edit();
+                editor.putBoolean("useMobileDataForRetrieval", b);
+                editor.commit();
+            }
+        });
+        //endregion
+
+        final Toast tooOld = Toast.makeText(SettingsActivity.this, "You need Android 8+ to use this feature.\n" +
+                "Your phone cannot automatically retrieve data. But you can click the GET DATA NOW button over in price history to do it manually." +
+                "Its not my fault you are poor, spend less time on Skyblock, find a real job and get a better phone.", Toast.LENGTH_LONG);
+        final Toast success = Toast.makeText(SettingsActivity.this,"Your phone will now retrieve bazaar data even if this app is closed.",Toast.LENGTH_SHORT);
+        btnScheduleData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            //Ensure there's no lingering tasks each time
+
+                            boolean useData = settingsData.getBoolean("useMobileDataForRetrieval", false);
+                            int minutes = settingsData.getInt("retrievalGapMinutes", 15);
+                            SharedPreferences.Editor editor = settingsData.edit();
+                            editor.putBoolean("scheduledDataRetrievalBefore",true);
+                            editor.commit();
+
+                            Constraints constraints;
+                            if (useData) {
+                                constraints = new Constraints.Builder()
+                                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                                        .build();
+
+                            } else {
+                                constraints = new Constraints.Builder()
+                                        .setRequiredNetworkType(NetworkType.UNMETERED)
+                                        .build();
+                            }
+
+                            PeriodicWorkRequest dataRetrieval =  new PeriodicWorkRequest.Builder(RetrieveAndStoreDataAndNotify.class,
+                                    minutes, TimeUnit.MINUTES, 1, TimeUnit.MINUTES)
+                                    .setConstraints(constraints)
+                                    .addTag("dataRetrievalTask")
+                                    .build();
+
+                            WorkManager.getInstance(getApplicationContext()).enqueueUniquePeriodicWork("dataRetrievalTask",ExistingPeriodicWorkPolicy.REPLACE,dataRetrieval);
+                            success.show();
+                        } else {
+                            //Your device isn't smart enough to use this feature
+                            tooOld.show();
+                        }
+                    }
+                }.start();
+            }
+        });
+
+        //endregion
+    }
+
+    public double Round(double input,int scale) {
+        try {
+            if (scale > 30) {
+                scale = 30;
+            }
+            BigDecimal bd = BigDecimal.valueOf(input);
+            bd = bd.setScale(scale, RoundingMode.HALF_UP);
+            return bd.doubleValue();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     //Display help message

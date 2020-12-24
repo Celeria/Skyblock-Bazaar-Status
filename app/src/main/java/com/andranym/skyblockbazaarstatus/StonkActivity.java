@@ -46,6 +46,12 @@ public class StonkActivity extends AppCompatActivity {
 
         setTitle("Stonks Simulator");
 
+//        //When I mess up and need to reset the balance
+//        SharedPreferences mySPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+//        SharedPreferences.Editor editor1 = mySPrefs.edit();
+//        editor1.remove("notificationThresholdCoins");
+//        editor1.apply();
+
         //regionDeclare UI elements
         btnAddProduct = findViewById(R.id.btnAddProduct);
         btnStonkHelp = findViewById(R.id.btnStonkHelp);
@@ -149,7 +155,7 @@ public class StonkActivity extends AppCompatActivity {
         //endregion
 
         //region Fill spinner with each product
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, products);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(StonkActivity.this,  android.R.layout.simple_spinner_dropdown_item, products);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOwned.setAdapter(adapter);
         //endregion
@@ -168,7 +174,7 @@ public class StonkActivity extends AppCompatActivity {
                 //Display all products the user had previously ordered, does so by checking how many owned.
                 int currentlyOwned = settings.getInt("stonksOwned" + actualName,0);
                 boolean isPinned = settings.getBoolean("isPinned" + actualName,false);
-                if (currentlyOwned != 0 || isPinned) {
+                if (currentlyOwned > 0 || isPinned) {
                     //uses the "original name" provided by the API, this ensures it
                     String orderHistory = "Order History:\n" + settings.getString("orderHistory" + actualName,"");
                     Stonk currentStonk = new Stonk(product,currentlyOwned,orderHistory);
@@ -262,6 +268,11 @@ public class StonkActivity extends AppCompatActivity {
 
     //Add commas method, adjusted to work with decimal places at the end
     public String addCommasAdjusted(String digits) {
+
+        if(digits.equals("1.0E8")){
+            return "100,000,000";
+        }
+
         //Store the part with the decimal
         String[] digitsSplit = digits.split("\\.");
         String beforeDecimal = digitsSplit[0];

@@ -137,7 +137,7 @@ public class FavoriteActivity extends AppCompatActivity {
         //endregion
 
         //region Put the list of items in the spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, products);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(FavoriteActivity.this,  android.R.layout.simple_spinner_dropdown_item, products);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFavorites.setAdapter(adapter);
         //endregion

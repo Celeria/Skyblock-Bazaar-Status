@@ -1,5 +1,8 @@
 package com.andranym.skyblockbazaarstatus;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +11,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
@@ -19,6 +23,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -37,13 +48,17 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Map;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 45782;
+    public static final String CHANNEL_ID = "Skyblock Bazaar Price Change";
     GoogleSignInClient mGoogleSignInClient;
     Button btnViewPrices;
     Button btnViewFavorites;
@@ -72,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setTitle("Main Menu");
+
+        //regionCreate notification channel so this app can send notifications if the user desires
+        createNotificationChannel();
+        //endregion
 
         //region Declare all UI elements
         btnViewPrices = (Button) findViewById(R.id.btnViewPrices);
@@ -141,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         //endregion
 
         //regionAgree to conditions
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean agreed = sharedPref.getBoolean("agreedToTerms",false);
         //this part used to be further down, but we need to put it here for a quick fix
         final String[] priceData = {null};
@@ -172,6 +191,12 @@ public class MainActivity extends AppCompatActivity {
             }
             //endregion
 
+            //region grab a bit of data for the price history, so it looks better for the first time
+            OneTimeWorkRequest dataRetrieval =  new OneTimeWorkRequest.Builder(RetrieveAndStoreDataAndNotify.class)
+                    .build();
+            WorkManager.getInstance(getApplicationContext()).enqueue(dataRetrieval);
+            //endregion
+
             //if the user hasn't agreed in the past, make them agree
             Intent goAgree = new Intent(this,AgreementActivity.class);
             startActivity(goAgree);
@@ -179,9 +204,9 @@ public class MainActivity extends AppCompatActivity {
         //endregion
 
         //regionCheck for update
-        if(sharedPref.getBoolean("needToShowUpdateScreen",true)){
+        if(sharedPref.getBoolean("needToShowUpdateScreen1",true)){
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("needToShowUpdateScreen",false);
+            editor.putBoolean("needToShowUpdateScreen1",false);
             editor.commit();
             startActivity(new Intent(this,UpdateActivity.class));
         }
@@ -194,51 +219,44 @@ public class MainActivity extends AppCompatActivity {
 
         //regionFetch data as soon as the app is opened
         //Only do so if a connection is found, and you are not on mobile data
-        if (isConnected[0] && !isMetered) {
-            pd = new ProgressDialog(MainActivity.this);
-            pd.setMessage("Retrieving data from Hypixel.\n" +
-                    "If it\'s down this won\'t work either.\n" +
-                    "Its like half a megabyte of data, if your phone is trash, it might take a moment to process as well.\n" +
-                    "Honestly if you had time to read this whole message either your internet or your phone is probably trash\n" +
-                    "Or maybe you are a speed reader, that's also possible.\n" +
-                    "I\'m honestly just putting stuff here so you have something to look at, you are welcome.");
-            pd.setCancelable(false);
-            pd.show();
-            try {
-                priceData[0] = new RetrieveData().execute(getString(R.string.url_beginning)).get();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //Store it in sharedPreferences for use by other activities
-            Thread t = new Thread() {
-                @Override
-                public void run() {
-                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("currentData", priceData[0]);
-                    editor.commit();
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                if (isConnected[0] && !isMetered) {
+                    try {
+                        priceData[0] = new RetrieveData().execute(getString(R.string.url_beginning)).get();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    //Store it in sharedPreferences for use by other activities
+                    Thread t = new Thread() {
+                        @Override
+                        public void run() {
+                            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putString("currentData", priceData[0]);
+                            editor.commit();
+                        }
+                    };
+                    t.start();
+                    try {
+                        t.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else{
+                    //If no connection, fetch the data from before
+                    priceData[0] = sharedPref.getString("currentData",null);
                 }
-            };
-            t.start();
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
-            if (pd.isShowing()) {
-                pd.dismiss();
-            }
-        } else{
-            //If no connection, fetch the data from before
-            priceData[0] = sharedPref.getString("currentData",null);
-        }
+        }.start();
         //endregion
 
         //regionDisplay visit counter and color if needed
         final int[] visitCount = {sharedPref.getInt("visitCounter", 1)};
-
         if(isConnected[0] && !showMobileWarning[0]) {
             try {
                 //Retrieve the previous score, and if its higher, replace the current score
@@ -255,6 +273,24 @@ public class MainActivity extends AppCompatActivity {
                                             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                                             SharedPreferences.Editor editor = sharedPref.edit();
                                             editor.putInt("visitCounter", (int) score + 1);
+                                            editor.apply();
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                mLeaderboardsClient.loadCurrentPlayerLeaderboardScore(getString(R.string.leaderboard_notifications_received), LeaderboardVariant.TIME_SPAN_ALL_TIME, LeaderboardVariant.COLLECTION_PUBLIC)
+                        .addOnSuccessListener(this, new OnSuccessListener<AnnotatedData<LeaderboardScore>>() {
+                            @Override
+                            public void onSuccess(AnnotatedData<LeaderboardScore> leaderboardScoreAnnotatedData) {
+                                if (leaderboardScoreAnnotatedData != null) {
+                                    if (leaderboardScoreAnnotatedData.get() != null) {
+                                        long notificationsPrevious = leaderboardScoreAnnotatedData.get().getRawScore();
+                                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                        int oldNotifications = sharedPref.getInt("numberOfNotificationsSent",0);
+                                        if (notificationsPrevious > oldNotifications) {
+                                            SharedPreferences.Editor editor = sharedPref.edit();
+                                            editor.putInt("numberOfNotificationsSent", (int) notificationsPrevious);
                                             editor.apply();
                                         }
                                     }
@@ -492,18 +528,18 @@ public class MainActivity extends AppCompatActivity {
         //endregion
 
         //region Block people from stealing this app
-        boolean usedBefore = sharedPref.getBoolean("copyWriteDetection",false);
-        if (!usedBefore) {
-            editor.putBoolean("copyWriteDetection",true);
-            editor.putLong("timeAccessed",System.currentTimeMillis());
-            editor.commit();
-        } else {
-            long timeAccessed = sharedPref.getLong("timeAccessed",0);
-            if ((double)(System.currentTimeMillis() - timeAccessed)/1000/60/60/24 > 3) {
-                Intent blockUser = new Intent(this,BannedActivity.class);
-                startActivity(blockUser);
-            }
-        }
+//        boolean usedBefore = sharedPref.getBoolean("copyWriteDetection",false);
+//        if (!usedBefore) {
+//            editor.putBoolean("copyWriteDetection",true);
+//            editor.putLong("timeAccessed",System.currentTimeMillis());
+//            editor.commit();
+//        } else {
+//            long timeAccessed = sharedPref.getLong("timeAccessed",0);
+//            if ((double)(System.currentTimeMillis() - timeAccessed)/1000/60/60/24 > 3) {
+//                Intent blockUser = new Intent(this,BannedActivity.class);
+//                startActivity(blockUser);
+//            }
+//        }
         //endregion
 
         //region Displays how long its been since the data was last updated
@@ -570,7 +606,7 @@ public class MainActivity extends AppCompatActivity {
                         //Call the task that can actually access UI elements
                         new checkTime().execute(unixTimeDataUpdated);
                         new showMobileWarning().execute(showMobileWarning[0]);
-                        SystemClock.sleep(5000);
+                        SystemClock.sleep(1000);
                         //Take a break so this thread isn't too resource intensive
                     }
                 }
@@ -613,7 +649,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //startActivity(new Intent(getApplicationContext(),PriceHistoryMenuActivity.class));
-                startActivity(new Intent(getApplicationContext(),ComingSoonActivity.class));
+                startActivity(new Intent(getApplicationContext(),PriceHistoryMenuActivity.class));
             }
         });
         //endregion
@@ -654,7 +690,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //signInSilently();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         //Reset the ability to use minion optimizer/terms agreed
         agreed = sharedPref.getBoolean("agreedToTerms",false);
@@ -709,6 +744,23 @@ public class MainActivity extends AppCompatActivity {
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
+        }
+    }
+
+    //Set up the notification channel so the app can send notifications
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Bazaar Information Update";
+            String description = "Receive notifications if Skyblock Bazaar prices change enough for you to care.";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 

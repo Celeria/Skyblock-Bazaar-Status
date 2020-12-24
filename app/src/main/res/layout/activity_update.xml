@@ -9,10 +9,11 @@
     <TextView
         android:id="@+id/textView26"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="App has been updated!\n\nWhat's new:\n\nAdded a search function to view prices.\n\nTo the two of you who donated money, thanks!"
+        android:text="App has been updated!\n\nWhat's new:\n\nAdded the notifications when prices change, go to settings to schedule how often you want your phone to get data, and go to price history to view the price graphs. I recommend waiting at least a couple days before enabling notifications, otherwise you'll get spammed with updates as prices change pretty quick. But yeah, get ready to make some serious flipping money, I have literally watched some 1000+ coin items randomly drop to 2 coins for a couple minutes before going back up.\n\nTo the two of you who donated money, thanks!"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btnUpdateGoBack"

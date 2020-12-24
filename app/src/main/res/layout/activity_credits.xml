@@ -57,7 +57,7 @@
                 android:id="@+id/textView50"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Additional thanks to all the people whose code I used snippets of in order to make some part of the 12,221 lines of code for this app work. If you wish to view the source code, and an explanation for how all of this works, check out the github repository I made:"
+                android:text="Additional thanks to all the people whose code I used snippets of in order to make some part of the 12,499 lines of code for this app work. If you wish to view the source code, and an explanation for how all of this works, check out the github repository I made:"
                 android:textSize="16sp" />
 
             <EditText
@@ -69,10 +69,40 @@
                 android:text="https://github.com/Celeria/Skyblock-Bazaar-Status" />
 
             <TextView
+                android:id="@+id/textView31"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Special thanks to MPAndroidChart for making it super easy to make the interactive graphs in this app. Check them out:"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="https://github.com/PhilJay/MPAndroidChart" />
+
+            <TextView
+                android:id="@+id/textView58"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I would also like to thank the people who made this library that makes it super easy to implement in app purchases:"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="https://github.com/anjlab/android-inapp-billing-v3" />
+
+            <TextView
                 android:id="@+id/textView52"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Finally thanks to me (Minecraft IGN: Celeria_Andranym) for spending the time to learn how to do this, as well as pay for it all. It didn't cost me that much actual money to make, but as you've seen, I haven't put any ads in this app, or made you pay for it. If you appreciate me doing so, and are burdened by excess money, click the button to give me some of it so I can afford skyblock gems."
+                android:text="Speaking of money, special thanks to me, (Minecraft IGN: Celeria_Andranym) for spending the time and money to make this app.\nIf you are feeling burdened by excess money, consider dropping some of it off below so I can afford skyblock gems. You get ZERO extra features for donating, so I have no idea why you would. But the option exists below."
                 android:textSize="16sp" />
 
             <Button
@@ -81,6 +111,19 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
                 android:text="donate" />
+
+            <TextView
+                android:id="@+id/textView57"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Curious about some of the open source software I used? Look at the licenses below:"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnLicenseInformation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="View Licenses" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,7 +59,7 @@
             android:text="@string/view_prices_settings"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/btnSaveMinionSettings" />
 
 
         <TextView
@@ -76,11 +76,11 @@
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:text="Minion Optimizer Settings"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/editDecimalBazaarTax" />
+            app:layout_constraintTop_toBottomOf="@+id/btnScheduleData" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -277,11 +277,10 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
             android:text="@string/question_mark"
             android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/textView12"
-            app:layout_constraintTop_toBottomOf="@+id/btnSaveBazaarTax" />
+            app:layout_constraintBottom_toTopOf="@+id/textView25"
+            app:layout_constraintStart_toEndOf="@+id/textView12" />
 
         <RadioGroup
             android:id="@+id/radioGroupFuelType"
@@ -346,6 +345,118 @@
             android:text="(Remember to click SAVE MINION SETTINGS)"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Schedule data retrieval:\nIn the first box, select how often your phone should ask Hypixel for the latest bazaar data. "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/textView59" />
+
+        <EditText
+            android:id="@+id/editNumMinutesBetweenUpdate"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Minutes"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/txtRetrievalSettings" />
+
+        <EditText
+            android:id="@+id/editNumPercentThreshold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Minimum % Change"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/txtNotificationThreshold" />
+
+        <Button
+            android:id="@+id/btnScheduleData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Schedule Data Retrieval"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/editNumCoinThreshold" />
+
+        <CheckBox
+            android:id="@+id/checkMobileUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:text="Use Mobile Data"
+            app:layout_constraintStart_toEndOf="@+id/editNumMinutesBetweenUpdate"
+            app:layout_constraintTop_toBottomOf="@+id/txtRetrievalSettings" />
+
+        <Switch
+            android:id="@+id/switchGiveNotifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Send me notifications about price changes"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/editNumMinutesBetweenUpdate" />
+
+        <TextView
+            android:id="@+id/txtNotificationThreshold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Set notification threshold:"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/switchGiveNotifications" />
+
+        <TextView
+            android:id="@+id/txtMinimumCoin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Minimum absolute change:\n(Don't care that seeds changed 100% from 0.1 to 0.2 coins?)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/editNumPercentThreshold" />
+
+        <EditText
+            android:id="@+id/editNumCoinThreshold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Minimum Coin Change"
+            android:inputType="number"
+            android:numeric="decimal"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/txtMinimumCoin" />
+
+        <TextView
+            android:id="@+id/textView59"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Price History Settings:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtRetrievalSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Your data retrieval settings:"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

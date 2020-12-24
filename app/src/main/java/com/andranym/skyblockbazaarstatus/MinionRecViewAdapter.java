@@ -193,7 +193,7 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
         upgrades.add("Custom Speed Boost " + customBoostNormal + "%");
         upgrades.add("Custom Fuel Boost " + customBoostFly + "%");
         upgrades.add("Flint Shovel");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context.getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, upgrades);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context,android.R.layout.simple_spinner_dropdown_item, upgrades);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.spinnerRecUpgrade1.setAdapter(adapter);
         holder.spinnerRecUpgrade2.setAdapter(adapter);

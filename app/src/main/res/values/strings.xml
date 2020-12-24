@@ -23,6 +23,8 @@
     <string name="leaderboard_most_coins_earned" translatable="false">CgkI-4n1zrYYEAIQCQ</string>
     <!--leaderboard Most Active Users-->
     <string name="leaderboard_most_active_users" translatable="false">CgkI-4n1zrYYEAIQCw</string>
+    <!--leaderboard Notifications Received-->
+    <string name="leaderboard_notifications_received" translatable="false">CgkI-4n1zrYYEAIQDA</string>
     <string name="api_key">Enter your Skyblock API key here</string>
     <string name="first_time">Hey, looks like this is your first time using this app:</string>
     <string name="key_instructions">In order to get your Skyblock API Key, log into skyblock, and type in /api.\n
