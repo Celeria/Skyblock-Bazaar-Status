@@ -542,7 +542,7 @@ public class SettingsActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            float threshold = settingsData.getFloat("notificationThreshold",0);
+                            float threshold = settingsData.getFloat("notificationThreshold",0) * 100;
                             txtNotificationThreshold.setText("Set threshold for sending a notification:\nCurrent threshold: "
                                     + Round(threshold,0) + "%");
                         }

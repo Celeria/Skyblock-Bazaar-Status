@@ -13,9 +13,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight">
-        <activity android:name=".PriceHistoryOfItemActivity"></activity>
+        <activity android:name=".PriceHistoryOfItemActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PriceHistoryMenuActivity" />
+        </activity>
         <activity android:name=".UpdateActivity" />
-        <activity android:name=".PriceHistoryMenuActivity" />
+        <activity android:name=".PriceHistoryMenuActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name=".ComingSoonActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
