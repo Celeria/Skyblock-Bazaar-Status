@@ -482,17 +482,20 @@ public class SettingsActivity extends AppCompatActivity {
                     //Find out how many minutes the user wants in between retrievals
                     if(!editNumMinutesBetweeenUpdate.getText().toString().equals("")){
                         int minutesDesired = Integer.parseInt(editNumMinutesBetweeenUpdate.getText().toString());
-                        if (minutesDesired >+ 15) {
+                        if (minutesDesired >= 15) {
                             SharedPreferences.Editor editor = settingsData.edit();
                             editor.putInt("retrievalGapMinutes",minutesDesired);
                             editor.commit();
                         } else {
                             //Set a minimum of 15 minutes so the server doesn't overwhelm
-                            Toast.makeText(getApplicationContext(),"No.",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"No. Don't be silly.\n" +
+                                    "If you have no life, and absolutely want to check more often, manually " +
+                                    "open the app and press the GET DATA NOW button over in price history if you want " +
+                                    "more frequent notifications.",Toast.LENGTH_SHORT).show();
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    txtRetrievalSettings.setText("15");
+                                    editNumMinutesBetweeenUpdate.setText("15");
                                 }
                             });
                         }
@@ -548,7 +551,7 @@ public class SettingsActivity extends AppCompatActivity {
                     if(!editNumPercentThreshold.getText().toString().equals("")){
                         float threshold = Float.parseFloat(editNumPercentThreshold.getText().toString());
                         SharedPreferences.Editor editor = settingsData.edit();
-                        editor.putFloat("notificationThreshold",threshold);
+                        editor.putFloat("notificationThreshold",threshold/100);
                         editor.commit();
                     }
 

@@ -9,7 +9,7 @@ android {
         applicationId "com.andranym.skyblockbazaarstatus"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 21
+        versionCode 23
         versionName "The annoying notification update"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
