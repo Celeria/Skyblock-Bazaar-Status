@@ -13,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="App has been updated!\n\nWhat's new:\n\nAdded the notifications when prices change, go to settings to schedule how often you want your phone to get data, and go to price history to view the price graphs. I recommend waiting at least a couple days before enabling notifications, otherwise you'll get spammed with updates as prices change pretty quick. But yeah, get ready to make some serious flipping money, I have literally watched some 1000+ coin items randomly drop to 2 coins for a couple minutes before going back up.\n\nNotifications might be a little wonky, I'll fix it if there's an issue. \n\nTo the two of you who donated money, thanks!"
+        android:text="App has been updated!\n\nWhat's new:\n\nFixed notification percentages being off. Wondering why notifications haven't been working? Yeah that's fixed now. Go to settings, fix up the percentages, and click the retrieve data button again. The search function for the price history also had a small glitch, I patched that out as well. Hate how I made the button bright blue? I'll put that back in a few days, I just wanted my older users to notice it was there. Because part of me is guessing this is just a bunch of text that most of you will ignore.\n\nLike the app? Do me a favor and tell your skyblock friends it exists. I made it free and ad free so people would actually to use it. Because I want to finally crash the skyblock economy. So help me do it."
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btnUpdateGoBack"

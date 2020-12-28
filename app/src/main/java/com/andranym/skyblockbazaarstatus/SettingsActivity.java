@@ -473,6 +473,10 @@ public class SettingsActivity extends AppCompatActivity {
         //regionPrice history settings
 
         //regionGet settings data from the user, and update the text to show them
+        final Toast noLife = Toast.makeText(getApplicationContext(),"No. Don't be silly. The minimum is 15 minutes.\n" +
+                "If you have no life, and absolutely want to check more often, manually " +
+                "open the app and press the GET DATA NOW button over in price history if you want " +
+                "more frequent notifications.",Toast.LENGTH_SHORT);
         new Thread(){
             @Override
             public void run() {
@@ -488,16 +492,7 @@ public class SettingsActivity extends AppCompatActivity {
                             editor.commit();
                         } else {
                             //Set a minimum of 15 minutes so the server doesn't overwhelm
-                            Toast.makeText(getApplicationContext(),"No. Don't be silly.\n" +
-                                    "If you have no life, and absolutely want to check more often, manually " +
-                                    "open the app and press the GET DATA NOW button over in price history if you want " +
-                                    "more frequent notifications.",Toast.LENGTH_SHORT).show();
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    editNumMinutesBetweeenUpdate.setText("15");
-                                }
-                            });
+                            noLife.show();
                         }
                     }
 

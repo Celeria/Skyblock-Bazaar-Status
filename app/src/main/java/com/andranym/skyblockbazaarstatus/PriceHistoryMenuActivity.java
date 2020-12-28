@@ -407,13 +407,23 @@ public class PriceHistoryMenuActivity extends AppCompatActivity {
                         //Get only the list of items the user wants
                         final ArrayList<String> fullDescriptionsWanted = new ArrayList<>();
                         final ArrayList<String> itemNamesWanted = new ArrayList<>();
+
+                        //Fix broken names in the search terms
+                        ArrayList<String> fixSearchPlainNames = new ArrayList<>();
+                        for(int i = 0; i < searchPlainNames.size(); ++i){
+                            String fixedName = new FixBadNamesImproved().fix(searchPlainNames.get(i));
+                            fixSearchPlainNames.add(fixedName);
+                        }
+
+                        searchPlainNames = new ArrayList<>(fixSearchPlainNames);
+
                         for(int i = 0; i < searchPlainNames.size(); ++i){
                             String possibleProduct = searchPlainNames.get(i);
                             //Check all the search terms, if a product contains the term, add it to the list
                             for(String term : searchTerms) {
                                 if(possibleProduct.toLowerCase().contains(term)){
                                     fullDescriptionsWanted.add(searchThis.get(i));
-                                    itemNamesWanted.add(possibleProduct);
+                                    itemNamesWanted.add(new FixBadNamesImproved().unfix(possibleProduct));
                                     break;
                                 }
                             }
