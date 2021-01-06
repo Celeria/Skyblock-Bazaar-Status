@@ -27,11 +27,33 @@ public class BazaarItem {
         return timesRetrieved;
     }
 
-    public BazaarItem(String itemName, ArrayList<String> buyPrices, ArrayList<String> sellPrices, ArrayList<String> timesRetrieved){
+    public ArrayList<String> getBuyMovingWeek() {
+        return buyMovingWeek;
+    }
+
+    public ArrayList<String> getSellMovingWeek() {
+        return sellMovingWeek;
+    }
+
+    public ArrayList<String> getBuyVolume() {
+        return buyVolume;
+    }
+
+    public ArrayList<String> getSellVolume() {
+        return sellVolume;
+    }
+
+    public BazaarItem(String itemName, ArrayList<String> buyPrices, ArrayList<String> sellPrices,
+                      ArrayList<String> timesRetrieved, ArrayList<String> buyMovingWeek, ArrayList<String> sellMovingWeek,
+                      ArrayList<String> buyVolume, ArrayList<String> sellVolume){
         this.itemName = itemName;
         this.buyPrices = buyPrices;
         this.sellPrices = sellPrices;
         this.timesRetrieved = timesRetrieved;
+        this.buyMovingWeek = buyMovingWeek;
+        this.sellMovingWeek = sellMovingWeek;
+        this.buyVolume = buyVolume;
+        this.sellVolume = sellVolume;
     }
 
     @NonNull
@@ -46,4 +68,16 @@ public class BazaarItem {
 
     @ColumnInfo
     public ArrayList<String> timesRetrieved;
+
+    @ColumnInfo
+    public ArrayList<String> buyMovingWeek;
+
+    @ColumnInfo
+    public ArrayList<String> sellMovingWeek;
+
+    @ColumnInfo
+    public ArrayList<String> buyVolume;
+
+    @ColumnInfo
+    public ArrayList<String> sellVolume;
 }

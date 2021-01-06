@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "83aa17fb83288ec5954bcfef83107a31",
+    "identityHash": "70d99a342484f575bae2b9c53afaef9f",
     "entities": [
       {
         "tableName": "BazaarItem",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemName` TEXT NOT NULL, `buyPrices` TEXT, `sellPrices` TEXT, `timesRetrieved` TEXT, PRIMARY KEY(`itemName`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemName` TEXT NOT NULL, `buyPrices` TEXT, `sellPrices` TEXT, `timesRetrieved` TEXT, `buyMovingWeek` TEXT, `sellMovingWeek` TEXT, `buyVolume` TEXT, `sellVolume` TEXT, PRIMARY KEY(`itemName`))",
         "fields": [
           {
             "fieldPath": "itemName",
@@ -31,6 +31,30 @@
             "columnName": "timesRetrieved",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "buyMovingWeek",
+            "columnName": "buyMovingWeek",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sellMovingWeek",
+            "columnName": "sellMovingWeek",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "buyVolume",
+            "columnName": "buyVolume",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sellVolume",
+            "columnName": "sellVolume",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -46,7 +70,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '83aa17fb83288ec5954bcfef83107a31')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '70d99a342484f575bae2b9c53afaef9f')"
     ]
   }
 }

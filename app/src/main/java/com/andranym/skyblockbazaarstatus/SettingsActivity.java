@@ -608,6 +608,7 @@ public class SettingsActivity extends AppCompatActivity {
                         super.run();
                         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             //Ensure there's no lingering tasks each time
+                            WorkManager.getInstance(getApplicationContext()).cancelAllWork();
 
                             boolean useData = settingsData.getBoolean("useMobileDataForRetrieval", false);
                             int minutes = settingsData.getInt("retrievalGapMinutes", 15);

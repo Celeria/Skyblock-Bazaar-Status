@@ -182,8 +182,12 @@ public class MinionOptimizerActivity extends AppCompatActivity {
 
                 double fuelNumberForCalculations = fuelNumber;
 
-                if (thisUpgrade1.equals("Flycatcher") || thisUpgrade2.equals("Flycatcher")) {
+                if (thisUpgrade1.equals("Flycatcher 20%") || thisUpgrade2.equals("Flycatcher 20%")) {
                     fuelNumberForCalculations = fuelNumberForCalculations + 20;
+                    //Make it possible to include two flycatchers for one minion. (quite rare you'd actually do this but sure)
+                    if(thisUpgrade1.equals("Flycatcher 20%") && thisUpgrade2.equals("Flycatcher 20%")) {
+                        fuelNumberForCalculations += 20;
+                    }
                 } else if (thisUpgrade1.equals("Custom Fuel Boost " + customBoostFly + "%") || thisUpgrade2.equals("Custom Fuel Boost " + customBoostFly + "%")) {
                     fuelNumberForCalculations = fuelNumberForCalculations + customBoostFly;
                 }

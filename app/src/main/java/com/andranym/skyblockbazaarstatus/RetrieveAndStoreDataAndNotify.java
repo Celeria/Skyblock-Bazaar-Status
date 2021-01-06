@@ -10,11 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.room.Room;
-import androidx.work.ListenableWorker;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
-
-import com.google.common.util.concurrent.ListenableFuture;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,6 +54,7 @@ public class RetrieveAndStoreDataAndNotify extends Worker {
         //Load old data from database
         bazaarPriceHistory = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "BazaarPriceHistoryDB")
+                .addMigrations(MIGRATION_1_2)
                 .build();
 
         //regionTake data retrieved, and update the stored database.
@@ -82,6 +82,12 @@ public class RetrieveAndStoreDataAndNotify extends Worker {
                     //admins adding an item with an incorrect name into the API, and not bothering to remove it
                     buyPrice = 0.0;
                 }
+
+                long buyVolume = productInformation.getJSONObject(current_product).getJSONObject("quick_status").getLong("buyVolume");
+                long sellVolume = productInformation.getJSONObject(current_product).getJSONObject("quick_status").getLong("sellVolume");
+                long buyMovingWeek = productInformation.getJSONObject(current_product).getJSONObject("quick_status").getLong("buyMovingWeek");
+                long sellMovingWeek = productInformation.getJSONObject(current_product).getJSONObject("quick_status").getLong("sellMovingWeek");
+
                 BazaarItem previousData = bazaarPriceHistory.BazaarDao().getAnAuctionItem(current_product);
                 if(previousData != null){
                     //Retrieve the old data, append the new data on, and then put it back
@@ -91,8 +97,34 @@ public class RetrieveAndStoreDataAndNotify extends Worker {
                     storedSellPrices.add(Double.toString(sellPrice));
                     ArrayList<String> storedTimesRetrieved = previousData.getTimesRetrieved();
                     storedTimesRetrieved.add(Long.toString(timeRetrieved));
-                    BazaarItem updatedEntry = new BazaarItem(current_product,storedBuyPrices,storedSellPrices,storedTimesRetrieved);
-                    bazaarPriceHistory.BazaarDao().insertAll(updatedEntry);
+                    try {
+                        ArrayList<String> storedBuyVolume = previousData.getBuyVolume();
+                        storedBuyVolume.add(Long.toString(buyVolume));
+                        ArrayList<String> storedSellVolume = previousData.getSellVolume();
+                        storedSellVolume.add(Long.toString(sellVolume));
+                        ArrayList<String> storedBuyMovingWeek = previousData.getBuyMovingWeek();
+                        storedBuyMovingWeek.add(Long.toString(buyMovingWeek));
+                        ArrayList<String> storedSellMovingWeek = previousData.getSellMovingWeek();
+                        storedSellMovingWeek.add(Long.toString(sellMovingWeek));
+
+                        BazaarItem updatedEntry = new BazaarItem(current_product,storedBuyPrices,storedSellPrices,storedTimesRetrieved,
+                                storedBuyMovingWeek,storedSellMovingWeek,storedBuyVolume,storedSellVolume);
+                        bazaarPriceHistory.BazaarDao().insertAll(updatedEntry);
+                    } catch (Exception e){
+                        //This is here because if the user has a previous version stored, it won't break
+                        ArrayList<String> storedBuyVolume = new ArrayList<>();
+                        storedBuyVolume.add(Long.toString(buyVolume));
+                        ArrayList<String> storedSellVolume = new ArrayList<>();
+                        storedSellVolume.add(Long.toString(sellVolume));
+                        ArrayList<String> storedBuyMovingWeek = new ArrayList<>();
+                        storedBuyMovingWeek.add(Long.toString(buyMovingWeek));
+                        ArrayList<String> storedSellMovingWeek = new ArrayList<>();
+                        storedSellMovingWeek.add(Long.toString(sellMovingWeek));
+
+                        BazaarItem updatedEntry = new BazaarItem(current_product,storedBuyPrices,storedSellPrices,storedTimesRetrieved,
+                                storedBuyMovingWeek,storedSellMovingWeek,storedBuyVolume,storedSellVolume);
+                        bazaarPriceHistory.BazaarDao().insertAll(updatedEntry);
+                    }
                 } else {
                     //Create new arrays, and store those
                     ArrayList<String> storedBuyPrices = new ArrayList<>();
@@ -101,10 +133,18 @@ public class RetrieveAndStoreDataAndNotify extends Worker {
                     storedSellPrices.add(Double.toString(sellPrice));
                     ArrayList<String> storedTimesRetrieved = new ArrayList<>();
                     storedTimesRetrieved.add(Long.toString(timeRetrieved));
-                    BazaarItem newEntry = new BazaarItem(current_product,storedBuyPrices,storedSellPrices,storedTimesRetrieved);
+                    ArrayList<String> storedBuyVolume = new ArrayList<>();
+                    storedBuyVolume.add(Long.toString(buyVolume));
+                    ArrayList<String> storedSellVolume = new ArrayList<>();
+                    storedSellVolume.add(Long.toString(sellVolume));
+                    ArrayList<String> storedBuyMovingWeek = new ArrayList<>();
+                    storedBuyMovingWeek.add(Long.toString(buyMovingWeek));
+                    ArrayList<String> storedSellMovingWeek = new ArrayList<>();
+                    storedSellMovingWeek.add(Long.toString(sellMovingWeek));
+                    BazaarItem newEntry = new BazaarItem(current_product,storedBuyPrices,storedSellPrices,storedTimesRetrieved,
+                            storedBuyMovingWeek,storedSellMovingWeek,storedBuyVolume,storedSellVolume);
                     bazaarPriceHistory.BazaarDao().insertAll(newEntry);
                 }
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -301,4 +341,14 @@ public class RetrieveAndStoreDataAndNotify extends Worker {
         result = result + afterDecimal;
         return result;
     }
+
+    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE BazaarItem ADD COLUMN buyMovingWeek");
+            database.execSQL("ALTER TABLE BazaarItem ADD COLUMN sellMovingWeek");
+            database.execSQL("ALTER TABLE BazaarItem ADD COLUMN sellVolume");
+            database.execSQL("ALTER TABLE BazaarItem ADD COLUMN buyVolume");
+        }
+    };
 }

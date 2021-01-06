@@ -9,8 +9,8 @@ android {
         applicationId "com.andranym.skyblockbazaarstatus"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 25
-        versionName "Small brain enlargening update"
+        versionCode 26
+        versionName "ɐᴉƃɹoǝƃ II, Official Edition"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

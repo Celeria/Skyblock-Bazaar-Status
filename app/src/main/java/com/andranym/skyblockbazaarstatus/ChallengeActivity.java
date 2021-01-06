@@ -345,8 +345,7 @@ public class ChallengeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String userAnswer = editTextC2.getText().toString();
                 userAnswer = userAnswer.toLowerCase();
-                if ((userAnswer.contains("equal protection clause") || userAnswer.contains("fourteenth amendment") || userAnswer.contains("14th amendment")) &&
-                        (userAnswer.contains("commerce"))) {
+                if (userAnswer.contains("democracy")) {
                     SharedPreferences.Editor editor = data.edit();
                     editor.putBoolean("solvedChallenge2", true);
                     editor.putBoolean("solvedChallenge2display",true);
@@ -369,7 +368,7 @@ public class ChallengeActivity extends AppCompatActivity {
         final int[] alienPopulation = {100 + randMaker.nextInt(100)};
         String question3 = "Imagine a planet called Tologon. This planet is arid, and its crust is has high amounts of sulfur in it. " +
                 "Although you would think this would make this planet a desert planet, planets tend to contain more than just 1 biome, unlike " +
-                "what some movies would have you believe. In any case, there is a variety of plant life, such as a plant that resembles the bamboo" +
+                "what some movies would have you believe. In any case, there is a variety of plant life, such as a plant that resembles the bamboo " +
                 "that we all know about. It has a solid brick-like texture, and the only intelligent species of life on this planet, the Tolgonians, " +
                 "often use the plant to fortify their subterranean homes. Just like our Earth, this planet's species have a concept of the birthday. " +
                 "However, for their planet, the year has 10,000 days in it, which are split into 10 1000 day \"months\". Tologonian birthdays are " +
