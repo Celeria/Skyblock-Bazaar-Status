@@ -67,7 +67,6 @@
                 android:layout_width="185dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="#3CEFE9"
                 android:text="Price History\n(new)"
                 app:layout_constraintEnd_toStartOf="@+id/btnGoogleSignIn"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -87,11 +86,12 @@
 
             <Button
                 android:id="@+id/btnChallenges"
-                android:layout_width="374dp"
+                android:layout_width="185dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="challenges"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnLeaderboard"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnNPCFLIP" />
 
@@ -165,7 +165,8 @@
                 android:textStyle="bold"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtWarnData" />
+                app:layout_constraintTop_toBottomOf="@+id/txtWarnData"
+                tools:visibility="visible" />
 
             <Button
                 android:id="@+id/btnBAZAARFLIP"
@@ -199,6 +200,17 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btnPriceHistory"
                 app:layout_constraintTop_toBottomOf="@+id/btnSettings" />
+
+            <ImageButton
+                android:id="@+id/btnLeaderboard"
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnChallenges"
+                app:layout_constraintTop_toBottomOf="@+id/btnNPCFLIP"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

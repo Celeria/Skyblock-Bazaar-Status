@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -13,6 +15,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PriceHistoryOfItemActivity extends AppCompatActivity {
 
@@ -69,6 +72,7 @@ public class PriceHistoryOfItemActivity extends AppCompatActivity {
                 super.run();
                 bazaarPriceHistory = Room.databaseBuilder(getApplicationContext(),
                         AppDatabase.class, "BazaarPriceHistoryDB")
+                        .addMigrations(MIGRATION_1_2)
                         .build();
                 BazaarItem desiredItem = bazaarPriceHistory.BazaarDao().getAnAuctionItem(itemToView);
 
@@ -88,8 +92,8 @@ public class PriceHistoryOfItemActivity extends AppCompatActivity {
                 }
 
                 //This is for the actual demand, this might be different in size, so its done here
-                ArrayList<String> buyVolumeString = desiredItem.getBuyVolume();
-                ArrayList<String> sellVolumeString = desiredItem.getSellVolume();
+                ArrayList<String> buyVolumeString = desiredItem.getBuyMovingWeek();
+                ArrayList<String> sellVolumeString = desiredItem.getSellMovingWeek();
 
                 ArrayList<Float> buyVolume = new ArrayList<>();
                 ArrayList<Float> sellVolume = new ArrayList<>();
@@ -98,33 +102,33 @@ public class PriceHistoryOfItemActivity extends AppCompatActivity {
                     sellVolume.add(Float.parseFloat(sellVolumeString.get(i)));
                 }
 
+                //Calculate what the median buy and sell volumes are
+                ArrayList<Float> buyVolumeSort = new ArrayList<>(buyVolume);
+                Collections.sort(buyVolumeSort);
+                float buyVolumeMedian = buyVolumeSort.get(buyVolumeSort.size()/2);
+
+                ArrayList<Float> sellVolumeSort = new ArrayList<>(sellVolume);
+                Collections.sort(sellVolumeSort);
+                float sellVolumeMedian = sellVolumeSort.get(sellVolumeSort.size()/2);
+
+
                 ArrayList<Float> buyVolumeDifference = new ArrayList<>();
                 ArrayList<Float> sellVolumeDifference = new ArrayList<>();
+
+                for(int i = 0; i < buyVolume.size(); ++i){
+                    buyVolumeDifference.add(buyVolume.get(i) - buyVolumeMedian);
+                    sellVolumeDifference.add(sellVolume.get(i) - sellVolumeMedian);
+                }
 
                 //Might be a size difference if you are using an older dataset
                 int sizeDifference = timesRetrieved.size() - buyVolume.size();
 
-                for(int i = 0; i < buyVolume.size(); ++ i){
-                    buyVolumeDifference.add(buyVolume.get(i));
-                    sellVolumeDifference.add(sellVolume.get(i));
-                }
-
-//                //Make it based on difference from previous time
-//                for(int i = 1; i < buyVolume.size(); ++ i){
-//                    buyVolumeDifference.add((buyVolume.get(i) - buyVolume.get(i-1)) / (timesRetrieved.get(i + sizeDifference) - timesRetrieved.get(i + sizeDifference - 1)));
-//                    sellVolumeDifference.add((sellVolume.get(i) - sellVolume.get(i-1)) / (timesRetrieved.get(i + sizeDifference) - timesRetrieved.get(i + sizeDifference - 1)));
-//                }
-//
-//                //Have something in the first slot just in case
-//                buyVolumeDifference.add(0,buyVolumeDifference.get(0));
-//                sellVolumeDifference.add(0,sellVolumeDifference.get(0));
-
-                ArrayList<Entry> demandValues = new ArrayList<>();
-                ArrayList<Entry> supplyValues = new ArrayList<>();
-
                 //Create a scaled version so that the user can see what's going on
                 float maxChangeBuy = buyVolumeDifference.get(0);
                 float maxChangeSell = sellVolumeDifference.get(0);
+
+                float minChangeBuy = buyVolumeDifference.get(0);
+                float minChangeSell = sellVolumeDifference.get(0);
 
                 for(int i = 1; i < buyVolumeDifference.size(); ++i){
                     float currentChange =  buyVolumeDifference.get(i);
@@ -132,37 +136,42 @@ public class PriceHistoryOfItemActivity extends AppCompatActivity {
                         maxChangeBuy = currentChange;
                     }
 
+                    if (currentChange < minChangeBuy) {
+                        minChangeBuy = currentChange;
+                    }
+
                     currentChange = sellVolumeDifference.get(i);
                     if(currentChange > maxChangeSell){
                         maxChangeSell = currentChange;
                     }
-                }
 
-                float minPriceBuy = buyPrices.get(0);
-                float minPriceSell = sellPrices.get(0);
-
-                for(int i = 1; i < sellVolume.size(); ++i){
-                    float currentPrice = buyPrices.get(i);
-                    if(currentPrice < minPriceBuy) {
-                        minPriceBuy = currentPrice;
-                    }
-
-                    currentPrice = sellPrices.get(i);
-                    if(currentPrice < minPriceSell) {
-                        minPriceSell = currentPrice;
+                    if(currentChange < minChangeSell) {
+                        minChangeSell = currentChange;
                     }
                 }
 
-                float buyScalingFactor = minPriceBuy / maxChangeBuy;
-                float sellScalingFactor = minPriceSell / maxChangeSell;
+                ArrayList<Float> buyPriceSort = new ArrayList<>(buyPrices);
+                Collections.sort(buyPriceSort);
+
+                ArrayList<Float> sellPriceSort = new ArrayList<>(sellPrices);
+                Collections.sort(sellPriceSort);
+
+                float medianPriceBuy = buyPriceSort.get(buyPriceSort.size()/2);
+                float medianPriceSell = sellPriceSort.get(sellPriceSort.size()/2);
+
+                float minBuyPoint = medianPriceBuy * (float)-0.2;
+                float minSellPoint = medianPriceSell * (float)-0.2;
 
                 ArrayList<Float> buyVolumeDifferenceScaled = new ArrayList<>();
                 ArrayList<Float> sellVolumeDifferenceScaled = new ArrayList<>();
 
                 for(int i = 0; i < buyVolumeDifference.size(); ++i){
-                    buyVolumeDifferenceScaled.add(buyScalingFactor * buyVolumeDifference.get(i));
-                    sellVolumeDifferenceScaled.add(sellScalingFactor * sellVolumeDifference.get(i));
+                    buyVolumeDifferenceScaled.add((0 - minBuyPoint) * ((buyVolumeDifference.get(i) - minChangeBuy)/(maxChangeBuy - minChangeBuy)) + minBuyPoint);
+                    sellVolumeDifferenceScaled.add((0 - minSellPoint) * ((sellVolumeDifference.get(i) - minChangeSell)/(maxChangeSell - minChangeSell)) + minSellPoint);
                 }
+
+                ArrayList<Entry> demandValues = new ArrayList<>();
+                ArrayList<Entry> supplyValues = new ArrayList<>();
 
                 for (int i = 0; i < buyVolume.size(); ++i) {
                     long time = timesRetrieved.get(i + sizeDifference);
@@ -263,4 +272,14 @@ public class PriceHistoryOfItemActivity extends AppCompatActivity {
         }.start();
         //endregion
     }
+
+    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE BazaarItem ADD COLUMN buyMovingWeek");
+            database.execSQL("ALTER TABLE BazaarItem ADD COLUMN sellMovingWeek");
+            database.execSQL("ALTER TABLE BazaarItem ADD COLUMN sellVolume");
+            database.execSQL("ALTER TABLE BazaarItem ADD COLUMN buyVolume");
+        }
+    };
 }

@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnGoogleSignIn;
     Button btnCredits;
     Button btnPriceHistory;
+    ImageButton btnLeaderboard;
     TextView txtMinutesSince;
     TextView txtWarnData;
     TextView txtWelcome;
@@ -100,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         pdStoring = new ProgressDialog(MainActivity.this);
         btnGoogleSignIn = (Button)findViewById(R.id.btnGoogleSignIn);
         btnCredits = (Button)findViewById(R.id.btnCredits);
+        btnLeaderboard = (ImageButton) findViewById(R.id.btnLeaderboard);
         pdStoring.setMessage("Your phone is processing the data... If you see this your device is so, so slow.");
         pdStoring.setCancelable(false);
         //endregion
@@ -644,6 +648,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //endregion
+
+        //regionCode to show leaderboards
+        btnLeaderboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLeaderboard();
+            }
+        });
     }
 
     private void signInSilently() {
@@ -676,6 +688,28 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             });
         }
+    }
+
+    private static final int RC_LEADERBOARD_UI = 9004;
+
+    private void showLeaderboard() {
+        boolean showActive = new Random().nextBoolean();
+        String leaderboard;
+
+        if(showActive){
+            leaderboard = getString(R.string.leaderboard_most_active_users);
+        } else {
+            leaderboard = getString(R.string.leaderboard_notifications_received);
+        }
+
+        Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
+                .getLeaderboardIntent(leaderboard)
+                .addOnSuccessListener(new OnSuccessListener<Intent>() {
+                    @Override
+                    public void onSuccess(Intent intent) {
+                        startActivityForResult(intent, RC_LEADERBOARD_UI);
+                    }
+                });
     }
 
     @Override
