@@ -681,7 +681,7 @@ public class PriceHistoryMenuActivity extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
                             NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                                    .setSmallIcon(R.drawable.app_logo)
+                                    .setSmallIcon(R.drawable.ic_price_up)
                                     .setContentTitle(notificationTitle)
                                     .setContentText(notificationContent)
                                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -710,7 +710,7 @@ public class PriceHistoryMenuActivity extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
                             NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                                    .setSmallIcon(R.drawable.app_logo)
+                                    .setSmallIcon(R.drawable.ic_price_up)
                                     .setContentTitle(notificationTitle)
                                     .setContentText(notificationContent)
                                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)

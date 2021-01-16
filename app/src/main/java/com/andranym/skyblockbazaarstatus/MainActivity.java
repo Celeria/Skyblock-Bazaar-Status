@@ -199,9 +199,9 @@ public class MainActivity extends AppCompatActivity {
         //endregion
 
         //regionCheck for update
-        if(sharedPref.getBoolean("needToShowUpdateScreen3",true)){
+        if(sharedPref.getBoolean("needToShowUpdateScreen4",true)){
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("needToShowUpdateScreen3",false);
+            editor.putBoolean("needToShowUpdateScreen4",false);
             editor.commit();
             startActivity(new Intent(this,UpdateActivity.class));
         }
@@ -522,7 +522,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //endregion
 
-        //region Block people from stealing this app
+//        //region Block people from stealing this app
         boolean usedBefore = sharedPref.getBoolean("copyWriteDetection",false);
         if (!usedBefore) {
             editor.putBoolean("copyWriteDetection",true);

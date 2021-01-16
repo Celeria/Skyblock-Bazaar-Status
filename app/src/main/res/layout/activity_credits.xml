@@ -57,7 +57,7 @@
                 android:id="@+id/textView50"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Additional thanks to all the people whose code I used snippets of in order to make some part of the 12,231 (14,927 if you include comments) lines of code for this app work. If you wish to view the source code, and an explanation for how all of this works, check out the github repository I made:"
+                android:text="Additional thanks to all the people whose code I used snippets of in order to make some part of the 12,540 (14,902 if you include comments) lines of code for this app work. If you wish to view the source code, and an explanation for how all of this works, check out the github repository I made:"
                 android:textSize="16sp" />
 
             <EditText

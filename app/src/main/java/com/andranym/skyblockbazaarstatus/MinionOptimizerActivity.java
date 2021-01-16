@@ -76,6 +76,7 @@ public class MinionOptimizerActivity extends AppCompatActivity {
         ArrayList<Double[]> minionItemsPerAction = new ArrayList<>();
         ArrayList<Double[]> minionNPCValues = new ArrayList<>();
         ArrayList<Double[]> minionSpeeds = new ArrayList<>();
+        ArrayList<Integer> minionRelevantTiers = new ArrayList<>();
         //Loop through the minionData JSON array and retrieve all the data we need.
         for(int i = 0;i < minionNumber;++i){
             try {
@@ -98,8 +99,10 @@ public class MinionOptimizerActivity extends AppCompatActivity {
                 minionItemsPerAction.add(itemsPerAction);
                 minionNPCValues.add(NPCValues);
                 //Minion Speeds is different so new loop is needed, its always 11, because there's 11 tiers.
+                //That was the case, but a new update changed that, so I'm fixing it now.
                 JSONObject currentMinionSpeeds = minionData.getJSONObject(i).getJSONObject("tier");
-                int speeds = 11;
+                int speeds = currentMinionSpeeds.length();
+                minionRelevantTiers.add(speeds);
                 Double[] currentSpeeds = new Double[speeds];
                 for (int j = 1; j <= speeds;++j) {
                     String index = Integer.toString(j);
@@ -133,7 +136,11 @@ public class MinionOptimizerActivity extends AppCompatActivity {
             String thisUpgrade2 = settings.getString(upgrade2,defaultUpgrade2);
             //regionDetermine the speed of the minion
                 //Place to store the speeds
-                Double[] timeBetweenActions = new Double[6];
+                int desiredSize = 6;
+                if (minionRelevantTiers.get(i) > 11) {
+                    desiredSize = 7;
+                }
+                Double[] timeBetweenActions = new Double[desiredSize];
 
                 //region Initialize all multipliers
                 int fuelType = settings.getInt(name + "fuelType",1);
@@ -247,6 +254,25 @@ public class MinionOptimizerActivity extends AppCompatActivity {
 
                         timeBetweenActions[counterTBA] = initialTime;
                         counterTBA += 1;
+                    }
+
+                    if(minionRelevantTiers.get(i) > 11) {
+                        Double initialTime = minionSpeeds.get(i)[11];
+                        //Account for fuel
+                        initialTime = RoundDownTwentieth(initialTime / (1 + fuelNumberForCalculations));
+                        //Account for crystals
+                        initialTime = RoundDownTwentieth(initialTime/ (1 + woodBoost));
+                        initialTime = RoundDownTwentieth(initialTime/ (1 + farmBoost));
+                        //Account for Upgrades
+                        initialTime = RoundDownTwentieth(initialTime / (1 + boost1));
+                        initialTime = RoundDownTwentieth(initialTime / (1 + boost2));
+                        //Account for Pets
+                        initialTime = RoundDownTwentieth(initialTime / (1 + petBoost));
+                        //Account for misc boosts
+                        initialTime = RoundDownTwentieth(initialTime/ (1 + miscBoost1));
+                        initialTime = RoundDownTwentieth(initialTime/ (1 + miscBoost2));
+
+                        timeBetweenActions[counterTBA] = initialTime;
                     }
                 //endregion
 
@@ -671,6 +697,10 @@ public class MinionOptimizerActivity extends AppCompatActivity {
 
                 //region Fill out Tier info
                 for (int j = 0; j < timeBetweenActions.length;++j) {
+                    //Account for Hypixel deciding to add a random tier 12 and ruining my life
+                    if(current_tier > 11) {
+                        current_tier = 12;
+                    }
                     String currentTierInfo = "\n" + current_tier + ". Coins Per Day: ";
                     double profit = 0;
                     if (productType == 0) {
@@ -850,6 +880,10 @@ public class MinionOptimizerActivity extends AppCompatActivity {
                     fuelNumber = multiplierNumberInt;
                 }
                 //endregion
+
+                //Modify the ranking because now there's possibly 12 tiers for certain minions
+                double rankDivider = 6.0;
+                //if ()
 
                 Minion thisMinion = new Minion(name,tierProfits,productsString,itemsPerActionString,NPCPrices,
                         bazaarPrices,typeOfFuel, (int) fuelNumber,Double.parseDouble(additionalMultiplier),thisUpgrade1,thisUpgrade2,petBoost,miscBoost1,miscBoost2,warnings,ranking);

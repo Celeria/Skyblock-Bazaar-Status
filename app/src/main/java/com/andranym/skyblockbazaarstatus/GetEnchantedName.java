@@ -79,8 +79,9 @@ public class GetEnchantedName {
             case "ENCHANTED_CACTUS":
                 returnThis = "ENCHANTED_CACTUS_GREEN";
                 break;
-
-
+            case "ENCHANTED_MITHRIL_ORE":
+                returnThis = "ENCHANTED_MITHRIL";
+                break;
         }
         return returnThis;
     }
