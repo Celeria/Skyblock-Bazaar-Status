@@ -291,11 +291,16 @@ public class PriceHistoryOfItemActivity extends AppCompatActivity {
 
 
                 //Make the graph make more sense
-                float scale = maxBuy / (buyPrices.get(buyPrices.size() - 1) * 2);
-                chartBuyPrice.zoom(1f,scale,0,buyPrices.get(buyPrices.size() - 1), YAxis.AxisDependency.RIGHT);
+                float scale;
+                scale = maxBuy / (buyPrices.get(buyPrices.size() - 1) * 2);
+                if (!Float.isNaN(scale)) {
+                    chartBuyPrice.zoom(1f, scale, 0, buyPrices.get(buyPrices.size() - 1), YAxis.AxisDependency.RIGHT);
+                }
 
                 scale = maxSell / (sellPrices.get(sellPrices.size() - 1) * 2);
-                chartSellPrice.zoom(1f,scale,0,sellPrices.get(sellPrices.size() - 1), YAxis.AxisDependency.RIGHT);
+                if (!Float.isNaN(scale)) {
+                    chartSellPrice.zoom(1f, scale, 0, sellPrices.get(sellPrices.size() - 1), YAxis.AxisDependency.RIGHT);
+                }
 
             }
         }.start();
