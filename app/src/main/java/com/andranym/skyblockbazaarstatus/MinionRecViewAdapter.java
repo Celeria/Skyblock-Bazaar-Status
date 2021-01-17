@@ -514,6 +514,7 @@ public class MinionRecViewAdapter extends RecyclerView.Adapter<MinionRecViewAdap
                                 case "Lapis Minion":
                                 case "Emerald Minion":
                                 case "Redstone Minion":
+                                case "Quartz Minion":
                                 case "Mithril Minion":
                                     mithrilBoost = 0.1;
                                     warnings = warnings + "\nNote: Using Mithril Crystal";
