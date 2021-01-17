@@ -199,9 +199,9 @@ public class MainActivity extends AppCompatActivity {
         //endregion
 
         //regionCheck for update
-        if(sharedPref.getBoolean("needToShowUpdateScreen4",true)){
+        if(sharedPref.getBoolean("needToShowUpdateScreen6",true)){
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("needToShowUpdateScreen4",false);
+            editor.putBoolean("needToShowUpdateScreen6",false);
             editor.commit();
             startActivity(new Intent(this,UpdateActivity.class));
         }

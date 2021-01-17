@@ -159,6 +159,7 @@ public class MinionOptimizerActivity extends AppCompatActivity {
                 }
                 int woodChecked = settings.getInt("woodChecked",0);
                 int farmChecked = settings.getInt("farmChecked",0);
+                int mithrilChecked = settings.getInt("mithrilChecked",0);
                 double petBoost = (double)settings.getInt(name+"petBoost",0)/10;
                 double miscBoost1 = Double.parseDouble(settings.getString(name + "miscBoost1","0.0"));
                 double miscBoost2 = Double.parseDouble(settings.getString(name + "miscBoost2","0.0"));
@@ -232,6 +233,24 @@ public class MinionOptimizerActivity extends AppCompatActivity {
                             warnings = warnings + "\nNote: Using Farm Crystal.";
                     }
                 }
+
+                double mithrilBoost = 0;
+                if(mithrilChecked == 1) {
+                    switch (name) {
+                        case "Cobblestone Minion":
+                        case "Obsidian Minion":
+                        case "Coal Minion":
+                        case "Iron Minion":
+                        case "Gold Minion":
+                        case "Diamond Minion":
+                        case "Lapis Minion":
+                        case "Emerald Minion":
+                        case "Redstone Minion":
+                        case "Mithril Minion":
+                            mithrilBoost = 0.1;
+                            warnings = warnings + "\nNote: Using Mithril Crystal";
+                    }
+                }
                 //endregion
 
                 //region Apply Multipliers to each relevant tier:
@@ -243,6 +262,7 @@ public class MinionOptimizerActivity extends AppCompatActivity {
                         //Account for crystals
                         initialTime = RoundDownTwentieth(initialTime/ (1 + woodBoost));
                         initialTime = RoundDownTwentieth(initialTime/ (1 + farmBoost));
+                        initialTime = RoundDownTwentieth(initialTime/ (1 + mithrilBoost));
                         //Account for Upgrades
                         initialTime = RoundDownTwentieth(initialTime / (1 + boost1));
                         initialTime = RoundDownTwentieth(initialTime / (1 + boost2));
@@ -263,6 +283,7 @@ public class MinionOptimizerActivity extends AppCompatActivity {
                         //Account for crystals
                         initialTime = RoundDownTwentieth(initialTime/ (1 + woodBoost));
                         initialTime = RoundDownTwentieth(initialTime/ (1 + farmBoost));
+                        initialTime = RoundDownTwentieth(initialTime/ (1 + mithrilBoost));
                         //Account for Upgrades
                         initialTime = RoundDownTwentieth(initialTime / (1 + boost1));
                         initialTime = RoundDownTwentieth(initialTime / (1 + boost2));
@@ -286,9 +307,11 @@ public class MinionOptimizerActivity extends AppCompatActivity {
                     //Account for all the different products that can exist if certain upgrades are used
                     //Change should only happen on the first element
                     if (j == 0) {
+                        boolean hasSmelter = (thisUpgrade1.equals("Auto Smelter") || thisUpgrade2.equals("Auto Smelter")) ||
+                                (thisUpgrade1.equals("Dwarven Super Compactor") || thisUpgrade2.equals("Dwarven Super Compactor"));
                         switch (name) {
                             case "Cactus Minion":
-                                if (thisUpgrade1.equals("Auto Smelter") || thisUpgrade2.equals("Auto Smelter")) {
+                                if (hasSmelter) {
                                     products.add("CACTUS_GREEN");
                                     npcPrices.add(1.0);
                                     itemsPerAction.add(3.0);
@@ -312,7 +335,7 @@ public class MinionOptimizerActivity extends AppCompatActivity {
                                 }
                                 break;
                             case "Iron Minion":
-                                if (thisUpgrade1.equals("Auto Smelter") || thisUpgrade2.equals("Auto Smelter")) {
+                                if (hasSmelter) {
                                     products.add("IRON_INGOT");
                                     npcPrices.add(3.0);
                                     itemsPerAction.add(1.0);
@@ -324,7 +347,7 @@ public class MinionOptimizerActivity extends AppCompatActivity {
                                 }
                                 break;
                             case "Gold Minion":
-                                if (thisUpgrade1.equals("Auto Smelter") || thisUpgrade2.equals("Auto Smelter")) {
+                                if (hasSmelter) {
                                     products.add("GOLD_INGOT");
                                     npcPrices.add(4.0);
                                     itemsPerAction.add(1.0);
@@ -542,7 +565,8 @@ public class MinionOptimizerActivity extends AppCompatActivity {
                     }
                 }
 
-                if(thisUpgrade1.equals("Super Compactor") || thisUpgrade2.equals("Super Compactor")) {
+                if((thisUpgrade1.equals("Super Compactor") || thisUpgrade2.equals("Super Compactor")) ||
+                        (thisUpgrade1.equals("Dwarven Super Compactor") || thisUpgrade2.equals("Dwarven Super Compactor"))) {
                     for (int j = 0; j < enchantedNames.size();++j) {
                         products.set(j,enchantedNames.get(j));
                         bazaarPricesString.add(addCommasAdjusted(Double.toString(bazaarEnchantedPrices.get(j))));

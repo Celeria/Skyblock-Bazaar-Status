@@ -9,8 +9,8 @@ android {
         applicationId "com.andranym.skyblockbazaarstatus"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 28
-        versionName "Dwarven Mine Update I: Ruining my previous code with tier 12 minions"
+        versionCode 31
+        versionName "Dwarven Mine Update II: Waiting for ENCHANTED_MITHRIL_ORE to ruin my code again"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

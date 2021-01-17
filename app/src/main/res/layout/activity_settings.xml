@@ -238,7 +238,7 @@
             android:layout_marginTop="8dp"
             android:text="save minion settings"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxWoodCrystal" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxMithrilCrystal" />
 
         <TextView
             android:id="@+id/textView17"
@@ -337,6 +337,15 @@
             android:text="Woodcutting"
             app:layout_constraintStart_toEndOf="@+id/checkBoxFarmCrystal"
             app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+        <CheckBox
+            android:id="@+id/checkBoxMithrilCrystal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Mithril"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxFarmCrystal" />
 
         <TextView
             android:id="@+id/textView25"

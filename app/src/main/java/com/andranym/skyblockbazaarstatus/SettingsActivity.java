@@ -46,6 +46,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -80,6 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
     EditText editNumCustomFly;
     CheckBox checkBoxFarmCrystal;
     CheckBox checkBoxWoodCrystal;
+    CheckBox checkBoxMithrilCrystal;
     Button btnSaveMinionSettings;
     EditText editNumMinutesBetweeenUpdate;
     CheckBox checkMobileData;
@@ -114,6 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
         final String defaultUpgrade2 = settingsData.getString("defaultUpgrade2","Diamond Spreading");
         final int woodChecked = settingsData.getInt("woodChecked",0);
         final int farmChecked = settingsData.getInt("farmChecked",0);
+        final int mithrilChecked = settingsData.getInt("mithrilChecked",0);
         //endregion
 
         //regionInitialize UI elements
@@ -141,6 +144,7 @@ public class SettingsActivity extends AppCompatActivity {
         btnMinionHelp = findViewById(R.id.btnMinionHelp);
         checkBoxFarmCrystal = findViewById(R.id.checkBoxFarmCrystal);
         checkBoxWoodCrystal = findViewById(R.id.checkBoxWoodCrystal);
+        checkBoxMithrilCrystal = findViewById(R.id.checkBoxMithrilCrystal);
         btnSaveMinionSettings = findViewById(R.id.btnSaveMinionSettings);
         editTextFuel = findViewById(R.id.editTextFuel);
         editNumMinutesBetweeenUpdate = findViewById(R.id.editNumMinutesBetweenUpdate);
@@ -350,6 +354,7 @@ public class SettingsActivity extends AppCompatActivity {
                 ArrayList<String> upgrades = new ArrayList<>();
                 upgrades.add("Compactor");
                 upgrades.add("Super Compactor");
+                upgrades.add("Dwarven Super Compactor");
                 upgrades.add("Auto Smelter");
                 upgrades.add("Diamond Spreading");
                 upgrades.add("Enchanted Egg");
@@ -374,6 +379,9 @@ public class SettingsActivity extends AppCompatActivity {
                 if (farmChecked == 1) {
                     checkBoxFarmCrystal.setChecked(true);
                 }
+                if (mithrilChecked == 1) {
+                    checkBoxMithrilCrystal.setChecked(true);
+                }
                 //Save if changes are made
                 checkBoxFarmCrystal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -395,6 +403,18 @@ public class SettingsActivity extends AppCompatActivity {
                             editor.putInt("woodChecked",1);
                         } else {
                             editor.putInt("woodChecked",0);
+                        }
+                        editor.commit();
+                    }
+                });
+                checkBoxMithrilCrystal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                        SharedPreferences.Editor editor = settingsData.edit();
+                        if (isChecked) {
+                            editor.putInt("mithrilChecked",1);
+                        } else {
+                            editor.putInt("mithrilChecked",0);
                         }
                         editor.commit();
                     }
@@ -450,6 +470,7 @@ public class SettingsActivity extends AppCompatActivity {
                     ArrayList<String> upgrades = new ArrayList<>();
                     upgrades.add("Compactor");
                     upgrades.add("Super Compactor");
+                    upgrades.add("Dwarven Super Compactor");
                     upgrades.add("Auto Smelter");
                     upgrades.add("Diamond Spreading");
                     upgrades.add("Enchanted Egg");
@@ -458,7 +479,7 @@ public class SettingsActivity extends AppCompatActivity {
                     upgrades.add("Custom Speed Boost " + customBoostNormal2 + "%");
                     upgrades.add("Custom Fuel Boost " + customBoostFly2 + "%");
                     upgrades.add("Flint Shovel");
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, upgrades);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(SettingsActivity.this,android.R.layout.simple_spinner_dropdown_item, upgrades);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerUpgrade1.setAdapter(adapter);
                     spinnerUpgrade2.setAdapter(adapter);
