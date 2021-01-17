@@ -9,6 +9,7 @@ import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -91,6 +92,22 @@ public class PriceHistoryOfItemActivity extends AppCompatActivity {
                     timesRetrieved.add(Long.parseLong(timesRetrievedString.get(i)));
                 }
 
+                //Find the maximum buy price in the whole list
+                float maxBuy = 0;
+                for (float currentPrice : buyPrices) {
+                    if (currentPrice > maxBuy) {
+                        maxBuy = currentPrice;
+                    }
+                }
+
+                //Find the maximum sell price in the whole list
+                float maxSell = 0;
+                for (float currentPrice : sellPrices) {
+                    if (currentPrice > maxSell) {
+                        maxSell = currentPrice;
+                    }
+                }
+
                 //This is for the actual demand, this might be different in size, so its done here
                 ArrayList<String> buyVolumeString = desiredItem.getBuyMovingWeek();
                 ArrayList<String> sellVolumeString = desiredItem.getSellMovingWeek();
@@ -159,15 +176,15 @@ public class PriceHistoryOfItemActivity extends AppCompatActivity {
                 float medianPriceBuy = buyPriceSort.get(buyPriceSort.size()/2);
                 float medianPriceSell = sellPriceSort.get(sellPriceSort.size()/2);
 
-                float minBuyPoint = medianPriceBuy * (float)-0.2;
-                float minSellPoint = medianPriceSell * (float)-0.2;
+                float minBuyPoint = medianPriceBuy * (float)-0.5;
+                float minSellPoint = medianPriceSell * (float)-0.5;
 
                 ArrayList<Float> buyVolumeDifferenceScaled = new ArrayList<>();
                 ArrayList<Float> sellVolumeDifferenceScaled = new ArrayList<>();
 
                 for(int i = 0; i < buyVolumeDifference.size(); ++i){
-                    buyVolumeDifferenceScaled.add((0 - minBuyPoint) * ((buyVolumeDifference.get(i) - minChangeBuy)/(maxChangeBuy - minChangeBuy)) + minBuyPoint);
-                    sellVolumeDifferenceScaled.add((0 - minSellPoint) * ((sellVolumeDifference.get(i) - minChangeSell)/(maxChangeSell - minChangeSell)) + minSellPoint);
+                    buyVolumeDifferenceScaled.add((buyPrices.get(buyPrices.size() - 1)/2 - minBuyPoint) * ((buyVolumeDifference.get(i) - minChangeBuy)/(maxChangeBuy - minChangeBuy)) + minBuyPoint);
+                    sellVolumeDifferenceScaled.add((sellPrices.get(buyPrices.size() - 1)/2 - minSellPoint) * ((sellVolumeDifference.get(i) - minChangeSell)/(maxChangeSell - minChangeSell)) + minSellPoint);
                 }
 
                 ArrayList<Entry> demandValues = new ArrayList<>();
@@ -267,6 +284,14 @@ public class PriceHistoryOfItemActivity extends AppCompatActivity {
                 chartBuyPrice.setData(data1);
 
                 chartSellPrice.setData(data2);
+
+
+                //Make the graph make more sense
+                float scale = maxBuy / (buyPrices.get(buyPrices.size() - 1) * 2);
+                chartBuyPrice.zoom(1f,scale,0,buyPrices.get(buyPrices.size() - 1), YAxis.AxisDependency.RIGHT);
+
+                scale = maxSell / (sellPrices.get(sellPrices.size() - 1) * 2);
+                chartSellPrice.zoom(1f,scale,0,sellPrices.get(sellPrices.size() - 1), YAxis.AxisDependency.RIGHT);
 
             }
         }.start();
