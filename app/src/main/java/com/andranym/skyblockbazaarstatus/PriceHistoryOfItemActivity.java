@@ -183,10 +183,14 @@ public class PriceHistoryOfItemActivity extends AppCompatActivity {
                 ArrayList<Float> sellVolumeDifferenceScaled = new ArrayList<>();
 
                 for(int i = 0; i < buyVolumeDifference.size(); ++i){
+                    if ((buyPrices.get(buyPrices.size() - 1)/2 < 0.1)) {
+                        buyVolumeDifferenceScaled.add((0.2f - minBuyPoint) * ((buyVolumeDifference.get(i) - minChangeBuy)/(maxChangeBuy - minChangeBuy)) + minBuyPoint);
+                        sellVolumeDifferenceScaled.add((0.2f - minSellPoint) * ((sellVolumeDifference.get(i) - minChangeSell)/(maxChangeSell - minChangeSell)) + minSellPoint);
+                    } else {
                     buyVolumeDifferenceScaled.add((buyPrices.get(buyPrices.size() - 1)/2 - minBuyPoint) * ((buyVolumeDifference.get(i) - minChangeBuy)/(maxChangeBuy - minChangeBuy)) + minBuyPoint);
                     sellVolumeDifferenceScaled.add((sellPrices.get(buyPrices.size() - 1)/2 - minSellPoint) * ((sellVolumeDifference.get(i) - minChangeSell)/(maxChangeSell - minChangeSell)) + minSellPoint);
+                    }
                 }
-
                 ArrayList<Entry> demandValues = new ArrayList<>();
                 ArrayList<Entry> supplyValues = new ArrayList<>();
 
