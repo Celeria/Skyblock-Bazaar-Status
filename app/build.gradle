@@ -9,8 +9,8 @@ android {
         applicationId "com.andranym.skyblockbazaarstatus"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 32
-        versionName "Dwarven Mine Update IV: I grant you the rank of *works with mithril crystal* but I do not grant you the rank of tier 12 minion. Quartz: That is outrageous, its unfair."
+        versionCode 34
+        versionName "Dwarven Mine Update V: Double the Mithril, 200x the mining speed."
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
