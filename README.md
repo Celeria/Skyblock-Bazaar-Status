@@ -23,4 +23,13 @@ Furthermore, you can just straight up view whatever materials that are currently
 
 I believe to be an easier way to view it all.
 
+Another feature I recently added was the ability to build up a history of the prices of all the in game items.
+I created a database so that price information can be efficiently stored, and I wrote the code so that when new items
+are added (they often are) it integrates flawlessly into the existing database.
+This data is used to give the user insights into price changes, as I set it up so that you can have your phone automatically
+retrieve price data from the API at your chosen interval. When it does so, I have it set up so that you can also receive 
+notifications on your phone when prices change enough for you to care.
+Considering there are hundreds of products, this can provide information at a glance that will allow users to
+maximize the amount of money players can make while playing the game.
+
 If I have applied to your job and I linked this as an accomplishment, I hope you find it impressive.
