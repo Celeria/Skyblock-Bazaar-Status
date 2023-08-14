@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 31
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.andranym.skyblockbazaarstatus"
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 34
+        targetSdkVersion 31
+        versionCode 35
         versionName "Dwarven Mine Update V: Double the Mithril, 200x the mining speed."
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

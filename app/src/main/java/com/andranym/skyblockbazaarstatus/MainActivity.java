@@ -199,9 +199,9 @@ public class MainActivity extends AppCompatActivity {
         //endregion
 
         //regionCheck for update
-        if(sharedPref.getBoolean("needToShowUpdateScreen9",true)){
+        if(sharedPref.getBoolean("needToShowUpdateScreen10",true)){
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("needToShowUpdateScreen9",false);
+            editor.putBoolean("needToShowUpdateScreen10",false);
             editor.commit();
             startActivity(new Intent(this,UpdateActivity.class));
         }
@@ -522,19 +522,19 @@ public class MainActivity extends AppCompatActivity {
         });
         //endregion
 
-//        //region Block people from stealing this app
-        boolean usedBefore = sharedPref.getBoolean("copyWriteDetection",false);
-        if (!usedBefore) {
-            editor.putBoolean("copyWriteDetection",true);
-            editor.putLong("timeAccessed",System.currentTimeMillis());
-            editor.commit();
-        } else {
-            long timeAccessed = sharedPref.getLong("timeAccessed",0);
-            if ((double)(System.currentTimeMillis() - timeAccessed)/1000/60/60/24 > 3) {
-                Intent blockUser = new Intent(this,BannedActivity.class);
-                startActivity(blockUser);
-            }
-        }
+        //region Block people from stealing this app
+//        boolean usedBefore = sharedPref.getBoolean("copyWriteDetection",false);
+//        if (!usedBefore) {
+//            editor.putBoolean("copyWriteDetection",true);
+//            editor.putLong("timeAccessed",System.currentTimeMillis());
+//            editor.commit();
+//        } else {
+//            long timeAccessed = sharedPref.getLong("timeAccessed",0);
+//            if ((double)(System.currentTimeMillis() - timeAccessed)/1000/60/60/24 > 3) {
+//                Intent blockUser = new Intent(this,BannedActivity.class);
+//                startActivity(blockUser);
+//            }
+//        }
         //endregion
 
         //region Displays how long its been since the data was last updated
@@ -656,6 +656,7 @@ public class MainActivity extends AppCompatActivity {
                 showLeaderboard();
             }
         });
+        //endregion
     }
 
     private void signInSilently() {

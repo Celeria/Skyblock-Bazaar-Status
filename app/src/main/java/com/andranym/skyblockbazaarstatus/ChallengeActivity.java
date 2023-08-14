@@ -525,8 +525,7 @@ public class ChallengeActivity extends AppCompatActivity {
                         }
                     }
                 }
-                if (solved5 && userAnswer.contains("I can't do the the multiplier one because my accelerometer is garbage, let me " +
-                        "use this easter egg to unlock it.")) {
+                if (userAnswer.contains("Plz Gib Challenge 5 Accel Bad")) {
                     SharedPreferences.Editor editor = data.edit();
                     editor.putBoolean("solvedChallenge4", true);
                     editor.putBoolean("solvedChallenge4display",true);
