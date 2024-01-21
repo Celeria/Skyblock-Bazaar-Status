@@ -1,8 +1,9 @@
 If you complete an achievement, that information is sent out so that you can get the achievement for 
 Google Play Games. 
-If I add a leaderboard for the stonk simulator game your score will also be collected if you chose
-to sign into Google Play. 
-This app will access your phone's accelerometer, but won't store that information.
+If you sign into Google Play Games, the number of times you've opened the app, as well as notifications received, and your high score for the stonk simulator will be sent to the leaderboard function on Google Play Games. I am personally curious how much people use this app, that is why. If you don't sign in, this information is never sent anywhere.
+A Google Play Games account is not required to use this app.
+If you choose to make your Google Play Games profile private, I also won't be able to see it. 
+This app will access your phone's accelerometer, but won't store/transmit that information.
 All settings information for this app is stored locally. If you delete the app, the information is gone.
 There is a nigh impossible challenge that once completed, I request you email me that you managed to do it.
 This is not done automatically.
