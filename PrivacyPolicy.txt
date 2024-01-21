@@ -1,12 +1,16 @@
-If you complete an achievement, that information is sent out so that you can get the achievement for 
-Google Play Games. 
+Privacy Policy for Skyblock Bazaar Status
+Created by Unlicensed Labcoat
+
+Personal data that is collected:
 If you sign into Google Play Games, the number of times you've opened the app, as well as notifications received, and your high score for the stonk simulator will be sent to the leaderboard function on Google Play Games. I am personally curious how much people use this app, that is why. If you don't sign in, this information is never sent anywhere.
-A Google Play Games account is not required to use this app.
+If you complete an achievement, that information is sent out so that you can get the achievement for 
+Google Play Games.
+A Google Play Games account is not required to use or access any of the features of this app.
 If you choose to make your Google Play Games profile private, I also won't be able to see it. 
 This app will access your phone's accelerometer, but won't store/transmit that information.
 All settings information for this app is stored locally. If you delete the app, the information is gone.
 There is a nigh impossible challenge that once completed, I request you email me that you managed to do it.
-This is not done automatically.
+This is not done automatically, and you are free to not do so, its just a "hey come email my github and let me know how you pulled it off".
 If you somehow manage to crash my app, which I have tried to make foolproof, Google will collect crash information,
 such as what kind of device it occured on, and your operating system, and give me the stack trace as well.
 I will likely ignore this information because whatever you did was probably an edge case.
