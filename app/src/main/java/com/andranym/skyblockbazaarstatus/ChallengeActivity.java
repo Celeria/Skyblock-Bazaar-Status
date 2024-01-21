@@ -502,35 +502,36 @@ public class ChallengeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String userAnswer = editTextC5.getText().toString().toUpperCase();
-                if (userAnswer.contains("TTTATCCATCCATCCATCCATCCATCAT") ||
-                userAnswer.contains("TCTATCCATCCATCCATCCATCCATCAT") ||
-                userAnswer.contains("TTCATCCATCCATCCATCCATCCATCAT")) {
-                    SharedPreferences.Editor editor = data.edit();
-                    editor.putBoolean("solvedChallenge5", true);
-                    editor.putBoolean("solvedChallenge5display",true);
-                    editor.commit();
-                    txtSolved5.setVisibility(View.VISIBLE);
-                } else {
-                    if (pityCounter[0] < 15) {
-                        Toast fail = Toast.makeText(getApplicationContext(), "That answer is not what I was looking for.", Toast.LENGTH_LONG);
-                        fail.show();
-                        ++pityCounter[0];
-                    } else {
-                        if (userAnswer.length() < 20) {
-                            Toast semiFail = Toast.makeText(getApplicationContext(), "Did you account for the start and stop codon? This is your only hint by the way, and only because I see you've spent some time on this.", Toast.LENGTH_LONG);
-                            semiFail.show();
-                        } else {
-                            Toast fail = Toast.makeText(getApplicationContext(), "That answer is not what I was looking for.", Toast.LENGTH_LONG);
-                            fail.show();
-                        }
-                    }
-                }
-                if (userAnswer.contains("Plz Gib Challenge 5 Accel Bad")) {
+                if (userAnswer.contains("PLZ GIB CHALLENGE 4 ACCEL BAD".toUpperCase())) {
                     SharedPreferences.Editor editor = data.edit();
                     editor.putBoolean("solvedChallenge4", true);
                     editor.putBoolean("solvedChallenge4display",true);
                     editor.commit();
                     Toast.makeText(getApplicationContext(),"Read the source code, didn't you? Sneaky sneaky.",Toast.LENGTH_SHORT).show();
+                } else{
+                    if (userAnswer.contains("TTTATCCATCCATCCATCCATCCATCAT") ||
+                            userAnswer.contains("TCTATCCATCCATCCATCCATCCATCAT") ||
+                            userAnswer.contains("TTCATCCATCCATCCATCCATCCATCAT")) {
+                        SharedPreferences.Editor editor = data.edit();
+                        editor.putBoolean("solvedChallenge5", true);
+                        editor.putBoolean("solvedChallenge5display",true);
+                        editor.commit();
+                        txtSolved5.setVisibility(View.VISIBLE);
+                    } else {
+                        if (pityCounter[0] < 15) {
+                            Toast fail = Toast.makeText(getApplicationContext(), "That answer is not what I was looking for.", Toast.LENGTH_LONG);
+                            fail.show();
+                            ++pityCounter[0];
+                        } else {
+                            if (userAnswer.length() < 20) {
+                                Toast semiFail = Toast.makeText(getApplicationContext(), "Did you account for the start and stop codon? This is your only hint by the way, and only because I see you've spent some time on this.", Toast.LENGTH_LONG);
+                                semiFail.show();
+                            } else {
+                                Toast fail = Toast.makeText(getApplicationContext(), "That answer is not what I was looking for.", Toast.LENGTH_LONG);
+                                fail.show();
+                            }
+                        }
+                    }
                 }
             }
         });

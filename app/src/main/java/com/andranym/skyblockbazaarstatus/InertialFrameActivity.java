@@ -39,6 +39,8 @@ public class InertialFrameActivity extends Activity implements SensorEventListen
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        sensorManager.registerListener(this, mAccelerometer,SensorManager.SENSOR_DELAY_GAME);
+
         final SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         final float[] second_x = {10};

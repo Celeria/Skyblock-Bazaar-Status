@@ -2,15 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "30.0.2"
+    compileSdkVersion 34
+    buildToolsVersion "34.0.0"
 
     defaultConfig {
         applicationId "com.andranym.skyblockbazaarstatus"
         minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 35
-        versionName "Dwarven Mine Update V: Double the Mithril, 200x the mining speed."
+        targetSdkVersion 34
+        versionCode 36
+        versionName "Joke update"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -27,6 +27,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    namespace 'com.andranym.skyblockbazaarstatus'
 }
 
 repositories {
@@ -36,27 +37,27 @@ repositories {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'com.google.android.material:material:1.2.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.material:material:1.11.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation 'com.google.code.gson:gson:2.10'
     //Including information about licenses used
-    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.1'
     //Google Play Games
-    implementation 'com.google.android.gms:play-services-auth:18.1.0'
-    implementation 'com.google.android.gms:play-services-games:20.0.1'
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
+    implementation 'com.google.android.gms:play-services-games:23.1.0'
     //Billing
-    implementation 'com.android.billingclient:billing:3.0.1'
+    implementation 'com.android.billingclient:billing:6.1.0'
     implementation 'com.anjlab.android.iab.v3:library:1.0.44'
     //Room database
-    def room_version = "2.2.5"
+    def room_version = "2.6.1"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     //WorkManager
-    def work_version = "2.4.0"
+    def work_version = "2.9.0"
     implementation "androidx.work:work-runtime:$work_version"
     //MPAndroidChart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
